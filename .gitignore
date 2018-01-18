@@ -1,0 +1,8 @@
+client/node_modules
+client/dist
+client/dist-server
+client/tmp
+client/out-tsc
+
+server/node_modules
+.idea
