@@ -17,6 +17,7 @@ import {UserComponent} from './pages/user/user.component'
 import {HomeModule} from './pages/home/home.module';
 import {UserModule} from './pages/user/user.module';
 
+import {HttpService} from '../app/shared/util/http.service'
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,7 +35,9 @@ import {UserModule} from './pages/user/user.module';
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    HttpService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
