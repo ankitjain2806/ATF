@@ -9,4 +9,9 @@ router.get('/', function(req, res, next) {
 router.get('/googleLogin', function(req, res, next) {
   res.json({'test': 1234});
 });
+
+router.get('/events/all', function(req, res, next) {
+  res.json({'name': 'name', 'description': 'description'});
+  res.end();
+});
 module.exports = router;
