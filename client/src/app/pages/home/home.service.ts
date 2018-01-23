@@ -13,8 +13,6 @@ export class HomeService {
   }
 
   googleLoginApi(): Observable<any> {
-    return this.http.get('/api/users/googleLogin', {}).map((res : Observable<Response>) => {
-        return res;
-    })
+    return this.http.get('/api/users/auth/google', {});
   }
 }

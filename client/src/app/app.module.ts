@@ -16,6 +16,7 @@ import {UserComponent} from './pages/user/user.component'
 
 import {HomeModule} from './pages/home/home.module';
 import {UserModule} from './pages/user/user.module';
+import {HeaderModule} from './header/header.module';
 
 import {HttpService} from './shared/util/http.service'
 @NgModule({
@@ -31,6 +32,7 @@ import {HttpService} from './shared/util/http.service'
     NgbModule.forRoot(),
     HomeModule,
     UserModule,
+    HeaderModule,
     // HttpModule,
     HttpClientModule,
     AppRoutingModule
