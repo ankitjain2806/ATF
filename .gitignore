@@ -5,4 +5,5 @@ client/tmp
 client/out-tsc
 
 server/node_modules
+server/views
 .idea

@@ -2,7 +2,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
-import {HttpModule} from '@angular/http';
+// import {HttpModule} from '@angular/http';
 import {HttpClientModule} from '@angular/common/http';
 
 import {AppComponent} from './app.component';
@@ -17,7 +17,7 @@ import {UserComponent} from './pages/user/user.component'
 import {HomeModule} from './pages/home/home.module';
 import {UserModule} from './pages/user/user.module';
 
-import {HttpService} from '../app/shared/util/http.service'
+import {HttpService} from './shared/util/http.service'
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,7 +31,7 @@ import {HttpService} from '../app/shared/util/http.service'
     NgbModule.forRoot(),
     HomeModule,
     UserModule,
-    HttpModule,
+    // HttpModule,
     HttpClientModule,
     AppRoutingModule
   ],
