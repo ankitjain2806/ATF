@@ -12,6 +12,7 @@ var cors = require('cors');
 
 var index = require('./controllers/index');
 var users = require('./controllers/users');
+var eventsHandler = require('./controllers/events');
 
 var app = express();
 
@@ -45,6 +46,7 @@ app.use(express.static(path.join(__dirname, 'views')));
 app.use(cors());
 
 app.use('/api/users', users);
+app.use('/api/events', eventsHandler);
 // app.use('/', index);
 
 // Catch all other routes and return the index file
