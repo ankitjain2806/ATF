@@ -19,4 +19,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
   }
+  goToProfile(){
+    this.router.navigateByUrl('/profile');
+  }
 }
