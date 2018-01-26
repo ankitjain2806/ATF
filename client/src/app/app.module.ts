@@ -13,6 +13,10 @@ import {HomeComponent} from './pages/home/home.component';
 import {HeaderComponent} from './header/header.component';
 import {FooterComponent} from './footer/footer.component';
 import {UserComponent} from './pages/user/user.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { EventItemComponent } from './event-item/event-item.component';
+
+import {AppService} from './app.service';
 
 import {HomeModule} from './pages/home/home.module';
 import {UserModule} from './pages/user/user.module';
@@ -26,7 +30,9 @@ import {HttpService} from './shared/util/http.service';
     HeaderComponent,
     HomeComponent,
     FooterComponent,
-    UserComponent
+    UserComponent,
+    DashboardComponent,
+    EventItemComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,9 +46,9 @@ import {HttpService} from './shared/util/http.service';
     AngularFontAwesomeModule
   ],
   providers: [
-    HttpService
-  ],
-  bootstrap: [AppComponent]
+    HttpService,
+    AppService
+  ],  bootstrap: [AppComponent]
 })
 export class AppModule {
 }
