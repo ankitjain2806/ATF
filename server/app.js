@@ -7,8 +7,9 @@ var bodyParser = require('body-parser');
 
 var index = require('./controllers/index');
 var users = require('./controllers/users');
-
+const eventsHandler = require('./controllers/events');
 var app = express();
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -28,6 +29,7 @@ app.use(function(req, res, next) {
 });
 
 app.use('/api/users', users);
+app.use('/api/events', eventsHandler);
 // app.use('/', index);
 
 // Catch all other routes and return the index file

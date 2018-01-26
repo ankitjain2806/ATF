@@ -1,6 +1,6 @@
 // db_connect.js
 var mongoose = require('mongoose');
-var mongoURI = 'mongodb://localhost:27017/tambola';
+var mongoURI = 'mongodb://localhost:27017/atf';
 
 mongoose.connect(mongoURI, {
   useMongoClient: true

@@ -9,22 +9,14 @@ import {AppService} from "../app.service";
 })
 export class DashboardComponent implements OnInit {
 
-  events: IEvent[] = [
-    {
-      name: 'Treasure Hunt',
-      description: 'Hunt for treasure'
-    },
-    {
-      name: 'Complier',
-      description: 'you dont know compiler'
-    }
-  ];
+  events: IEvent[] = [];
 
   constructor(private appService: AppService) { }
 
   ngOnInit() {
     this.appService.getAllEvents().subscribe(data => {
       console.log(data);
+      this.events = data;
     });
   }
 
