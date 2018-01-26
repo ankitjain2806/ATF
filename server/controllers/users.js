@@ -77,10 +77,13 @@ router.get('/getCurrentSession', function (req, res, next) {
   res.json(req.session)
 });
 
+router.get('/events/all', function(req, res, next) {
+  res.json({'name': 'name', 'description': 'description'});
+  res.end();
+});
+
 router.get('/logout', function (req, res, next) {
   req.session.destroy(function(err) {
     res.redirect("/");
   })
-});
-
 module.exports = router;

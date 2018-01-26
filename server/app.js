@@ -12,9 +12,9 @@ var cors = require('cors');
 
 var index = require('./controllers/index');
 var users = require('./controllers/users');
-var eventsHandler = require('./controllers/events');
-
+const eventsHandler = require('./controllers/events');
 var app = express();
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -42,6 +42,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'views')));
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 
 app.use(cors());
 
