@@ -22,8 +22,6 @@ import {UserModule} from './pages/user/user.module';
 import {HeaderModule} from './header/header.module';
 import {DashboardModule} from './pages/dashboard/dashboard.module';
 
-import {HttpService} from './shared/util/http.service';
-
 @NgModule({
   declarations: [
     AppComponent,
