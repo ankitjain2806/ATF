@@ -22,9 +22,9 @@ import {HomeModule} from './pages/home/home.module';
 import {UserModule} from './pages/user/user.module';
 import {HeaderModule} from './header/header.module';
 
+import {HttpService} from './shared/util/http.service';
+import {UserSessionService} from "./shared/util/user-session.service";
 
-
-import {HttpService} from './shared/util/http.service'
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,7 +47,8 @@ import {HttpService} from './shared/util/http.service'
   ],
   providers: [
     HttpService,
-    AppService
+    AppService,
+    UserSessionService
   ],  bootstrap: [AppComponent]
 })
 export class AppModule {
