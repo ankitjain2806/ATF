@@ -9,7 +9,6 @@ var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 
 var cors = require('cors');
-
 var index = require('./controllers/index');
 var users = require('./controllers/users');
 const eventsHandler = require('./controllers/events');
@@ -22,7 +21,6 @@ app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-
 app.use(require('express-session')({
   secret: 'myKey',
   resave: true,
@@ -35,7 +33,6 @@ app.use(require('express-session')({
 
 app.use(passport.initialize());
 app.use(passport.session());
-
 
 app.use(logger('dev'));
 app.use(bodyParser.json());

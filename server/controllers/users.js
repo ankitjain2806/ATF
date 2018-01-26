@@ -20,9 +20,9 @@ passport.use(new GoogleStrategy({
     passReqToCallback: true
   },
   function (request, accessToken, refreshToken, profile, done) {
-    console.log("-----------------------")
-    console.log(profile)
-    console.log("-----------------------")
+    console.log("-----------------------");
+    console.log(profile);
+    console.log("-----------------------");
     User.findOne({'email': profile.email}, function (err, person) {
       if (err) {
         return handleError(err);
@@ -83,7 +83,9 @@ router.get('/events/all', function(req, res, next) {
 });
 
 router.get('/logout', function (req, res, next) {
-  req.session.destroy(function(err) {
-    res.redirect("/");
-  })
+    req.session.destroy(function (err) {
+        res.redirect("/");
+    });
+});
+
 module.exports = router;

@@ -47,7 +47,7 @@ import {HttpService} from './shared/util/http.service'
   ],
   providers: [
     HttpService,
-	AppService
+    AppService
   ],  bootstrap: [AppComponent]
 })
 export class AppModule {
