@@ -13,14 +13,14 @@ import {HomeComponent} from './pages/home/home.component';
 import {HeaderComponent} from './header/header.component';
 import {FooterComponent} from './footer/footer.component';
 import {UserComponent} from './pages/user/user.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { EventItemComponent } from './event-item/event-item.component';
 
+import {HttpService} from './shared/util/http.service';
 import {AppService} from './app.service';
 
 import {HomeModule} from './pages/home/home.module';
 import {UserModule} from './pages/user/user.module';
 import {HeaderModule} from './header/header.module';
+import {DashboardModule} from './pages/dashboard/dashboard.module';
 
 import {HttpService} from './shared/util/http.service';
 
@@ -31,8 +31,6 @@ import {HttpService} from './shared/util/http.service';
     HomeComponent,
     FooterComponent,
     UserComponent,
-    DashboardComponent,
-    EventItemComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,6 +38,7 @@ import {HttpService} from './shared/util/http.service';
     HomeModule,
     UserModule,
     HeaderModule,
+    DashboardModule,
     // HttpModule,
     HttpClientModule,
     AppRoutingModule,
@@ -48,7 +47,8 @@ import {HttpService} from './shared/util/http.service';
   providers: [
     HttpService,
     AppService
-  ],  bootstrap: [AppComponent]
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }

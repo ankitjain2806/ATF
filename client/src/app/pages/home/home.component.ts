@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {HomeService} from '../home/home.service';
+import {HomeService} from './home.service';
 
 @Component({
   selector: 'app-home',
@@ -17,6 +17,6 @@ export class HomeComponent implements OnInit {
   callGoogleLogin() {
     this.homeService.googleLoginApi().subscribe((data) => {
       console.log(data);
-    })
+    });
   }
 }
