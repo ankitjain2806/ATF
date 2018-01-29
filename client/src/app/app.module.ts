@@ -13,14 +13,16 @@ import {HomeComponent} from './pages/home/home.component';
 import {HeaderComponent} from './header/header.component';
 import {FooterComponent} from './footer/footer.component';
 import {UserComponent} from './pages/user/user.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { EventItemComponent } from './event-item/event-item.component';
+import {DashboardComponent} from './pages/dashboard/dashboard.component';
+import {EventComponent} from './pages/event/event.component';
 
 import {AppService} from "./app.service";
 
 import {HomeModule} from './pages/home/home.module';
 import {UserModule} from './pages/user/user.module';
 import {HeaderModule} from './header/header.module';
+import {EventModule} from "./pages/event/event.module";
+import {DashboardModule} from "./pages/dashboard/dashboard.module";
 
 import {HttpService} from './shared/util/http.service';
 import {UserSessionService} from "./shared/util/user-session.service";
@@ -33,7 +35,7 @@ import {UserSessionService} from "./shared/util/user-session.service";
     FooterComponent,
     UserComponent,
     DashboardComponent,
-    EventItemComponent,
+    EventComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,6 +43,8 @@ import {UserSessionService} from "./shared/util/user-session.service";
     HomeModule,
     UserModule,
     HeaderModule,
+    EventModule,
+    DashboardModule,
     // HttpModule,
     HttpClientModule,
     AppRoutingModule,
@@ -49,7 +53,7 @@ import {UserSessionService} from "./shared/util/user-session.service";
     HttpService,
     AppService,
     UserSessionService
-  ],  bootstrap: [AppComponent]
+  ], bootstrap: [AppComponent]
 })
 export class AppModule {
 }
