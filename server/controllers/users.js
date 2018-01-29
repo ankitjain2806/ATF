@@ -74,7 +74,11 @@ router.get('/auth/google/callback', passport.authenticate('google', {
 }));
 
 router.get('/getCurrentSession', function (req, res, next) {
-  res.json(req.session)
+  var sessionObj = { user : null};
+  if(req.session && req.session.user) {
+    sessionObj.user = req.session.user;
+  }
+  res.json(sessionObj)
 });
 
 router.get('/events/all', function(req, res, next) {

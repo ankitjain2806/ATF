@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {UserSessionService} from "../../shared/util/user-session.service";
 
 @Component({
   selector: 'app-user',
@@ -6,10 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./user.component.scss']
 })
 export class UserComponent implements OnInit {
-
-  constructor() { }
+  userSession = null;
+  constructor(private session: UserSessionService) {
+    this.userSession = this.session.getSession();
+  }
 
   ngOnInit() {
+
   }
 
 }

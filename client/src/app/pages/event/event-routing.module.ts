@@ -1,18 +1,18 @@
 import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
-import {DashboardComponent} from "./dashboard.component";
+import {EventComponent} from "./event.component";
 
 @NgModule({
   imports: [
     RouterModule.forChild([
       {
-        path: 'dashboard',
-        component: DashboardComponent,
-        data: {title: "Dashboard"}
+        path: 'event',
+        component: EventComponent,
+        data: {title: "Event"}
       }
     ])
   ],
   exports: [RouterModule]
 })
-export class DashboardRoutingModule {
+export class EventRoutingModule {
 }
