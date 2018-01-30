@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {IEvent} from '../../models/event';
 import {AppService} from "../../app.service";
 
+import {DashboardService} from "./dashboard.service";
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -11,10 +13,10 @@ export class DashboardComponent implements OnInit {
 
   events: IEvent[] = [];
 
-  constructor(private appService: AppService) { }
+  constructor(private dashboardService: DashboardService) { }
 
   ngOnInit() {
-    this.appService.getAllEvents().subscribe(data => {
+    this.dashboardService.getAllEvents().subscribe(data => {
       console.log(data);
       this.events = data;
     });

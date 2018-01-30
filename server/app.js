@@ -10,8 +10,8 @@ var MongoStore = require('connect-mongo')(session);
 
 var cors = require('cors');
 var index = require('./controllers/index');
-var users = require('./controllers/users');
-const eventsHandler = require('./controllers/events');
+var usersController = require('./controllers/users');
+const eventsController = require('./controllers/events');
 var app = express();
 
 
@@ -47,8 +47,8 @@ app.use(function(req, res, next) {
 
 app.use(cors());
 
-app.use('/api/users', users);
-app.use('/api/events', eventsHandler);
+app.use('/api/users', usersController);
+app.use('/api/events', eventsController);
 // app.use('/', index);
 
 // Catch all other routes and return the index file

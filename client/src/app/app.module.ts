@@ -9,12 +9,14 @@ import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 
 
+/*
 import {HomeComponent} from './pages/home/home.component';
+*/
 import {HeaderComponent} from './header/header.component';
 import {FooterComponent} from './footer/footer.component';
-import {UserComponent} from './pages/user/user.component';
+/*import {UserComponent} from './pages/user/user.component';
 import {DashboardComponent} from './pages/dashboard/dashboard.component';
-import {EventComponent} from './pages/event/event.component';
+import {EventComponent} from './pages/event/events/event.component';*/
 
 import {AppService} from "./app.service";
 
@@ -31,11 +33,10 @@ import {UserSessionService} from "./shared/util/user-session.service";
   declarations: [
     AppComponent,
     HeaderComponent,
-    HomeComponent,
     FooterComponent,
-    UserComponent,
+/*    UserComponent,
     DashboardComponent,
-    EventComponent,
+    EventComponent,*/
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,23 @@
+<p>
+  registration works!
+{{event.name}} <br>
+{{event.description}}
+<br>
+</p>
+
+<form (ngSubmit)="registerEvent(signupForm)">
+  Team Name
+  <input type="text" name="teamname" ngModel>
+  <br>
+  User 1 Id
+  <input type="text" name="user1" ngModel>
+  <br>
+  User 2 Id
+  <input type="text" name="user2" ngModel>
+  <br>
+  User 3 Id
+  <input type="text" name="user3" ngModel>
+  <br>
+  <button type="submit">Sign Up</button>
+</form>
+

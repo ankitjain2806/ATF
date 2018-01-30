@@ -14,18 +14,20 @@ function createEvents() {
 
     const allEvents = [event1, event2];
     const logs = [];
-    allEvents.forEach((event, index) => {
-        event.save((err) => {
-            if(err) {
+    allEvents.forEach(function (event, index) {
+        event.save(function (err) {
+            if (err) {
                 console.log(event.name + ' failed to save in db');
             }
             console.log(event.name + ' success to save in db');
-        });
-    });
+        })
+        ;
+    })
+    ;
     console.log('attempted to simulate events... ');
 }
 
-const simulate = function() {
+const simulate = function () {
     createEvents();
 };
 
