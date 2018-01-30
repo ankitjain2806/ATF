@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {NgForm} from "@angular/forms";
+
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
@@ -8,14 +9,16 @@ import {NgForm} from "@angular/forms";
 })
 export class RegistrationComponent implements OnInit {
 
-  constructor(private httpClient : HttpClient) { }
+  constructor(private httpClient: HttpClient) {
+  }
 
   event = {};
   data = {};
+
   ngOnInit() {
     this.event = {
-        name:'Treasure Hunt',
-        description:'Hunt for treasure'
+      name: 'Treasure Hunt',
+      description: 'Hunt for treasure'
     }
   }
 
