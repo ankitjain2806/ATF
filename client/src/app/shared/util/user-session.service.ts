@@ -5,11 +5,12 @@ export class UserSessionService {
   userSession;
   constructor() { }
 
-  setSession(userSession) {
+/*  setSession(userSession) {
     this.userSession = userSession;
-  }
+  }*/
 
   getSession() {
-    return this.userSession;
+    return JSON.parse(localStorage.getItem('userSession'));
+    // return this.userSession;
   }
 }

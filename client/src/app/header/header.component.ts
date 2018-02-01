@@ -16,8 +16,11 @@ export class HeaderComponent implements OnInit {
               private headerService: HeaderService) {
     this.headerService.getUserSession()
       .subscribe(res => {
-        this.session.setSession(res.user);
-        this.userSession = this.session.getSession();
+        //this.session.setSession(res.user);
+        if(res.user != null) {
+          localStorage.setItem('userSession', JSON.stringify(res.user));
+          this.userSession = res.user;
+        }
       });
   }
 
@@ -26,4 +29,3 @@ export class HeaderComponent implements OnInit {
   goToProfile(){
     this.router.navigateByUrl('/profile');
   }
-}
