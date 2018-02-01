@@ -1,7 +1,10 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {EventRoutingModule} from './event-routing.module'
-import {EventService} from "./event.service";
+import {EventRoutingModule} from './event-routing.module';
+import { TreasurehuntComponent } from './treasurehunt/treasurehunt.component';
+import { IngameComponent } from './treasurehunt/ingame/ingame.component';
+import { OverviewComponent } from './treasurehunt/overview/overview.component';
+import {FormsModule} from '@angular/forms';
 
 import {EventComponent} from "./events/event.component";
 import {RegistrationComponent} from "./registration/registration.component";
@@ -9,15 +12,14 @@ import {RegistrationComponent} from "./registration/registration.component";
 @NgModule({
   imports: [
     CommonModule,
-    EventRoutingModule
+    EventRoutingModule,
+    FormsModule
   ],
-  declarations: [
+  declarations: [TreasurehuntComponent,
+    IngameComponent,
+    OverviewComponent,
     EventComponent,
-    RegistrationComponent
-  ],
-  providers: [
-    EventService
-  ],
+    RegistrationComponent ],
   exports: [
     EventComponent
   ]

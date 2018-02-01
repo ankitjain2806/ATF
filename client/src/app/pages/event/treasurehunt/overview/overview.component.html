@@ -1,0 +1,9 @@
+<h1>{{info.title}}</h1>
+
+<br>
+
+<h3>{{info.description}}</h3>
+
+<!--<input type="button" class="btn btn-primary" [routerLink]="['../game']" value="continue" *ngIf="!isNew"/>-->
+<input type="button" class="btn btn-primary" [routerLink]="['../game']" value="continue" *ngIf="isNew"/>
+<input type="button" class="btn btn-primary" (click)="registerForEvent()" value="register" *ngIf="isNew"/>

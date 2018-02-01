@@ -9,11 +9,11 @@ export class HttpService {
   constructor(private http: HttpClient) {
   }
 
-  get(url, options): Observable<any>{
+  get(url, options): Observable<any> {
     return this.http.get(url, options);
   }
 
-  post(url, options){
+  post(url, options) {
     return this.http.post(url, options);
   }
 }
