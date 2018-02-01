@@ -1,23 +1,14 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-
-// import {HttpModule} from '@angular/http';
 import {HttpClientModule} from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 
-
-/*
-import {HomeComponent} from './pages/home/home.component';
-*/
 import {HeaderComponent} from './header/header.component';
 import {FooterComponent} from './footer/footer.component';
-/*import {UserComponent} from './pages/user/user.component';
-import {DashboardComponent} from './pages/dashboard/dashboard.component';
-import {EventComponent} from './pages/event/events/event.component';*/
-
 import {AppService} from "./app.service";
 
 import {HomeModule} from './pages/home/home.module';
@@ -33,28 +24,28 @@ import {UserSessionService} from "./shared/util/user-session.service";
   declarations: [
     AppComponent,
     HeaderComponent,
-    FooterComponent,
-/*    UserComponent,
-    DashboardComponent,
-    EventComponent,*/
+    FooterComponent
   ],
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
+    FormsModule,
     NgbModule.forRoot(),
     HomeModule,
     UserModule,
     HeaderModule,
     EventModule,
     DashboardModule,
-    // HttpModule,
     HttpClientModule,
+    BrowserModule,
     AppRoutingModule,
   ],
   providers: [
     HttpService,
     AppService,
     UserSessionService
-  ], bootstrap: [AppComponent]
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }

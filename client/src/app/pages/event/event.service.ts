@@ -5,6 +5,7 @@ import 'rxjs/add/operator/map';
 
 import {HttpService} from '../../shared/util/http.service';
 
+import {EventRegistration} from "../../models/event-registration";
 
 @Injectable()
 export class EventService {
@@ -13,8 +14,8 @@ export class EventService {
 
   }
 
-  registerEvent(): Observable<any> {
-    return this.http.post('/api/events/team-register', {});
+  registerEvent(form: EventRegistration): Observable<any> {
+    return this.http.post('/api/events/team-register', form);
   }
 
   getAllEvents(): Observable<any> {

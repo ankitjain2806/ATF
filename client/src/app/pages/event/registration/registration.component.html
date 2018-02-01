@@ -1,23 +1,23 @@
-<p>
-  registration works!
-{{event.name}} <br>
-{{event.description}}
-<br>
-</p>
-
-<form (ngSubmit)="registerEvent(signupForm)">
-  Team Name
-  <input type="text" name="teamname" ngModel>
-  <br>
-  User 1 Id
-  <input type="text" name="user1" ngModel>
-  <br>
-  User 2 Id
-  <input type="text" name="user2" ngModel>
-  <br>
-  User 3 Id
-  <input type="text" name="user3" ngModel>
-  <br>
-  <button type="submit">Sign Up</button>
-</form>
-
+<div class="container-fluid">
+  <h1>Team Registration For Treasure Hunt</h1>
+  <div class="col-md-4 col-sm-12 col-4">
+    <form [formGroup]="registrationForm" novalidate (ngSubmit)="onSubmit()">
+      <div class="form-group row">
+        <label for="teamname" class="col-md-4 col-sm-6 col-4">Team Name</label>
+        <div class="col-md-8 col-sm-6 col-8">
+          <input type="text" class="form-control" id="teamname" placeholder="Enter Team Name" formControlName="teamName">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4 col-sm-6 col-4">Invite Member</label>
+        <div class="col-md-8 col-sm-6 col-8" formArrayName="members">
+          <div *ngFor="let email of registrationForm.controls.members.controls; let i=index" [formGroupName]="i"  >
+            <input type="text" class="form-control" id="member" placeholder="Enter Member email Id" formControlName="email">
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">Register</button>
+      <button type="button" class="btn btn-info" (click)="addMember()">Add New Member</button>
+    </form>
+  </div>
+</div>
