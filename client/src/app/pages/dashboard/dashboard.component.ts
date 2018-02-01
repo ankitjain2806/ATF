@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {IEvent} from '../../models/event';
-import {AppService} from "../../app.service";
 
 import {DashboardService} from "./dashboard.service";
 

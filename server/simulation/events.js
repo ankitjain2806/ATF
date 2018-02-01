@@ -4,7 +4,27 @@ function createEvents() {
     console.log('attempting to simulate events...');
     const event1 = new EventModel({
         name: 'Treasure Hunt',
-        description: 'Hunt for treasure'
+        description: 'Hunt for treasure',
+        "stages" : [
+            {
+                "question" : "What is the first blockchain application?",
+                "type" : "NORMAL",
+                "answer" : "bitcoin"
+            },
+            {
+                "question" : "Choose those which give 'true'",
+                "type" : "MCQ",
+                "options" : [
+                    "2==2",
+                    "2!=2",
+                    "a!=b",
+                    "b=a"
+                ],
+                "answer" : [
+                    "0"
+                ]
+            }
+        ]
     });
 
     const event2 = new EventModel({
@@ -22,9 +42,8 @@ function createEvents() {
             console.log(event.name + ' success to save in db');
         })
         ;
-    })
-    ;
-    console.log('attempted to simulate events... ');
+    });
+    console.log('finished to simulate events... ');
 }
 
 const simulate = function () {
