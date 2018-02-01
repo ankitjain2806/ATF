@@ -1,5 +1,5 @@
 # ATF
-
+npm install -g @angular/cli
 #setup
 1. npm install in client and server to install all dependencies <br/>
 2. start off client <br/>

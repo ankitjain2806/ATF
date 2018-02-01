@@ -4,6 +4,7 @@ var passport = require('passport');
 
 var GoogleStrategy = require('passport-google-oauth2').Strategy;
 var User = require('../models/User');
+var envConfig = require('../config/env');
 
 passport.serializeUser(function (user, done) {
   done(null, user);
@@ -14,15 +15,12 @@ passport.deserializeUser(function (obj, done) {
 });
 
 passport.use(new GoogleStrategy({
-    clientID: '562692892340-9o35ra5u84gr56dv797jtj7f0mvb1r7p.apps.googleusercontent.com',
-    clientSecret: '44ui31IRScrmBYu13xmWYS8f',
-    callbackURL: "http://localhost:3000/api/users/auth/google/callback",
+    clientID: envConfig.googleAuth.clientID,
+    clientSecret: envConfig.googleAuth.clientSecret,
+    callbackURL: envConfig.siteUrl + "/api/users/auth/google/callback",
     passReqToCallback: true
   },
   function (request, accessToken, refreshToken, profile, done) {
-    console.log("-----------------------");
-    console.log(profile);
-    console.log("-----------------------");
     User.findOne({'email': profile.email}, function (err, person) {
       if (err) {
         return handleError(err);
