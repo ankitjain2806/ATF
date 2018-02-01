@@ -1,10 +1,11 @@
 var express = require('express');
 var EventModel = require('../models/Event');
 var TeamModel = require('../models/Team');
+var User = require('../models/User');
 var UserEventStateModel = require('../models/UserEventState');
 var router = express.Router();
-
-function getUserStateForEvent(req, res, cb) {
+var async = require('async');
+/*function getUserStateForEvent(req, res, cb) {
     const userId = req.body.user;
     const event = req.body.event;
     if(userId === undefined || event === undefined || userId === null || event === null) {
@@ -27,9 +28,9 @@ function getUserStateForEvent(req, res, cb) {
             cb({'stage': 0, 'multiplier': 1});
         }
     });
-}
+}*/
 
-function getUserStageQuestion(req, res, cb) {
+/*function getUserStageQuestion(req, res, cb) {
     getUserStateForEvent(req, res, (currentState) => {
         // get current stage [index] from stages
         // TODO: change 'name' to event id
@@ -40,7 +41,7 @@ function getUserStageQuestion(req, res, cb) {
             cb(currentStageQuestion);
         });
     });
-}
+}*/
 
 function updateUserEventState(req, res, cb) {
     //update user state
@@ -57,18 +58,37 @@ router.get('/all', function (req, res, next) {
 });
 
 router.post('/team-register', function (req, res, next) {
-    const team = new TeamModel(req.body);
-    team.save(function (err, team) {
-        if (err) {
-            res.json(err);
-        } else {
-            res.json({data: team, message: 'saved'});
-        }
-        res.end();
+    var teamData = {
+        teamName: req.body.teamName,
+        members: []
+    };
+    var users = req.body.members;
+    async.times(users.length, function (n, next) {
+        User.findOne({email: users[n].email}, function (err, person) {
+            if (err) {
+                console.trace(err)
+            }
+            if (person) {
+                // members.push(person.id);
+                next(null, person.id)
+            } else {
+            }
+        });
+    }, function (err, members) {
+        teamData.members = members;
+        var team = new TeamModel(teamData);
+        team.save(function (err, team) {
+            if (err) {
+                res.json(err);
+            } else {
+                res.json({data: team, message: 'saved'});
+            }
+            res.end();
+        });
     });
 });
 
-router.get('/treasurehunt/details', function(req, res, next) {
+/*router.get('/treasurehunt/details', function(req, res, next) {
     const query = EventModel.findOne({'name': 'TreasureHunt'})
         .select({'title': 1, 'description': 1});
     query.exec((err, data) => {
@@ -82,9 +102,9 @@ router.post('/treasurehunt/get/state', function(req, res, next) {
         res.json(state);
         res.end();
     });
-});
+});*/
 
-router.post('/treasurehunt/set/state', function(req, res, next) {
+router.post('/treasurehunt/set/state', function (req, res, next) {
     const stateModel = {
         user: req.body.user
     };
@@ -101,7 +121,7 @@ router.post('/treasurehunt/set/state', function(req, res, next) {
     res.end();
 });
 
-router.post('/treasurehunt/question', function(req, res, next) {
+/*router.post('/treasurehunt/question', function(req, res, next) {
     getUserStageQuestion(req, res, (currentStageQuestion) => {
         res.json(currentStageQuestion);
         res.end();
@@ -128,6 +148,6 @@ router.post('/treasurehunt/question/check', function(req, res, next) {
             }
         });
     }
-});
+});*/
 
 module.exports = router;
