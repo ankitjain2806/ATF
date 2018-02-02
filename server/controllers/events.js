@@ -48,6 +48,15 @@ function updateUserEventState(req, res, cb) {
     cb();
 }
 
+router.get('/getEventById/:id', function (req, res, next) {
+    EventModel.findOne({id: req.params.id}, function (err, event) {
+        if (err) {
+            console.trace(err)
+        }
+        res.json(event);
+    });
+});
+
 router.get('/all', function (req, res, next) {
     var query = EventModel.find()
         .select({'name': 1, 'description': 1});
@@ -72,6 +81,22 @@ router.post('/team-register', function (req, res, next) {
                 // members.push(person.id);
                 next(null, person.id)
             } else {
+                //console.log(profile);
+                var user = new User({
+                    name: {
+                        familyName: "",
+                        givenName: ""
+                    },
+                    isActive: false,
+                    email: users[n].email,
+                    imageUrl: "",
+                    provider: "",
+                    providerData: ""
+                });
+                user.save(function (err, data) {
+                   // request.session.user = data;
+                    return done(err, data);
+                })
             }
         });
     }, function (err, members) {
