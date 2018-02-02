@@ -1,12 +1,11 @@
 var express = require('express');
 var router = express.Router();
-// var passport = require('passport');
-
-// var GoogleStrategy = require('passport-google-oauth2').Strategy;
+var passport = require('passport');
+var GoogleStrategy = require('passport-google-oauth2').Strategy;
 var User = require('../models/User');
-// var envConfig = require('../config/env');
 
-/*
+var envConfig = require('../config/env');
+
 passport.serializeUser(function (user, done) {
   done(null, user);
 });
@@ -14,16 +13,15 @@ passport.serializeUser(function (user, done) {
 passport.deserializeUser(function (obj, done) {
   done(null, obj);
 });
-*/
 
-/*
 passport.use(new GoogleStrategy({
     clientID: envConfig.googleAuth.clientID,
     clientSecret: envConfig.googleAuth.clientSecret,
-    callbackURL: envConfig.siteUrl + "/api/users/auth/google/callback",
+    callbackURL: envConfig.siteUrl + envConfig.googleAuth.callbackUrl,
     passReqToCallback: true
   },
   function (request, accessToken, refreshToken, profile, done) {
+  console.log(profile)
     User.findOne({'email': profile.email}, function (err, person) {
       if (err) {
         return handleError(err);
@@ -54,13 +52,7 @@ passport.use(new GoogleStrategy({
   }
 ));
 
-*/
-/* GET users listing. */
-router.get('/', function (req, res, next) {
-  res.send('respond with a resource');
-});
-
-/*router.get('/auth/google',
+router.get('/google',
   passport.authenticate('google', {
       scope:
         [
@@ -70,28 +62,25 @@ router.get('/', function (req, res, next) {
     }
   ));
 
-router.get('/auth/google/callback', passport.authenticate('google', {
+router.get('/google/callback', passport.authenticate('google', {
   successRedirect: '/',
   failureRedirect: '/'
-}));*/
+}));
 
-/*router.get('/getCurrentSession', function (req, res, next) {
+
+router.get('/getCurrentSession', function (req, res, next) {
   var sessionObj = {user: null};
   if (req.session && req.session.user) {
     sessionObj.user = req.session.user;
   }
   res.json(sessionObj)
-});*/
-
-router.get('/events/all', function (req, res, next) {
-  res.json({'name': 'name', 'description': 'description'});
-  res.end();
 });
 
-/*router.get('/logout', function (req, res, next) {
+
+router.get('/logout', function (req, res, next) {
   req.session.destroy(function (err) {
     res.redirect("/");
   });
-});*/
+});
 
 module.exports = router;
