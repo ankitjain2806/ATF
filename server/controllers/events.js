@@ -48,8 +48,8 @@ function updateUserEventState(req, res, cb) {
     cb();
 }
 
-router.get('/getEventById/:id', function (req, res, next) {
-    EventModel.findOne({id: req.params.id}, function (err, event) {
+router.get('/getEventDetails/:slug', function (req, res, next) {
+    EventModel.findOne({slug: req.params.slug}, function (err, event) {
         if (err) {
             console.trace(err)
         }
