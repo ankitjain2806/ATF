@@ -61,14 +61,15 @@ app.use(cors());
  * @param next
  */
 var isLoggedIn = function (req, res, next) {
-  if (req.session && req.session.user) {
-    next()
+  if (req.session && typeof req.session.user !== undefined) {
+    next();
+  } else {
+    res.redirect('/');
   }
-  res.error(401)
 };
 
-app.use('/api/users', usersController);
-app.use('/api/events', eventsController);
+app.use('/api/users', isLoggedIn, usersController);
+app.use('/api/events', isLoggedIn, eventsController);
 app.use('/auth', AuthController)
 
 // Catch all other routes and return the index file
@@ -94,7 +95,7 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.json({'errorqq': err});
+  res.json({'error': err});
 });
 
 module.exports = app;

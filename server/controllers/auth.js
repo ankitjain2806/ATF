@@ -3,7 +3,7 @@ var router = express.Router();
 var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth2').Strategy;
 var User = require('../models/User');
-
+var responseHandler = require('../util/responseHandler');
 var envConfig = require('../config/env');
 
 passport.serializeUser(function (user, done) {
@@ -21,7 +21,6 @@ passport.use(new GoogleStrategy({
     passReqToCallback: true
   },
   function (request, accessToken, refreshToken, profile, done) {
-  console.log(profile)
     User.findOne({'email': profile.email}, function (err, person) {
       if (err) {
         return handleError(err);
@@ -73,7 +72,8 @@ router.get('/getCurrentSession', function (req, res, next) {
   if (req.session && req.session.user) {
     sessionObj.user = req.session.user;
   }
-  res.json(sessionObj)
+  responseHandler.response(res, 200, null, sessionObj)
+  // res.json(sessionObj)
 });
 
 
