@@ -1,10 +1,10 @@
 var handler = {
   response: function (res, code, err, data) {
     res.sendStatus(code)
-    if(!err) {
+    if(err) {
       res.json({ error: err });
     } else {
-      res.json({ data: data });
+      res.json(data);
     }
   }
 };

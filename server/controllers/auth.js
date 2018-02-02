@@ -72,8 +72,8 @@ router.get('/getCurrentSession', function (req, res, next) {
   if (req.session && req.session.user) {
     sessionObj.user = req.session.user;
   }
-  responseHandler.response(res, 200, null, sessionObj)
-  // res.json(sessionObj)
+  // responseHandler.response(res, 200, null, sessionObj)
+  res.json(sessionObj)
 });
 
 
