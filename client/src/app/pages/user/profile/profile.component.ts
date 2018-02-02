@@ -6,12 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-	userName = "Divyanshu Kumar";
-  email = "divyanshu.kumar@accoliteindia.com";
-  coin = 15;
-  gender = "Male";
-  bio = "Promoting positive community and economic growth in our neighborhood";
-  phoneNumber = "99999 99999";
+  user = JSON.parse(localStorage.getItem("userSession"));
+
   constructor() { }
 
   ngOnInit() {

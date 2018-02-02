@@ -12,7 +12,7 @@ import {ProfileComponent} from './profile/profile.component';
         data: {title: 'User'}
       },
       {
-        path: 'profile',
+        path: 'user/profile',
         component: ProfileComponent,
         data: {title: 'Profile'}
       }
