@@ -1,11 +1,14 @@
 <div class="card">
   <div class="card-header">
-    <a data-toggle="collapse" data-parent="#accordion" href="#{{data.name}}" aria-expanded="false" aria-controls="accordion">{{data.name}}</a>
+    <a data-toggle="collapse" data-parent="#accordion" [routerLink]="['/event/'+data.slug]" aria-expanded="false"
+       aria-controls="accordion">{{data.name}}</a>
   </div>
   <div id="{{data.name}}" class="collapse in">
     <div class="card card-block">
       <p>{{data.description}} </p>
-      <div> <button type="button" class="btn btn-success float-right">Register</button></div>
+      <div>
+        <button type="button" class="btn btn-success float-right">Register</button>
+      </div>
     </div>
   </div>
 </div>

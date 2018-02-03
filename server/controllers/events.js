@@ -55,6 +55,15 @@ function updateUserEventState(req, res, cb) {
     cb();
 }
 
+router.get('/getEventDetails/:slug', function (req, res, next) {
+    EventModel.findOne({slug: req.params.slug}, function (err, event) {
+        if (err) {
+            console.trace(err)
+        }
+        res.json(event);
+    });
+});
+
 router.get('/all', function (req, res, next) {
     var query = EventModel.find()
         .select({'name': 1, 'description': 1});
@@ -67,32 +76,66 @@ router.get('/all', function (req, res, next) {
 router.post('/team-register', function (req, res, next) {
     var teamData = {
         teamName: req.body.teamName,
+        eventId: ""
         members: []
     };
-    var users = req.body.members;
-    async.times(users.length, function (n, next) {
-        User.findOne({email: users[n].email}, function (err, person) {
-            if (err) {
-                console.trace(err)
+
+    async.series([
+            function (callback) {
+                EventModel.findOne({slug: req.params.slug}, function (err, event) {
+                    if (err) {
+                        console.trace(err)
+                    }
+                    teamNData.eventId = event.id
+                    callback();
+                });
+
+            },
+            function (callback) {
+                // do some more stuff ...
+                var users = req.body.members;
+                async.times(users.length, function (n, next) {
+                    User.findOne({email: users[n].email}, function (err, person) {
+                        if (err) {
+                            console.trace(err)
+                        }
+                        if (person) {
+                            // members.push(person.id);
+                            next(null, person.id)
+                        } else {
+                            //console.log(profile);
+                            var user = new User({
+                                name: {
+                                    familyName: "",
+                                    givenName: ""
+                                },
+                                isActive: false,
+                                email: users[n].email,
+                                imageUrl: "",
+                                provider: "",
+                                providerData: ""
+                            });
+                            user.save(function (err, data) {
+                                // request.session.user = data;
+                                return done(err, data);
+                            })
+                        }
+                    });
+                }, function (err, members) {
+                    teamData.members = members;
+                    var team = new TeamModel(teamData);
+                    team.save(function (err, team) {
+                        if (err) {
+                            res.json(err);
+                        } else {
+                            res.json({data: team, message: 'saved'});
+                        }
+                        res.end();
+                    });
+                });
             }
-            if (person) {
-                // members.push(person.id);
-                next(null, person.id)
-            } else {
-            }
-        });
-    }, function (err, members) {
-        teamData.members = members;
-        var team = new TeamModel(teamData);
-        team.save(function (err, team) {
-            if (err) {
-                res.json(err);
-            } else {
-                res.json({data: team, message: 'saved'});
-            }
-            res.end();
-        });
-    });
+        ]
+    );
 });
 
 router.get('/treasurehunt/details', function(req, res, next) {

@@ -5,18 +5,25 @@ import {RegistrationComponent} from "./registration/registration.component";
 import {TreasurehuntComponent} from "./treasurehunt/treasurehunt.component";
 import {OverviewComponent} from "./treasurehunt/overview/overview.component";
 import {IngameComponent} from "./treasurehunt/ingame/ingame.component";
+import {EventDetailComponent} from "./event-details/event-detail.component";
 
 @NgModule({
   imports: [
-    RouterModule.forChild([{
+    RouterModule.forChild([
+      {
         path: 'event',
         component: EventComponent,
         data: {title: "Event"}
       },
       {
-        path: 'event/registration',
+        path: 'event/registration/:slug',
         component: RegistrationComponent,
-        data: {title: "Event"}
+        data: {title: "Event Registration"}
+      },
+      {
+        path: 'event/:slug',
+        component: EventDetailComponent,
+        data: {title: "Event Detail"}
       },
       {
         path: 'treasurehunt',

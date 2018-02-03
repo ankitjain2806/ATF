@@ -21,4 +21,9 @@ export class EventService {
   getAllEvents(): Observable<any> {
     return this.http.get('/api/events/all', {});
   }
+
+  getEventDetail(slug: string) : Observable<any> {
+    const url = '/api/events/getEventDetails/' + slug
+    return this.http.get(url, {});
+  }
 }
