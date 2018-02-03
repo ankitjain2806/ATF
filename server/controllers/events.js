@@ -76,7 +76,7 @@ router.get('/all', function (req, res, next) {
 router.post('/team-register', function (req, res, next) {
     var teamData = {
         teamName: req.body.teamName,
-        eventId: ""
+        eventId: "",
         members: []
     };
 
