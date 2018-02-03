@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {reject} from "q";
 import {HttpService} from "../../../../shared/util/http.service";
 import {UserSessionService} from "../../../../shared/util/user-session.service";
+import {ActivatedRoute} from "@angular/router";
+import {TreasurehuntService} from "../treasurehunt.service";
 
 @Component({
   selector: 'app-ingame',
@@ -10,41 +12,29 @@ import {UserSessionService} from "../../../../shared/util/user-session.service";
 })
 export class IngameComponent implements OnInit {
 
+  eventId: string;
   question = {};
   answer = {};
   state = {};
   userSession = null;
+  private paramsSub: any;
 
-  constructor(private httpService: HttpService, private session: UserSessionService) {
+  constructor(private session: UserSessionService,
+              private activatedRouter: ActivatedRoute,
+              private treasurehuntService: TreasurehuntService) {
     this.userSession = this.session.getSession();
-    console.log('user sesion', this.userSession);
+    console.log('user sesion', this.userSession._id);
   }
 
   ngOnInit() {
-/*    this.userSession = this.session.getSession();
-    console.log('user sesion', this.userSession);*/
-    this.getCurrentQuestion();
-  }
-
-  getUserStageQuestion(userId) {
-    this.httpService.post('http://localhost:3000/api/events/treasurehunt/question', {user: userId})
-      .subscribe((response) => {
-        this.question = response;
-      });
-  }
-
-  private getUserState(number: number) {
-    return new Promise((resolve, rjt) => {
-      setTimeout(function () {
-        const state = {'inStage': number};
-        resolve(state);
-      }, 100);
+    this.paramsSub = this.activatedRouter.params.subscribe(params => {
+      this.eventId = params['id'];
+      this.getCurrentQuestion();
     });
-    // this.httpService.post('http://localhost:3000/api/events/state', {user: this.userSession});
   }
 
   private checkAnswerAndChangeState() {
-    this.CheckAnswerCorrectness().subscribe(response => {
+    this.treasurehuntService.checkIsCorrectAnswer(this.answer).subscribe(response => {
       if (response['data']) {
         this.getCurrentQuestion();
       } else {
@@ -54,13 +44,11 @@ export class IngameComponent implements OnInit {
   }
 
   private getCurrentQuestion() {
-    this.getUserState(1).then(state => {
+    this.treasurehuntService.getUserState(this.userSession._id, this.eventId).subscribe(state => {
       this.state = state;
-      this.getUserStageQuestion(123);
+      this.treasurehuntService.getUserStageQuestion(this.userSession._id, this.eventId).subscribe((response) => {
+        this.question = response;
+      });
     });
-  }
-
-  private CheckAnswerCorrectness() {
-    return this.httpService.post('http://localhost:3000/api/events/treasurehunt/question/check', {user: 1, answer: this.answer});
   }
 }

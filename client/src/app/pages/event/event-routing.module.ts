@@ -23,9 +23,9 @@ import {IngameComponent} from "./treasurehunt/ingame/ingame.component";
         component: TreasurehuntComponent,
         data: {title: 'Treasure Hunt'},
         children: [
-          { path: '', redirectTo: 'overview', pathMatch: 'full' },
-          { path: 'overview', component: OverviewComponent },
-          { path: 'game', component: IngameComponent }
+          { path: '', redirectTo: '/home', pathMatch: 'full' },
+          { path: ':id/overview', component: OverviewComponent },
+          { path: ':id/game', component: IngameComponent }
         ]
       }
     ])

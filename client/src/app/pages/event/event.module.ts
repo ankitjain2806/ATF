@@ -10,6 +10,7 @@ import {EventComponent} from "./events/event.component";
 import {RegistrationComponent} from "./registration/registration.component";
 
 import {EventService} from "./event.service";
+import {TreasurehuntService} from "./treasurehunt/treasurehunt.service";
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import {EventService} from "./event.service";
     EventComponent
   ],
   providers: [
-    EventService
+    EventService,
+    TreasurehuntService
   ]
 })
 export class EventModule {

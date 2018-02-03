@@ -5,43 +5,50 @@ var User = require('../models/User');
 var UserEventStateModel = require('../models/UserEventState');
 var router = express.Router();
 var async = require('async');
-/*function getUserStateForEvent(req, res, cb) {
+
+function getUserStateForEvent(req, res, cb) {
     const userId = req.body.user;
     const event = req.body.event;
     if(userId === undefined || event === undefined || userId === null || event === null) {
         cb({'error': 'data supplied is not sufficient buddy..'});
         return;
     }
-    // get user current stage
-    const query = UserEventStateModel.findOne({'user': "5a71804d4d04951790a33e4f"});
+    /**get user current stage*/
+    const query = UserEventStateModel.findOne({'user': userId});
+    query.select('events');
     query.exec((err, data) => {
         if(err) {
-            // user is not present
+            /**user is not present*/
             cb({'error': 'cannot get the state', data: err});
             return;
         }
-        console.log('user state', data);
         if(data === null) {
-            // new to event
-            cb({data: null});
-        } else {
-            cb({'stage': 0, 'multiplier': 1});
+            /**new to event*/
+            cb(null);
+            return;
         }
+        const _events = data.events;
+        const _state = _events.filter((item) => {
+            return item.event.toString() === event;
+        });
+        cb(_state);
     });
-}*/
+}
 
-/*function getUserStageQuestion(req, res, cb) {
+function getUserStageQuestion(req, res, cb) {
     getUserStateForEvent(req, res, (currentState) => {
         // get current stage [index] from stages
         // TODO: change 'name' to event id
+        console.log('current state of user ', currentState[0]);
         const query = EventModel.findOne({'name': 'TreasureHunt'})
             .select({'stages': 1, '_id': 0});
         query.exec((err, data) => {
-            const currentStageQuestion = data['stages'][currentState.stage];
+            console.log('questions ', data['stages'][currentState[0].stage]);
+            const currentStageQuestion = data['stages'][currentState[0].stage];
             cb(currentStageQuestion);
         });
     });
-}*/
+}
 
 function updateUserEventState(req, res, cb) {
     //update user state
@@ -88,7 +95,7 @@ router.post('/team-register', function (req, res, next) {
     });
 });
 
-/*router.get('/treasurehunt/details', function(req, res, next) {
+router.get('/treasurehunt/details', function(req, res, next) {
     const query = EventModel.findOne({'name': 'TreasureHunt'})
         .select({'title': 1, 'description': 1});
     query.exec((err, data) => {
@@ -99,29 +106,33 @@ router.post('/team-register', function (req, res, next) {
 
 router.post('/treasurehunt/get/state', function(req, res, next) {
     getUserStateForEvent(req, res, (state) => {
-        res.json(state);
+        res.json({data: state});
         res.end();
     });
-});*/
-
-router.post('/treasurehunt/set/state', function (req, res, next) {
-    const stateModel = {
-        user: req.body.user
-    };
-    // const query = UserEventStateModel.insert(stateModel);
-    console.log(query);
-    /*query.exec((err, model) => {
-        if(err) {
-          res.json({'error': '', data: err});
-          return;
-        }
-        res.json({data: true});
-        res.end();
-    });*/
-    res.end();
 });
 
-/*router.post('/treasurehunt/question', function(req, res, next) {
+router.post('/treasurehunt/set/state', function (req, res, next) {
+    console.log('user ', req.body.user);
+    const model = new UserEventStateModel({
+        user: req.body.user,
+        events: [{
+            event: req.body.event,
+            stage: 0,
+            multiplier: 1
+        }]
+    });
+    model.save((err, model) => {
+        if(err) {
+            res.json({error: 'not registered', data: err});
+            res.end();
+            return;
+        }
+       res.json({data: true});
+       res.end();
+    });
+});
+
+router.post('/treasurehunt/question', function(req, res, next) {
     getUserStageQuestion(req, res, (currentStageQuestion) => {
         res.json(currentStageQuestion);
         res.end();
@@ -148,6 +159,6 @@ router.post('/treasurehunt/question/check', function(req, res, next) {
             }
         });
     }
-});*/
+});
 
 module.exports = router;

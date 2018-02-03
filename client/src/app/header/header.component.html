@@ -15,6 +15,9 @@
       <li class="nav-item">
         <a class="nav-link" [routerLink]="['user/profile']">Profile</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['dashboard']">Dashboard</a>
+      </li>
     </ul>
     <span class="text-white" *ngIf="userSession">
       <img [src]="userSession.imageUrl" class="user-image" />
