@@ -6,12 +6,13 @@ var UserSchema = new mongoose.Schema({
         familyName: String,
         givenName: String
     },
-    isActive: Boolean,
     email: String,
     imageUrl: String,
     provider: String,
     providerData: Schema.Types.Mixed,
-    lastUpdated: {type: Date, default: Date.now}
+    lastUpdated: {type: Date, default: Date.now},
+    isActive: {type: Boolean, default: false},
+    isInvited: {type: Boolean, default: false}
 });
 
 var User = mongoose.model('User', UserSchema);

@@ -78,14 +78,13 @@ router.post('/team-register', function (req, res, next) {
         eventId: "",
         members: []
     };
-
     async.series([
             function (callback) {
-                EventModel.findOne({slug: req.params.slug}, function (err, event) {
+                EventModel.findOne({slug: req.body.slug}, function (err, event) {
                     if (err) {
                         console.trace(err)
                     }
-                    teamNData.eventId = event.id
+                    teamData.eventId = event.id;
                     callback();
                 });
 
@@ -112,10 +111,12 @@ router.post('/team-register', function (req, res, next) {
                                 email: users[n].email,
                                 imageUrl: "",
                                 provider: "",
+                                isInvited: true,
                                 providerData: ""
                             });
                             user.save(function (err, data) {
                                 // request.session.user = data;
+                                console.log('new user saved');
                                 return done(err, data);
                             })
                         }
@@ -123,6 +124,7 @@ router.post('/team-register', function (req, res, next) {
                 }, function (err, members) {
                     teamData.members = members;
                     var team = new TeamModel(teamData);
+                    console.log('team details' + team);
                     team.save(function (err, team) {
                         if (err) {
                             res.json(err);
