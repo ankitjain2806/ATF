@@ -65,8 +65,7 @@ router.get('/getEventDetails/:slug', function (req, res, next) {
 });
 
 router.get('/all', function (req, res, next) {
-    var query = EventModel.find()
-        .select({'name': 1, 'description': 1});
+    var query = EventModel.find().select('name description slug');
     query.exec(function (err, data) {
         res.json(data);
         res.end();

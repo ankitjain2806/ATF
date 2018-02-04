@@ -12,6 +12,7 @@ import {RegistrationComponent} from "./registration/registration.component";
 import {EventService} from "./event.service";
 import {EventDetailComponent} from "./event-details/event-detail.component";
 import {TreasurehuntService} from "./treasurehunt/treasurehunt.service";
+import {EventDetailsResolverService} from "./event-details/event-details-resolver.service";
 
 @NgModule({
   imports: [
@@ -33,7 +34,8 @@ import {TreasurehuntService} from "./treasurehunt/treasurehunt.service";
   ],
   providers: [
     EventService,
-    TreasurehuntService
+    TreasurehuntService,
+    EventDetailsResolverService
   ]
 })
 export class EventModule {

@@ -7,6 +7,8 @@ import {OverviewComponent} from "./treasurehunt/overview/overview.component";
 import {IngameComponent} from "./treasurehunt/ingame/ingame.component";
 import {EventDetailComponent} from "./event-details/event-detail.component";
 
+import {EventDetailsResolverService} from "./event-details/event-details-resolver.service";
+
 @NgModule({
   imports: [
     RouterModule.forChild([
@@ -18,12 +20,15 @@ import {EventDetailComponent} from "./event-details/event-detail.component";
       {
         path: 'event/registration/:slug',
         component: RegistrationComponent,
-        data: {title: "Event Registration"}
+        data: {title: "Event Registration"},
       },
       {
         path: 'event/:slug',
         component: EventDetailComponent,
-        data: {title: "Event Detail"}
+        data: {title: "Event Detail", path: 'event/:slug'},
+        resolve: {
+          event: EventDetailsResolverService
+        }
       },
       {
         path: 'treasurehunt',

@@ -1,11 +1,11 @@
 <div class="container-fluid">
   <div>
-    {{event.name}}
+    {{eventDetails.name}}
   </div>
   <div>
-    {{event.description}}
+    {{eventDetails.description}}
   </div>
   <div>
-    <a class="btn btn-primary" [routerLink]="['/event/registration/'+ event.slug]">Register</a>
+    <a class="btn btn-primary" [routerLink]="['/event/registration/', eventDetails.slug]">Register</a>
   </div>
 </div>
