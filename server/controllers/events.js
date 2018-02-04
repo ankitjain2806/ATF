@@ -16,7 +16,7 @@ function getUserStateForEvent(req, res, cb) {
     /**get user current stage*/
     const query = UserEventStateModel.findOne({'user': userId});
     query.select('events');
-    query.exec((err, data) => {
+    query.exec(function(err, data) {
         if(err) {
             /**user is not present*/
             cb({'error': 'cannot get the state', data: err});
@@ -28,7 +28,7 @@ function getUserStateForEvent(req, res, cb) {
             return;
         }
         const _events = data.events;
-        const _state = _events.filter((item) => {
+        const _state = _events.filter(function(item) {
             return item.event.toString() === event;
         });
         cb(_state);
@@ -36,13 +36,13 @@ function getUserStateForEvent(req, res, cb) {
 }
 
 function getUserStageQuestion(req, res, cb) {
-    getUserStateForEvent(req, res, (currentState) => {
+    getUserStateForEvent(req, res, function(currentState) {
         // get current stage [index] from stages
         // TODO: change 'name' to event id
         console.log('current state of user ', currentState[0]);
         const query = EventModel.findOne({'name': 'TreasureHunt'})
             .select({'stages': 1, '_id': 0});
-        query.exec((err, data) => {
+        query.exec(function(err, data) {
             console.log('questions ', data['stages'][currentState[0].stage]);
             const currentStageQuestion = data['stages'][currentState[0].stage];
             cb(currentStageQuestion);
@@ -141,14 +141,14 @@ router.post('/team-register', function (req, res, next) {
 router.get('/treasurehunt/details', function(req, res, next) {
     const query = EventModel.findOne({'name': 'TreasureHunt'})
         .select({'title': 1, 'description': 1});
-    query.exec((err, data) => {
+    query.exec(function(err, data) {
         res.json({data: data});
         res.end();
     });
 });
 
 router.post('/treasurehunt/get/state', function(req, res, next) {
-    getUserStateForEvent(req, res, (state) => {
+    getUserStateForEvent(req, res, function(state) {
         res.json({data: state});
         res.end();
     });
@@ -164,7 +164,7 @@ router.post('/treasurehunt/set/state', function (req, res, next) {
             multiplier: 1
         }]
     });
-    model.save((err, model) => {
+    model.save(function(err, model) {
         if(err) {
             res.json({error: 'not registered', data: err});
             res.end();
@@ -176,7 +176,7 @@ router.post('/treasurehunt/set/state', function (req, res, next) {
 });
 
 router.post('/treasurehunt/question', function(req, res, next) {
-    getUserStageQuestion(req, res, (currentStageQuestion) => {
+    getUserStageQuestion(req, res, function(currentStageQuestion) {
         res.json(currentStageQuestion);
         res.end();
     });
@@ -186,7 +186,7 @@ router.post('/treasurehunt/question/check', function(req, res, next) {
     if(req.body.answer === null || req.body.answer === undefined) {
         res.status(500).send({'error': 'cannot find the answer in the request buddy...'});
     } else {
-        getUserStageQuestion(req, res, (question) => {
+        getUserStageQuestion(req, res, function(question) {
             console.log('question hre', question.answer);
             console.log('ans', req.body.answer.value);
             const isCorrectAnswer = question.answer === req.body.answer.value;
@@ -194,7 +194,7 @@ router.post('/treasurehunt/question/check', function(req, res, next) {
 
             // update the state of the user
             if(isCorrectAnswer) {
-                updateUserEventState(req, res, () => {
+                updateUserEventState(req, res, function() {
                     res.end();
                 });
             } else {

@@ -68,8 +68,8 @@ var isLoggedIn = function (req, res, next) {
   }
 };
 
-app.use('/api/users', isLoggedIn, usersController);
-app.use('/api/events', isLoggedIn, eventsController);
+app.use('/api/users', usersController);
+app.use('/api/events', eventsController);
 app.use('/auth', AuthController)
 
 // /api/users/getAll

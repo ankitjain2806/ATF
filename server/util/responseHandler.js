@@ -1,6 +1,6 @@
 var handler = {
   response: function (res, code, err, data) {
-    res.sendStatus(code)
+    // res.sendStatus(code)
     if(err) {
       res.json({ error: err });
     } else {

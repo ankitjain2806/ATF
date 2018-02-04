@@ -33,7 +33,7 @@ export class IngameComponent implements OnInit {
     });
   }
 
-  private checkAnswerAndChangeState() {
+  checkAnswerAndChangeState() {
     this.treasurehuntService.checkIsCorrectAnswer(this.answer).subscribe(response => {
       if (response['data']) {
         this.getCurrentQuestion();

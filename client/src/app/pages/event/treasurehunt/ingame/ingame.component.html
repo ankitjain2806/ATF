@@ -1,6 +1,6 @@
-<h1><strong>Question no: {{state.inStage}}</strong></h1>
-<h2>{{question.question}}</h2>
-<div *ngIf="question.type === 'NORMAL'">
-  <input type="text" [(ngModel)]="answer.value">
+<h1><strong>Question no: {{state['inStage']}}</strong></h1>
+<h2>{{question['question']}}</h2>
+<div *ngIf="question['type'] === 'NORMAL'">
+  <input type="text" [(ngModel)]="answer['value']">
 </div>
 <input type="button" class="btn btn-primary" value="submit" (click)="checkAnswerAndChangeState()">

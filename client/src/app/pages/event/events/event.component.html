@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-header">
-    <a data-toggle="collapse" data-parent="#accordion" [routerLink]="['/event/'+data.slug]" aria-expanded="false"
+    <a data-toggle="collapse" data-parent="#accordion" [routerLink]="['/event/'+data['slug']]" aria-expanded="false"
        aria-controls="accordion">{{data.name}}</a>
   </div>
   <div id="{{data.name}}" class="collapse in">
