@@ -16,6 +16,7 @@ export class IngameComponent implements OnInit {
   question = {};
   answer = {};
   state = {};
+  showNext: Boolean = false;
   userSession = null;
   private paramsSub: any;
 
@@ -23,7 +24,6 @@ export class IngameComponent implements OnInit {
               private activatedRouter: ActivatedRoute,
               private treasurehuntService: TreasurehuntService) {
     this.userSession = this.session.getSession();
-    console.log('user sesion', this.userSession._id);
   }
 
   ngOnInit() {
@@ -34,19 +34,32 @@ export class IngameComponent implements OnInit {
   }
 
   checkAnswerAndChangeState() {
-    this.treasurehuntService.checkIsCorrectAnswer(this.answer).subscribe(response => {
-      if (response['data']) {
-        this.getCurrentQuestion();
+    this.treasurehuntService.checkIsCorrectAnswer(this.userSession._id, this.eventId, this.answer).subscribe(response => {
+      if (response['error']) {
+        alert(response['error']);
       } else {
-        window.alert('wrong answer');
+        /**check if the answer is correct */
+        response['data'] ? this.performIfUserCorrect() : this.performIfUserWrong();
       }
     });
   }
+
+  performIfUserCorrect() {
+    alert('correct answer!!!');
+    this.showNext = true;
+  }
+
+  performIfUserWrong() {
+    alert('Wrong answer!!! try again');
+  }
+
 
   private getCurrentQuestion() {
     this.treasurehuntService.getUserState(this.userSession._id, this.eventId).subscribe(state => {
       this.state = state;
       this.treasurehuntService.getUserStageQuestion(this.userSession._id, this.eventId).subscribe((response) => {
+        /** showing new question for state*/
+        this.showNext = false;
         this.question = response;
       });
     });

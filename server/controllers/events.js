@@ -43,16 +43,33 @@ function getUserStageQuestion(req, res, cb) {
         const query = EventModel.findOne({'name': 'TreasureHunt'})
             .select({'stages': 1, '_id': 0});
         query.exec(function(err, data) {
-            console.log('questions ', data['stages'][currentState[0].stage]);
+            // console.log('questions ', data['stages'][currentState[0].stage]);
             const currentStageQuestion = data['stages'][currentState[0].stage];
             cb(currentStageQuestion);
         });
     });
 }
 
-function updateUserEventState(req, res, cb) {
+function updateUserEventState(req, res, state, cb) {
+    console.log('-------------updating........');
     //update user state
-    cb();
+    const userId = req.body.user;
+    const event = req.body.event;
+    if(userId === undefined || event === undefined || userId === null || event === null) {
+        cb({'error': 'data supplied is not sufficient buddy..'});
+        return;
+    }
+
+    /**update user current stage*/
+    console.log('updateUserEventState ', userId, ' ', event);
+    UserEventStateModel.update({'user': userId, 'events.event': event}, {'$inc': {'events.$.stage': 1}}, function (err) {
+        console.log('err', err);
+        if(err) {
+            res['error'] = 'cannot update the user state';
+            res['data'] = err;
+            cb();
+        }
+    });
 }
 
 router.get('/getEventDetails/:slug', function (req, res, next) {
@@ -188,14 +205,13 @@ router.post('/treasurehunt/question/check', function(req, res, next) {
         res.status(500).send({'error': 'cannot find the answer in the request buddy...'});
     } else {
         getUserStageQuestion(req, res, function(question) {
-            console.log('question hre', question.answer);
-            console.log('ans', req.body.answer.value);
-            const isCorrectAnswer = question.answer === req.body.answer.value;
+            _q = question.toObject();
+            const isCorrectAnswer = _q.answer[0] === req.body.answer;
             isCorrectAnswer ? res.json({data: true}) : res.json({data: false});
 
             // update the state of the user
             if(isCorrectAnswer) {
-                updateUserEventState(req, res, function() {
+                updateUserEventState(req, res, undefined, function() {
                     res.end();
                 });
             } else {

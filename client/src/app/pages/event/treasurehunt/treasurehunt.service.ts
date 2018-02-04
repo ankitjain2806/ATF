@@ -12,8 +12,8 @@ export class TreasurehuntService {
     return this.httpService.get(this.local_base + '/details', {});
   }
 
-  getUserState(user, eventId) {
-    return this.httpService.post(this.local_base + '/get/state', {user: user, event: eventId});
+  getUserState(userId, eventId) {
+    return this.httpService.post(this.local_base + '/get/state', {user: userId, event: eventId});
   }
 
   setUserState(user, state, eventId) {
@@ -27,11 +27,16 @@ export class TreasurehuntService {
     return this.httpService.post(this.local_base + '/set/state', params);
   }
 
-  checkIsCorrectAnswer(answer) {
-    return this.httpService.post(this.local_base + '/question/check', {user: 1, answer: answer});
+  checkIsCorrectAnswer(userId, event, answer) {
+    return this.httpService.post(this.local_base + '/question/check',
+      {
+      user: userId,
+      event: event,
+      answer: answer.value
+    });
   }
 
   getUserStageQuestion(userId, eventId) {
-    return this.httpService.post(this.local_base + '/question',{user: userId, event: eventId});
+    return this.httpService.post(this.local_base + '/question', {user: userId, event: eventId});
   }
 }

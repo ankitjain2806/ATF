@@ -3,4 +3,5 @@
 <div *ngIf="question['type'] === 'NORMAL'">
   <input type="text" [(ngModel)]="answer['value']">
 </div>
-<input type="button" class="btn btn-primary" value="submit" (click)="checkAnswerAndChangeState()">
+<input *ngIf="!showNext" type="button" class="btn btn-primary" value="submit" (click)="checkAnswerAndChangeState()">
+<input *ngIf="showNext" type="button" class="btn btn-primary" value="next" (click)="getCurrentQuestion()">

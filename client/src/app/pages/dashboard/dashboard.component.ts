@@ -24,8 +24,8 @@ export class DashboardComponent implements OnInit {
   }
 
   goToEvent(event) {
-    console.log(event._id);
-    // this.router.navigate(['/treasurehunt', event._id, 'overview']);
+    // console.log(event._id);
+    this.router.navigate(['/treasurehunt', event._id, 'overview']);
   }
 
 }
