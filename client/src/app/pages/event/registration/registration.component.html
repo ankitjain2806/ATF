@@ -11,7 +11,7 @@
       <div class="form-group row">
         <label class="col-md-4 col-sm-6 col-4">Invite Member</label>
         <div class="col-md-8 col-sm-6 col-8" formArrayName="members">
-          <div *ngFor="let email of registrationForm.controls.members['controls']; let i=index" [formGroupName]="i"  >
+          <div *ngFor="let email of registrationForm['controls'].members['controls']; let i=index" [formGroupName]="i"  >
             <input type="text" class="form-control" id="member" placeholder="Enter Member email Id" formControlName="email">
           </div>
         </div>

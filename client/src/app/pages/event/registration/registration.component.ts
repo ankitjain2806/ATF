@@ -42,6 +42,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   addMember() {
+
     const control = <FormArray>this.registrationForm.controls['members'];
     control.push(this.initMember());
 
