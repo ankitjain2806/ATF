@@ -73,13 +73,40 @@ function updateUserEventState(req, res, state, cb) {
 }
 
 router.get('/getEventDetails/:slug', function (req, res, next) {
-    EventModel.findOne({slug: req.params.slug}, function (err, event) {
-        if (err) {
-            console.trace(err)
+  var loggedInUser = req.session.user;
+  async.waterfall([
+    function (callback) {
+      var query = {
+        slug: req.params.slug,
+      };
+      EventModel.findOne(query, function (err, event) {
+        callback(null, event);
+      });
+    },
+    function (event, callback) {
+      var query = {
+        eventId: event.id,
+      };
+      if(loggedInUser) {
+        query.members= {"$in": [loggedInUser._id]}
+      }
+      console.log(query)
+      TeamModel.findOne(query, function (err, team) {
+        var eventDetails = {
+          name: event.name,
+          description: event.description,
+          isMember: (team) ? true : false
         }
-        res.json(event);
-    });
+        callback(null, eventDetails);
+      });
+    }
+  ], function (err, result) {
+    res.json(result);
+  });
+
+
 });
+
 
 router.get('/all', function (req, res, next) {
     var query = EventModel.find().select('name description slug');

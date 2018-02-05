@@ -1,8 +1,8 @@
 var mongoose = require('mongoose');
 var TeamSchema = new mongoose.Schema({
-    teamName: String,
-    // event_id: Number,
-    members: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
+  teamName: String,
+  eventId: {type: mongoose.Schema.Types.ObjectId, ref: 'Event'},
+  members: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
 });
 var Team = mongoose.model('Team', TeamSchema);
 module.exports = Team;

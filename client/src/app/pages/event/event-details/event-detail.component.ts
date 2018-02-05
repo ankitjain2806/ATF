@@ -11,13 +11,11 @@ import {EventDetailsResolverService} from "./event-details-resolver.service";
 })
 export class EventDetailComponent implements OnInit {
   eventDetails: IEvent;
-
   constructor(private eventService: EventService, private route: ActivatedRoute) {
     this.route.data.subscribe((res) => {
       this.eventDetails = res.event;
     })
   }
-
   ngOnInit() {
 
   }

@@ -9,6 +9,8 @@ import {EventDetailComponent} from "./event-details/event-detail.component";
 
 import {EventDetailsResolverService} from "./event-details/event-details-resolver.service";
 
+import {CompilexComponent} from "./compilex/compilex.component";
+
 @NgModule({
   imports: [
     RouterModule.forChild([
@@ -39,7 +41,11 @@ import {EventDetailsResolverService} from "./event-details/event-details-resolve
           { path: ':id/overview', component: OverviewComponent },
           { path: ':id/game', component: IngameComponent }
         ]
-      }
+      },
+      {
+        path: 'compilex',
+        component: CompilexComponent
+      },
     ])
   ],
   exports: [RouterModule]
