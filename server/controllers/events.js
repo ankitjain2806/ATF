@@ -180,7 +180,7 @@ router.post('/team-register', function (req, res, next) {
             })
           });
         }, function (err, members) {
-            res.json({ data : 'teamRegistered'})
+            res.json({ data : 'success'})
         });
       },
     ]
