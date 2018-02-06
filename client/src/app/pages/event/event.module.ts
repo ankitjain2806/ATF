@@ -13,6 +13,8 @@ import {EventService} from "./event.service";
 import {EventDetailComponent} from "./event-details/event-detail.component";
 import {TreasurehuntService} from "./treasurehunt/treasurehunt.service";
 import {EventDetailsResolverService} from "./event-details/event-details-resolver.service";
+import { EventEndComponent } from './event-end/event-end.component';
+import {EventEndDetailsResolverService} from "./event-end/event-end-resolver.service";
 
 @NgModule({
   imports: [
@@ -27,7 +29,8 @@ import {EventDetailsResolverService} from "./event-details/event-details-resolve
     OverviewComponent,
     EventComponent,
     RegistrationComponent,
-    EventDetailComponent
+    EventDetailComponent,
+    EventEndComponent
   ],
   exports: [
     EventComponent

@@ -14,8 +14,7 @@ function getUserStateForEvent(req, res, cb) {
         return;
     }
     /**get user current stage*/
-    const query = UserEventStateModel.findOne({'user': userId});
-    query.select('events');
+    const query = UserEventStateModel.findOne({'user': userId}).select('events');
     query.exec(function(err, data) {
         if(err) {
             /**user is not present*/
@@ -44,9 +43,24 @@ function getUserStageQuestion(req, res, cb) {
             .select({'stages': 1, '_id': 0});
         query.exec(function(err, data) {
             // console.log('questions ', data['stages'][currentState[0].stage]);
-            const currentStageQuestion = data['stages'][currentState[0].stage];
+            const index = currentState[0].stage - 1;
+            const currentStageQuestion = data['stages'][index];
             cb(currentStageQuestion);
         });
+    });
+}
+
+function neatlyUpdateUserState(userId, event, res, updateObj, cb) {
+    UserEventStateModel.update({
+        'user': userId,
+        'events.event': event
+    }, updateObj, function (err) {
+        console.log('err', err);
+        if (err) {
+            res['error'] = 'cannot update the user state';
+            res['data'] = err;
+            cb();
+        }
     });
 }
 
@@ -59,16 +73,19 @@ function updateUserEventState(req, res, state, cb) {
         cb({'error': 'data supplied is not sufficient buddy..'});
         return;
     }
-
     /**update user current stage*/
     console.log('updateUserEventState ', userId, ' ', event);
-    UserEventStateModel.update({'user': userId, 'events.event': event}, {'$inc': {'events.$.stage': 1}}, function (err) {
-        console.log('err', err);
-        if(err) {
-            res['error'] = 'cannot update the user state';
-            res['data'] = err;
-            cb();
+    const stagesQuery = EventModel.find({'_id': event}).select({'stages': 1});
+    stagesQuery.exec(function (err, rDoc) {
+        const numberOfStages = rDoc[0].stages.length || 0;
+        const updateQueryObj = {};
+        if(numberOfStages === state[0].stage) {
+            /**update state to completed */
+            updateQueryObj['$set'] = {'events.$.completed': true};
+        } else {
+            updateQueryObj['$inc'] = {'events.$.stage': 1};
         }
+        neatlyUpdateUserState(userId, event, res, updateQueryObj, cb);
     });
 }
 
@@ -156,6 +173,34 @@ router.post('/team-register', function (req, res, next) {
     );
 });
 
+router.post('/end', function (req, res) {
+
+    /**
+     * event points, stage wise points, other events
+     * */
+    const event = req.body.slug;
+    const recommendationsQuery = EventModel.find({}).select({'title': 1, 'description': 1, '_id': 0});
+    async.series({
+        recommendations: function (callback) {
+            recommendationsQuery.exec(function (err, rDoc) {
+                if(err) {
+                    callback(err, null);
+                } else {
+                    callback(null, rDoc);
+                }
+            });
+        }
+    }, function (err, results) {
+        if(err) {
+            res.json({error: 'can not get the data', data: err});
+            res.end();
+        } else {
+            res.json(results);
+            res.end();
+        }
+    });
+});
+
 router.get('/treasurehunt/details', function(req, res, next) {
     const query = EventModel.findOne({'name': 'TreasureHunt'})
         .select({'title': 1, 'description': 1});
@@ -173,13 +218,13 @@ router.post('/treasurehunt/get/state', function(req, res, next) {
 });
 
 router.post('/treasurehunt/set/state', function (req, res, next) {
-    console.log('user ', req.body.user);
     const model = new UserEventStateModel({
         user: req.body.user,
         events: [{
             event: req.body.event,
-            stage: 0,
-            multiplier: 1
+            stage: 1,
+            multiplier: 1,
+            completed: false
         }]
     });
     model.save(function(err, model) {
@@ -211,8 +256,10 @@ router.post('/treasurehunt/question/check', function(req, res, next) {
 
             // update the state of the user
             if(isCorrectAnswer) {
-                updateUserEventState(req, res, undefined, function() {
-                    res.end();
+                getUserStateForEvent(req, res, function (state) {
+                    updateUserEventState(req, res, state, function() {
+                        res.end();
+                    });
                 });
             } else {
                 res.end();

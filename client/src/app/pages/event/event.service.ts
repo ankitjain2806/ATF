@@ -10,20 +10,28 @@ import {EventRegistration} from "../../models/event-registration";
 @Injectable()
 export class EventService {
 
+  private local_base = '/api/events/';
+
   constructor(private http: HttpService) {
 
   }
 
   registerEvent(form: EventRegistration): Observable<any> {
-    return this.http.post('/api/events/team-register', form);
+    return this.http.post(this.local_base + 'team-register', form);
   }
 
   getAllEvents(): Observable<any> {
-    return this.http.get('/api/events/all', {});
+    return this.http.get(this.local_base + 'all', {});
   }
 
-  getEventDetail(slug: string) : Observable<any> {
-    const url = '/api/events/getEventDetails/' + slug
+  getEventDetail(slug: string): Observable<any> {
+    const url = this.local_base + 'getEventDetails/' + slug
     return this.http.get(url, {});
+  }
+
+  getEventEndDetail(slug: string): Observable<any> {
+    const url = this.local_base + 'end';
+    const params = {slug};
+    return this.http.post(url, params);
   }
 }
