@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-cd client;
-# npm install
+git pull
+cd client
+npm install
 ng build --prod
-cd ..
+cd..
 cd server
-# npm install
+npm install
 export NODE_ENV=development
-#npm start  
-
+#npm start
 nohup  npm start & > log1.js
 

@@ -1,4 +1,4 @@
-export interface AddEvent{
+export interface AddEvent {
   _id : string;
   name : string;
   description : string;

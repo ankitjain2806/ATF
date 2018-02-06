@@ -26,10 +26,13 @@ passport.use(new GoogleStrategy({
         return handleError(err);
       } else {
         if (person) {
+          if(!person.isActive) {
+
+          }
+
           request.session.user = person;
           return done(err, person);
         } else {
-          console.log(profile);
           var user = new User({
             name: {
               familyName: profile.name.familyName,
