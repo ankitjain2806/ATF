@@ -16,7 +16,7 @@ export class EventDetailsResolverService implements Resolve<IEvent>{
   constructor(private service: EventService) {
   }
 
-  resolve(route: ActivatedRouteSnapshot) {
+  resolve(route: ActivatedRouteSnapshot): Observable <any> {
     const slug = route.params['slug'];
     return this.service.getEventDetail(slug);
   }

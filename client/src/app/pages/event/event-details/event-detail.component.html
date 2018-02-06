@@ -9,7 +9,7 @@
     <a class="btn btn-primary" [routerLink]="['/event/registration/', eventDetails.slug]" *ngIf="!eventDetails.isMember">
       Register
     </a>
-    <a class="btn btn-primary" [routerLink]="['/event/treasurehunt/game']" *ngIf="eventDetails.isMember">
+    <a class="btn btn-primary" [routerLink]="['/event/'+  eventDetails.slug +'/game']" *ngIf="eventDetails.isMember">
       Continue
     </a>
   </div>

@@ -8,7 +8,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import {EventComponent} from "./events/event.component";
 import {RegistrationComponent} from "./registration/registration.component";
-import {CompilexComponent} from "./compilex/compilex.component";
+import {CompilerComponent} from "./compiler/compiler.component";
 
 import {EventService} from "./event.service";
 import {EventDetailComponent} from "./event-details/event-detail.component";
@@ -29,7 +29,7 @@ import {EventDetailsResolverService} from "./event-details/event-details-resolve
     EventComponent,
     RegistrationComponent,
     EventDetailComponent,
-    CompilexComponent
+    CompilerComponent
   ],
   exports: [
     EventComponent

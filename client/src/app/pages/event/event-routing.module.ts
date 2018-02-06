@@ -9,7 +9,7 @@ import {EventDetailComponent} from "./event-details/event-detail.component";
 
 import {EventDetailsResolverService} from "./event-details/event-details-resolver.service";
 
-import {CompilexComponent} from "./compilex/compilex.component";
+import {CompilerComponent} from "./compiler/compiler.component";
 
 @NgModule({
   imports: [
@@ -20,17 +20,21 @@ import {CompilexComponent} from "./compilex/compilex.component";
         data: {title: "Event"}
       },
       {
-        path: 'event/registration/:slug',
-        component: RegistrationComponent,
-        data: {title: "Event Registration"},
-      },
-      {
         path: 'event/:slug',
         component: EventDetailComponent,
         data: {title: "Event Detail", path: 'event/:slug'},
         resolve: {
           event: EventDetailsResolverService
         }
+      },
+      {
+        path: 'event/registration/:slug',
+        component: RegistrationComponent,
+        data: {title: "Event Registration"},
+      },
+      {
+        path: 'event/compiler/game',
+        component: CompilerComponent
       },
       {
         path: 'treasurehunt',
@@ -41,11 +45,7 @@ import {CompilexComponent} from "./compilex/compilex.component";
           { path: ':id/overview', component: OverviewComponent },
           { path: ':id/game', component: IngameComponent }
         ]
-      },
-      {
-        path: 'compilex',
-        component: CompilexComponent
-      },
+      }
     ])
   ],
   exports: [RouterModule]
