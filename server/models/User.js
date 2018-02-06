@@ -13,7 +13,7 @@ var UserSchema = new mongoose.Schema({
   lastUpdated: {type: Date, default: Date.now},
   isActive: {type: Boolean, default: false},
   isInvited: {type: Boolean, default: false},
-  events:[{type: mongoose.Schema.Types.ObjectId, ref: 'Event'}]
+  events: [{type: mongoose.Schema.Types.ObjectId, ref: 'Event'}]
 });
 
 var User = mongoose.model('User', UserSchema);

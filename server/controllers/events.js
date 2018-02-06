@@ -85,17 +85,15 @@ router.get('/getEventDetails/:slug', function (req, res, next) {
     },
     function (event, callback) {
       var query = {
-        eventId: event.id,
+        events: {"$in": [event.id]},
+        _id: req.session.user._id
       };
-      if (loggedInUser) {
-        query.members = {"$in": [loggedInUser._id]}
-      }
-      TeamModel.findOne(query, function (err, team) {
+      User.findOne(query, function (err, user) {
         var eventDetails = {
           name: event.name,
           description: event.description,
           slug: event.slug,
-          isMember: (team) ? true : false
+          isMember: (user) ? true : false
         }
         callback(null, eventDetails);
       });
@@ -117,35 +115,23 @@ router.get('/all', function (req, res, next) {
 });
 
 router.post('/team-register', function (req, res, next) {
+  var eventId = null;
   var teamData = {
     teamName: req.body.teamName,
-    eventId: "",
+    captain: req.session.user._id,
     members: []
   };
   async.series([
       function (callback) {
-        EventModel.findOne({slug: req.body.slug}, function (err, event) {
-          if (err) {
-            console.trace(err)
-          }
-          teamData.eventId = event.id;
-          callback();
-        });
-
-      },
-      function (callback) {
-        // do some more stuff ...
         var users = req.body.members;
         async.times(users.length, function (n, next) {
           User.findOne({email: users[n].email}, function (err, person) {
             if (err) {
-              console.trace(err)
+              callback(err, null)
             }
             if (person) {
-              // members.push(person.id);
               next(null, person.id)
             } else {
-              //console.log(profile);
               var user = new User({
                 name: {
                   familyName: "",
@@ -159,30 +145,52 @@ router.post('/team-register', function (req, res, next) {
                 providerData: ""
               });
               user.save(function (err, data) {
-                // request.session.user = data;
-                console.log('new user saved');
-                return done(err, data);
+                next(null, data.id)
               })
             }
           });
         }, function (err, members) {
+          members.push(req.session.user._id)
           teamData.members = members;
-          var team = new TeamModel(teamData);
-          console.log('team details' + team);
-          team.save(function (err, team) {
-            if (err) {
-              res.json(err);
-            } else {
-              res.json({data: team, message: 'saved'});
-            }
-            res.end();
-          });
+          callback(null, members);
         });
-      }
+      },
+      function (callback) {
+        EventModel.findOne({slug: req.body.slug}, function (err, event) {
+          eventId = event.id;
+          event.teams.push(teamData);
+          event.save(function (err, data) {
+            callback(err, event)
+          })
+        });
+      },
+      function (callback) {
+        async.times(teamData.members.length, function (n, next) {
+          User.findOne({_id: teamData.members[n]}, function (err, user) {
+            console.log(err, user)
+            if (err) {
+              next(err, null)
+            }
+            if(!user.events){
+              user.events = [];
+            }
+            user.events.push(eventId);
+            user.save(function(err, data){
+              next(null, data)
+            })
+          });
+        }, function (err, members) {
+            res.json({ data : 'teamRegistered'})
+        });
+      },
     ]
   );
 });
 
+
+/**
+ * @todo move to events/treasurehunt
+ */
 router.get('/treasurehunt/details', function (req, res, next) {
   const query = EventModel.findOne({'name': 'TreasureHunt'})
     .select({'title': 1, 'description': 1});
