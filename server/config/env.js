@@ -9,7 +9,8 @@ var envConfig = {
       callbackUrl: '/auth/google/callback'
     },
     mongoURI: 'mongodb://localhost:27017/ATF',
-    sessionSecret: 'myKey'
+    sessionSecret: 'myKey',
+    glotToken: 'Token 9b90f202-6a45-451d-bc8f-7a72707242c0'
   },
   development: {
     siteUrl: 'http://localhost:3000',
@@ -20,7 +21,8 @@ var envConfig = {
       callbackUrl: '/auth/google/callback'
     },
     mongoURI: 'mongodb://accolite:accolite@ds231987.mlab.com:31987/atf_accolite',
-    sessionSecret: 'BJNRvSLbio'
+    sessionSecret: 'BJNRvSLbio',
+    glotToken: 'Token 9b90f202-6a45-451d-bc8f-7a72707242c0'
   },
   production: {}
 };

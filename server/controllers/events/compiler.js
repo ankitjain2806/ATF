@@ -4,20 +4,9 @@ var User = require('../../models/User');
 var router = express.Router();
 var async = require('async');
 var request = require('request');
-var langObj = {
-    java: {
-        name: 'java',
-        ext: 'java'
-    },
-    php: {
-        name: 'php',
-        ext: 'php'
-    },
-    python: {
-        name: 'python',
-        ext: 'py'
-    }
-}
+var envConfig = require('../../config/env');
+var langObj = require('../../config/languageConst');
+
 router.post('/run', function (req, res, next) {
 
     console.log("in the unnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn")
@@ -30,7 +19,7 @@ router.post('/run', function (req, res, next) {
         method: 'POST',
         url: 'https://run.glot.io/languages/'+lang.name+'/latest',
         headers: {
-            'Authorization': 'Token 9b90f202-6a45-451d-bc8f-7a72707242c0',
+            'Authorization': envConfig.glotToken,
             'Content-type': 'application/json'
         },
         json: {"files": [{"name": "main."+lang.ext , "content": code
