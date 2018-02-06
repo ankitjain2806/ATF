@@ -1,4 +1,8 @@
 <div class="container-fluid">
   <h1>Compiler</h1>
-  <textarea name="code" ></textarea>
+  <form [formGroup]="compilerForm" novalidate (ngSubmit)="onSubmit()">
+    <textarea name="code" title="code" formControlName="code" class="form-control"></textarea>
+    <button type="submit" class="btn btn-primary">Submit Code</button>
+  </form>
+
 </div>

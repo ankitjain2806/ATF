@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {SuperAdminService} from "./superadmin.service";
-import {AddEvent} from "../../models/AddEvent";
-import { clone } from 'lodash';
+import {clone} from 'lodash';
+import {IEvent} from "../../models/event";
 
 @Component({
   moduleId: module.id,
@@ -9,29 +9,30 @@ import { clone } from 'lodash';
 })
 
 export class SuperAdminComponent implements OnInit {
-  events: AddEvent[];
-  selectedEvent : AddEvent;
+  events: IEvent[];
+  selectedEvent: IEvent;
   eventForm: boolean = false;
   editeventForm: boolean = false;
   isNewForm: boolean;
   newevent: any = {};
   editedevent: any = {};
 
-  constructor(private superAdminService: SuperAdminService) { }
+  constructor(private superAdminService: SuperAdminService) {
+  }
 
   ngOnInit() {
     this.getEvents();
   }
 
   getEvents() {
-     this.superAdminService.getAllEvents().subscribe(data => {
+    this.superAdminService.getAllEvents().subscribe(data => {
       console.log(data);
       this.events = data;
     });
   }
 
-  showEditEventForm(event: AddEvent) {
-    if(!event) {
+  showEditEventForm(event: IEvent) {
+    if (!event) {
       this.eventForm = false;
       return;
     }
@@ -41,7 +42,7 @@ export class SuperAdminComponent implements OnInit {
 
   showAddEventForm() {
     // resets form if edited event
-    if(this.events.length) {
+    if (this.events.length) {
       this.newevent = {};
     }
     this.eventForm = true;
@@ -49,10 +50,10 @@ export class SuperAdminComponent implements OnInit {
   }
 
   saveEvent(event: any) {
-    if(this.isNewForm) {
+    if (this.isNewForm) {
       // add a new event
 
-      this.selectedEvent =Object.assign({},event);
+      this.selectedEvent = Object.assign({}, event);
       this.superAdminService.addEvent(this.selectedEvent).subscribe(() => {
         this.getEvents();
       });
@@ -61,14 +62,14 @@ export class SuperAdminComponent implements OnInit {
   }
 
   removeEvent(event: any) {
-    this.selectedEvent =Object.assign({},event);
-    this.superAdminService.deleteEvent(event).subscribe(() =>{
+    this.selectedEvent = Object.assign({}, event);
+    this.superAdminService.deleteEvent(event).subscribe(() => {
       this.getEvents();
     });
   }
 
   updateEvent() {
-    this.superAdminService.updateEvent(this.editedevent).subscribe(() =>{
+    this.superAdminService.updateEvent(this.editedevent).subscribe(() => {
       this.getEvents();
     });
     this.editeventForm = false;

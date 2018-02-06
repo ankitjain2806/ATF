@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormGroup, FormControl, FormBuilder, Validators, FormArray} from '@angular/forms';
+import {EventService} from "../event.service";
 
 @Component({
   selector: 'app-compiler',
@@ -7,12 +8,23 @@ import {FormGroup, FormControl, FormBuilder, Validators, FormArray} from '@angul
   styleUrls: ['./compiler.component.scss']
 })
 export class CompilerComponent implements OnInit {
-  complierForm: FormGroup;
+  compilerForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private eventService: EventService) {
   }
 
   ngOnInit() {
+    this.compilerForm = this.fb.group({
+      code: [''],
+      language: ['java'],
+    });
   }
 
+  onSubmit() {
+    this.eventService.registerEvent(this.compilerForm.value).subscribe((res) => {
+      if(res.data == 'success') {
+        alert(res)
+      }
+    })
+  }
 }

@@ -14,6 +14,7 @@ export class RegistrationComponent implements OnInit {
   eventSlug: string;
   constructor(private fb: FormBuilder,
               private eventService: EventService,
+              private router: Router,
               private route: ActivatedRoute) {
     this.route.params.subscribe(params => {
       this.eventSlug = params['slug']
@@ -42,11 +43,8 @@ export class RegistrationComponent implements OnInit {
   }
 
   addMember() {
-
     const control = <FormArray>this.registrationForm.controls['members'];
     control.push(this.initMember());
-
-    console.log(this.registrationForm)
   }
 
   deleteMember() {
@@ -54,7 +52,10 @@ export class RegistrationComponent implements OnInit {
   }
 
   onSubmit() {
-    this.eventService.registerEvent(this.registrationForm.value).subscribe(() => {
+    this.eventService.registerEvent(this.registrationForm.value).subscribe((res) => {
+      if(res.data == 'success') {
+        this.router.navigate(['/event', this.eventSlug, '/game']);
+      }
     })
   }
 
