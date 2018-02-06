@@ -9,6 +9,12 @@ import {EventService} from "../event.service";
 })
 export class CompilerComponent implements OnInit {
   compilerForm: FormGroup;
+  output: string;
+  languages = [
+    { language : 'PHP', slug: 'php'},
+    { language : 'JAVA', slug: 'java'},
+    { language : 'Python', slug: 'python'}
+    ]
 
   constructor(private fb: FormBuilder, private eventService: EventService) {
   }
@@ -21,8 +27,9 @@ export class CompilerComponent implements OnInit {
   }
 
   onSubmit() {
-    this.eventService.runCompilerCode(this.compilerForm.value).subscribe((res) => {
-      alert(res)
+    console.log(this.compilerForm.value)
+    this.eventService.runCompilerCode(this.compilerForm.value).subscribe((res: any) => {
+      this.output = res.stdout;
     })
   }
 }

@@ -14,6 +14,7 @@ router.post('/run', function (req, res, next) {
     var code = req.body.code.replace(/(\n\t|\n|\t)/gm," ");
     var language= req.body.language;
     var lang = langObj[language];
+    console.log(lang, language, langObj)
     console.log(code);
     var options = {
         method: 'POST',

@@ -1,8 +1,15 @@
 <div class="container-fluid">
   <h1>Compiler</h1>
-  <form [formGroup]="compilerForm" novalidate (ngSubmit)="onSubmit()">
-    <textarea name="code" title="code" formControlName="code" class="form-control"></textarea>
-    <button type="submit" class="btn btn-primary">Submit Code</button>
-  </form>
-
+  <div class="col-md-4 col-sm-12 col-4">
+    <form [formGroup]="compilerForm" novalidate (ngSubmit)="onSubmit()">
+      <textarea name="code" title="code" formControlName="code" class="form-control"></textarea>
+      <select class="form-control" formControlName="language">
+        <option *ngFor="let language of languages" [value]="language.slug">{{language.language}}</option>
+      </select>
+      <button type="submit" class="btn btn-primary">Submit Code</button>
+    </form>
+  </div>
+  <div class="red">
+    output : {{output}}
+  </div>
 </div>

@@ -13,4 +13,4 @@ var langObj = {
   }
 };
 
-module.export = langObj;
+module.exports = langObj;
