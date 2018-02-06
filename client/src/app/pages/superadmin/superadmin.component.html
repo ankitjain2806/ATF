@@ -1,0 +1,73 @@
+<div class="container">
+  <div class="col-md-12">
+    <h1>Event List</h1>
+    <table class="table table-bordered table-striped table-hover">
+      <thead>
+      <tr>
+        <th class="text-center">#</th>
+        <th class="text-center">Name</th>
+        <th class="text-center">Description</th>
+        <th class="text-center">&nbsp;</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let event of events; let i=index;">
+        <td>{{ i }}</td>
+        <td>{{ event.name }}</td>
+        <td>{{ event.description }}</td>
+        <td>
+          <button class="btn btn-info"
+                  (click)="showEditEventForm(event)">
+            <i class="fa fa-edit"></i>
+          </button>
+          <button class="btn btn-danger"
+                  (click)="removeEvent(event)">
+            <i class="fa fa-minus"></i>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <button class="btn btn-success"
+            (click)="showAddEventForm()"><i class="fa fa-plus"></i></button>
+    <br />
+    <br />
+
+    <form *ngIf="eventForm">
+      <h2>Add New Event</h2>
+      <p>Name: <input type="text"
+                      name="name"
+                      [(ngModel)]="newevent.name" /></p>
+      <p>Description: <input type="text"
+                             name="description"
+                             [(ngModel)]="newevent.description" /></p>
+      <p>
+        <button type="button"
+                class="btn btn-primary"
+                (click)="saveEvent(newevent)">Submit</button>
+        <button type="button"
+                class="btn btn-warning"
+                (click)="cancelNewEvent()">Cancel</button>
+      </p>
+    </form>
+
+    <form *ngIf="editeventForm">
+      <h2>Edit Event Details</h2>
+      <p>Name: <input type="text"
+                      name="name"
+                      [(ngModel)]="editedevent.name" /></p>
+      <p>Description: <input type="text"
+                             name="description"
+                             [(ngModel)]="editedevent.description" /></p>
+      <p>
+        <button type="button"
+                class="btn btn-primary"
+                (click)="updateEvent(editedevent)">Submit</button>
+        <button type="button"
+                class="btn btn-warning"
+                (click)="cancelEdits()">Cancel</button>
+      </p>
+    </form>
+  </div>
+</div>

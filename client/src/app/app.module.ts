@@ -16,6 +16,7 @@ import {UserModule} from './pages/user/user.module';
 import {HeaderModule} from './header/header.module';
 import {EventModule} from "./pages/event/event.module";
 import {DashboardModule} from "./pages/dashboard/dashboard.module";
+import {SuperadminModule} from "./pages/superadmin/superadmin.module";
 
 import {HttpService} from './shared/util/http.service';
 import {UserSessionService} from "./shared/util/user-session.service";
@@ -36,6 +37,7 @@ import {UserSessionService} from "./shared/util/user-session.service";
     HeaderModule,
     EventModule,
     DashboardModule,
+    SuperadminModule,
     HttpClientModule,
     BrowserModule,
     AppRoutingModule,

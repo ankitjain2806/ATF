@@ -15,6 +15,7 @@ var cors = require('cors');
 var index = require('./controllers/index');
 var usersController = require('./controllers/users');
 var eventsController = require('./controllers/events');
+var superAdminController = require('./controllers/superadmin');
 var AuthController = require('./controllers/auth')
 
 
@@ -70,6 +71,7 @@ var isLoggedIn = function (req, res, next) {
 
 app.use('/api/users', usersController);
 app.use('/api/events', eventsController);
+app.use('/api/superadmin/events', isLoggedIn, superAdminController);
 app.use('/auth', AuthController)
 
 // /api/users/getAll
