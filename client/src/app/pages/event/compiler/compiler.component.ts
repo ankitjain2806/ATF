@@ -21,10 +21,8 @@ export class CompilerComponent implements OnInit {
   }
 
   onSubmit() {
-    this.eventService.registerEvent(this.compilerForm.value).subscribe((res) => {
-      if(res.data == 'success') {
-        alert(res)
-      }
+    this.eventService.runCompilerCode(this.compilerForm.value).subscribe((res) => {
+      alert(res)
     })
   }
 }
