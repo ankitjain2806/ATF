@@ -6,44 +6,64 @@ var async = require('async');
 var request = require('request');
 var envConfig = require('../../config/env');
 var langObj = require('../../config/languageConst');
+var amqp = require('amqplib/callback_api');
 
 router.post('/run', function (req, res, next) {
 
-    console.log("in the unnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn")
+  // var amqp = require('amqplib/callback_api');
 
-    var code = req.body.code.replace(/(\n\t|\n|\t)/gm," ");
-    var language= req.body.language;
-    var lang = langObj[language];
-    console.log(lang, language, langObj)
-    console.log(code);
-    var options = {
-        method: 'POST',
-        url: 'https://run.glot.io/languages/'+lang.name+'/latest',
-        headers: {
-            'Authorization': envConfig.glotToken,
-            'Content-type': 'application/json'
-        },
-        json: {"files": [{"name": "main."+lang.ext , "content": code
-            }]
-        }
+  amqp.connect('amqp://localhost:5672', function(err, conn) {
+    conn.createChannel(function(err, ch) {
+      var q = 'compilerQueue';
+      var code = req.body.code.replace(/(\n\t|\n|\t)/gm, " ");
+      var language = req.body.language;
+      var lang = langObj[language];
+      var obj = {
+        langName :lang.name,
+        token: envConfig.glotToken,
+        ext: lang.ext,
+        code: code
+      };
+
+      ch.assertQueue(q, {durable: false});
+      // Note: on Node 6 Buffer.from(msg) should be used
+      ch.sendToQueue(q, new Buffer(JSON.stringify(obj)));
+      res.send('gonee')
+    });
+    // setTimeout(function() { conn.close(); process.exit(0) }, 500);
+  });
+
+/*  var code = req.body.code.replace(/(\n\t|\n|\t)/gm, " ");
+  var language = req.body.language;
+  var lang = langObj[language];
+  var obj = {
+    langName :lang.name,
+    token: envConfig.glotToken,
+    ext: lang.ext,
+    code: code
+  };*/
+
+/*  var options = {
+    method: 'POST',
+    url: 'https://run.glot.io/languages/' + lang.name + '/latest',
+    headers: {
+      'Authorization': envConfig.glotToken,
+      'Content-type': 'application/json'
+    },
+    json: {
+      "files": [{
+        "name": "main." + lang.ext, "content": code
+      }]
     }
+  }
 
-    function callback(error, response, body) {
-        // console.log('callback');
-        // console.log(error);
-        //console.log('statusCode:', response && response.statusCode);
-        //console.log(error);
-        //console.log(body);
-        //console.log(response.statusCode);
-        if (!error && response.statusCode == 200) {
-
-            //console.log('success');
-            //console.log(response.body);
-
-            res.json(response.body);
-        }
+  function callback(error, response, body) {
+    if (!error && response.statusCode == 200) {
+      res.json(response.body);
     }
-    request(options, callback);
+  }
+
+  request(options, callback);*/
 });
 
 
