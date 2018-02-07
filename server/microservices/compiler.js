@@ -38,11 +38,6 @@ amqp.connect('amqp://localhost:5672', function (err, conn) {
   });
 });
 
-app.get('/', function (req, res) {
-
-
-});
-
 app.listen(3100, function () {
   console.log('Example app listening on port 3100!')
 })
