@@ -46,15 +46,10 @@ import {CompilerComponent} from "./compiler/compiler.component";
         component: CompilerComponent
       },
       {
-        path: 'treasurehunt',
-        component: TreasurehuntComponent,
-        data: {title: 'Treasure Hunt'},
-        children: [
-          { path: '', redirectTo: '/home', pathMatch: 'full' },
-          { path: ':id/overview', component: OverviewComponent },
-          { path: ':id/game', component: IngameComponent }
-        ]
-      }
+        path: 'event/:slug/game',
+        data: {title: "Treasure Hunt!", path: 'event/:slug/game'},
+        component: IngameComponent
+      },
     ])
   ],
   exports: [RouterModule]

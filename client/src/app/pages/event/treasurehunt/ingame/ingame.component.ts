@@ -12,7 +12,7 @@ import {TreasurehuntService} from "../treasurehunt.service";
 })
 export class IngameComponent implements OnInit {
 
-  eventId: string;
+  slug: string;
   question = {};
   answer = {
     value: []
@@ -30,17 +30,19 @@ export class IngameComponent implements OnInit {
   }
 
   ngOnInit() {
+    // const slug = this.activatedRouter.params['slug'];
     this.paramsSub = this.activatedRouter.params.subscribe(params => {
-      this.eventId = params['id'];
+      this.slug = params['slug'];
       this.getCurrentQuestion();
     });
   }
 
   checkAnswerAndChangeState() {
     const userAnswer = this.treasurehuntService.getAnswerParam(this.answer, this.question['type']);
+    this.answer = this.treasurehuntService.resetAnswer();
     this.treasurehuntService.checkIsCorrectAnswer({
       user: this.userSession._id,
-      event: this.eventId,
+      event: this.slug,
       answer: userAnswer
     }).subscribe(response => {
       if (response['error']) {
@@ -71,7 +73,7 @@ export class IngameComponent implements OnInit {
   }
 
   private getCurrentQuestion() {
-    this.treasurehuntService.getUserState(this.userSession._id, this.eventId).subscribe(state => {
+    this.treasurehuntService.getUserState(this.userSession._id, this.slug).subscribe(state => {
       this.state = state['data'][0];
       /** check state if completed or in progress*/
       if (this.state['completed']) {
@@ -83,7 +85,7 @@ export class IngameComponent implements OnInit {
   }
 
   private requestAndRenderQuestion() {
-    this.treasurehuntService.getUserStageQuestion(this.userSession._id, this.eventId).subscribe((response) => {
+    this.treasurehuntService.getUserStageQuestion(this.userSession._id, this.slug).subscribe((response) => {
       /** showing new question for state*/
       this.showNext = false;
       this.question = response['data'];
