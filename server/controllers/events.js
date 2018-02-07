@@ -201,6 +201,31 @@ router.post('/end', function (req, res) {
     });
 });
 
+router.post('/isended', function (req, res) {
+    const event = req.body.slug;
+    const user = req.body.user;
+    console.log(event, user);
+    const query = UserEventStateModel.find(
+        {
+            'user': user,
+            'events.slug': event
+        }
+    );
+    query.exec(function (err, rDoc) {
+        if(err) {
+            res.json({error: 'cannot get the data', data: false});
+            res.end();
+        } else {
+            const events = rDoc[0].toObject().events;
+            const _event = events.filter(e => e.slug === event);
+            res.json({data: _event[0].completed});
+            res.end();
+        }
+    });
+});
+
+
+
 router.get('/treasurehunt/details', function(req, res, next) {
     const query = EventModel.findOne({'name': 'TreasureHunt'})
         .select({'title': 1, 'description': 1});
@@ -240,10 +265,26 @@ router.post('/treasurehunt/set/state', function (req, res, next) {
 
 router.post('/treasurehunt/question', function(req, res, next) {
     getUserStageQuestion(req, res, function(currentStageQuestion) {
-        res.json(currentStageQuestion);
+        const _response = currentStageQuestion.toObject();
+        delete _response.answer;
+        res.json({data: _response});
         res.end();
     });
 });
+
+function checkAnswersSubmitted(submitted, correct) {
+    if(submitted.length !== correct.length) {
+        return false;
+    }
+    for(let i=0; i<submitted.length; i++) {
+        const _i = correct.findIndex(x => x === submitted[i]);
+        if(_i < 0) {
+            /** wrong answer */
+            return false;
+        }
+    }
+    return true;
+}
 
 router.post('/treasurehunt/question/check', function(req, res, next) {
     if(req.body.answer === null || req.body.answer === undefined) {
@@ -251,7 +292,7 @@ router.post('/treasurehunt/question/check', function(req, res, next) {
     } else {
         getUserStageQuestion(req, res, function(question) {
             _q = question.toObject();
-            const isCorrectAnswer = _q.answer[0] === req.body.answer;
+            const isCorrectAnswer = checkAnswersSubmitted(req.body.answer, _q.answer);
             isCorrectAnswer ? res.json({data: true}) : res.json({data: false});
 
             // update the state of the user

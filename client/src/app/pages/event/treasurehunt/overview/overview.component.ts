@@ -37,7 +37,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
         if (response['error']) {
           // user is not present; redirect to home
         } else {
-          this.isNew = response['data'] === null;
+          this.isNew = response['data'].length === 0;
           console.log('user is registerd as new ? ', this.isNew);
         }
       });

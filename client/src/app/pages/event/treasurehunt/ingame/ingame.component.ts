@@ -14,7 +14,9 @@ export class IngameComponent implements OnInit {
 
   eventId: string;
   question = {};
-  answer = {};
+  answer = {
+    value: []
+  };
   state = {};
   showNext: Boolean = false;
   userSession = null;
@@ -35,7 +37,12 @@ export class IngameComponent implements OnInit {
   }
 
   checkAnswerAndChangeState() {
-    this.treasurehuntService.checkIsCorrectAnswer(this.userSession._id, this.eventId, this.answer).subscribe(response => {
+    const userAnswer = this.treasurehuntService.getAnswerParam(this.answer, this.question['type']);
+    this.treasurehuntService.checkIsCorrectAnswer({
+      user: this.userSession._id,
+      event: this.eventId,
+      answer: userAnswer
+    }).subscribe(response => {
       if (response['error']) {
         alert(response['error']);
       } else {
@@ -45,13 +52,22 @@ export class IngameComponent implements OnInit {
     });
   }
 
-  performIfUserCorrect() {
+  private performIfUserCorrect() {
     alert('correct answer!!!');
     this.showNext = true;
   }
 
-  performIfUserWrong() {
+  private performIfUserWrong() {
     alert('Wrong answer!!! try again');
+  }
+
+  private toggleAnswersSelected(selected) {
+    const isPresentIndex = this.answer.value.findIndex(x => x === selected);
+    if (isPresentIndex >= 0) {
+      this.answer.value.splice(isPresentIndex);
+    } else {
+      this.answer.value.push(selected);
+    }
   }
 
   private getCurrentQuestion() {
@@ -70,7 +86,7 @@ export class IngameComponent implements OnInit {
     this.treasurehuntService.getUserStageQuestion(this.userSession._id, this.eventId).subscribe((response) => {
       /** showing new question for state*/
       this.showNext = false;
-      this.question = response;
+      this.question = response['data'];
     });
   }
 }

@@ -27,16 +27,24 @@ export class TreasurehuntService {
     return this.httpService.post(this.local_base + '/set/state', params);
   }
 
-  checkIsCorrectAnswer(userId, event, answer) {
-    return this.httpService.post(this.local_base + '/question/check',
-      {
-      user: userId,
-      event: event,
-      answer: answer.value
-    });
+  checkIsCorrectAnswer(params) {
+    return this.httpService.post(this.local_base + '/question/check', params);
   }
 
   getUserStageQuestion(userId, eventId) {
     return this.httpService.post(this.local_base + '/question', {user: userId, event: eventId});
+  }
+
+  getAnswerParam(answer, questionType) {
+    const param = [];
+    switch (questionType) {
+      case 'NORMAL':
+        param.push(answer.text);
+        break;
+      case 'MCQ':
+        answer.value.forEach(a => param.push(a));
+        break;
+    }
+    return param;
   }
 }

@@ -10,6 +10,7 @@ import {EventDetailComponent} from "./event-details/event-detail.component";
 import {EventDetailsResolverService} from "./event-details/event-details-resolver.service";
 import {EventEndComponent} from "./event-end/event-end.component";
 import {EventEndDetailsResolverService} from "./event-end/event-end-resolver.service";
+import {FinishedGuardService} from "./event-end/finished-guard.service";
 
 @NgModule({
   imports: [
@@ -35,7 +36,8 @@ import {EventEndDetailsResolverService} from "./event-end/event-end-resolver.ser
       {
         path: 'event/:slug/finished',
         component: EventEndComponent,
-        data: {title: "Event Completed!", path: 'event/:slug/finished'}
+        data: {title: "Event Completed!", path: 'event/:slug/finished'},
+        canActivate: [FinishedGuardService]
       },
       {
         path: 'treasurehunt',

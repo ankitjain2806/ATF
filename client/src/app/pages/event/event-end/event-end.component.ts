@@ -18,7 +18,6 @@ export class EventEndComponent implements OnInit {
     const slug = this.route.params['slug'];
     this.service.getEventEndDetail(slug).subscribe((response) => {
       this.data = response;
-      console.log(this.data['recommendations']);
     });
   }
 

@@ -34,4 +34,10 @@ export class EventService {
     const params = {slug};
     return this.http.post(url, params);
   }
+
+  isEventEnded(slug: string, user: string): Observable<any> {
+    const params = {slug, user};
+    const url = this.local_base + '/isended';
+    return this.http.post(url, params);
+  }
 }
