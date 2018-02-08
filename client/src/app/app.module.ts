@@ -2,7 +2,8 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {HttpClientModule} from '@angular/common/http';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {AceEditorDirective} from 'ng2-ace-editor';
 
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
@@ -20,12 +21,14 @@ import {SuperadminModule} from "./pages/superadmin/superadmin.module";
 
 import {HttpService} from './shared/util/http.service';
 import {UserSessionService} from "./shared/util/user-session.service";
+import {SocketService} from "./shared/util/socket.service";
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    AceEditorDirective
   ],
   imports: [
     BrowserModule,
@@ -45,7 +48,8 @@ import {UserSessionService} from "./shared/util/user-session.service";
   providers: [
     HttpService,
     AppService,
-    UserSessionService
+    UserSessionService,
+    SocketService
   ],
   bootstrap: [AppComponent]
 })

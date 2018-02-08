@@ -14,6 +14,6 @@ export class DashboardService {
   }
 
   getAllEvents(): Observable<any> {
-    return this.http.get('http://localhost:3000/api/events/all', {});
+    return this.http.get('/api/events/all', {});
   }
 }

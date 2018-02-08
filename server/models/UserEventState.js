@@ -6,8 +6,10 @@ var UserEventStateSchema = new Schema({
     user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
     events: [new Schema({
         event: {type: mongoose.Schema.Types.ObjectId, ref: 'Event'},
+        slug: String,
         stage: Number,
         multiplier: Number,
+        completed: Boolean
     })],
     lastUpdated: { type: Date, default: Date.now }
 });

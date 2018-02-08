@@ -8,6 +8,9 @@ import {IngameComponent} from "./treasurehunt/ingame/ingame.component";
 import {EventDetailComponent} from "./event-details/event-detail.component";
 
 import {EventDetailsResolverService} from "./event-details/event-details-resolver.service";
+import {EventEndComponent} from "./event-end/event-end.component";
+import {EventEndDetailsResolverService} from "./event-end/event-end-resolver.service";
+import {FinishedGuardService} from "./event-end/finished-guard.service";
 
 import {CompilerComponent} from "./compiler/compiler.component";
 
@@ -33,19 +36,20 @@ import {CompilerComponent} from "./compiler/compiler.component";
         data: {title: "Event Registration"},
       },
       {
+        path: 'event/:slug/finished',
+        component: EventEndComponent,
+        data: {title: "Event Completed!", path: 'event/:slug/finished'},
+        canActivate: [FinishedGuardService]
+      },
+      {
         path: 'event/compiler/game',
         component: CompilerComponent
       },
       {
-        path: 'treasurehunt',
-        component: TreasurehuntComponent,
-        data: {title: 'Treasure Hunt'},
-        children: [
-          { path: '', redirectTo: '/home', pathMatch: 'full' },
-          { path: ':id/overview', component: OverviewComponent },
-          { path: ':id/game', component: IngameComponent }
-        ]
-      }
+        path: 'event/:slug/game',
+        data: {title: "Treasure Hunt!", path: 'event/:slug/game'},
+        component: IngameComponent
+      },
     ])
   ],
   exports: [RouterModule]

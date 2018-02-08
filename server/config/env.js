@@ -13,7 +13,7 @@ var envConfig = {
     glotToken: 'Token 9b90f202-6a45-451d-bc8f-7a72707242c0'
   },
   development: {
-    siteUrl: 'http://localhost:3000',
+    siteUrl: 'http://atf.accolitelabs.com',
     port: 3000,
     googleAuth: {
       clientID: '562692892340-9o35ra5u84gr56dv797jtj7f0mvb1r7p.apps.googleusercontent.com',

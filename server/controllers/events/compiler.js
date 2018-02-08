@@ -6,44 +6,37 @@ var async = require('async');
 var request = require('request');
 var envConfig = require('../../config/env');
 var langObj = require('../../config/languageConst');
-
+var amqp = require('amqplib/callback_api');
+var socket = require('../../util/socket');
 router.post('/run', function (req, res, next) {
 
-    console.log("in the unnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn")
+  // var amqp = require('amqplib/callback_api');
 
-    var code = req.body.code.replace(/(\n\t|\n|\t)/gm," ");
-    var language= req.body.language;
-    var lang = langObj[language];
-    console.log(lang, language, langObj)
-    console.log(code);
-    var options = {
-        method: 'POST',
-        url: 'https://run.glot.io/languages/'+lang.name+'/latest',
-        headers: {
-            'Authorization': envConfig.glotToken,
-            'Content-type': 'application/json'
-        },
-        json: {"files": [{"name": "main."+lang.ext , "content": code
-            }]
-        }
-    }
+  amqp.connect('amqp://localhost:5672', function(err, conn) {
+    conn.createChannel(function(err, ch) {
+      var q = 'compilerQueue';
+      var code = req.body.code.replace(/(\n\t|\n|\t)/gm, " ");
+      var language = req.body.language;
+      var lang = langObj[language];
+      var obj = {
+        langName :lang.name,
+        token: envConfig.glotToken,
+        ext: lang.ext,
+        code: code
+      };
 
-    function callback(error, response, body) {
-        // console.log('callback');
-        // console.log(error);
-        //console.log('statusCode:', response && response.statusCode);
-        //console.log(error);
-        //console.log(body);
-        //console.log(response.statusCode);
-        if (!error && response.statusCode == 200) {
-
-            //console.log('success');
-            //console.log(response.body);
-
-            res.json(response.body);
-        }
-    }
-    request(options, callback);
+      // Note: on Node 6 Buffer.from(msg) should be used
+      ch.sendToQueue(q, new Buffer(JSON.stringify(obj)));
+      res.send({data: 'socket is on the way'});
+      var resultQueue = 'resultQueue';
+      ch.assertQueue(resultQueue, {durable: false});
+      ch.consume(resultQueue, function (msg) {
+        console.log(JSON.parse(msg.content.toString()));
+        socket.send('testConnection', {data: JSON.parse(msg.content.toString())})
+      }, {noAck: true});
+    });
+    // setTimeout(function() { conn.close(); process.exit(0) }, 500);
+  });
 });
 
 

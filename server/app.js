@@ -8,9 +8,7 @@ var passport = require('passport');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var envConfig = require('./config/env');
-
 var cors = require('cors');
-
 
 var index = require('./controllers/index');
 var usersController = require('./controllers/users');
@@ -22,6 +20,11 @@ var AuthController = require('./controllers/auth')
 
 var app = express();
 
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
+
+var socket = require('./util/socket');
+socket.setSocket(io);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -104,4 +107,4 @@ app.use(function (err, req, res, next) {
   res.json({'error': err});
 });
 
-module.exports = app;
+module.exports = {app: app, server: server};
