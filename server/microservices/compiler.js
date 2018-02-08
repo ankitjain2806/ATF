@@ -5,15 +5,11 @@ var request = require('request')
 amqp.connect('amqp://localhost:5672', function (err, conn) {
   // console.log(err,conn)
   conn.createChannel(function (err, ch) {
-    var q = 'compilerQueue';
-
-    ch.assertQueue(q, {durable: false});
-    console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", q);
-    ch.consume(q, function (msg) {
+    var compilerQueue = 'compilerQueue';
+    ch.assertQueue(compilerQueue, {durable: false});
+    ch.consume(compilerQueue, function (msg) {
       var obj = msg.content.toString();
       obj = JSON.parse(obj);
-      console.log(obj.langName, obj.token, obj.ext, obj.code);
-
       var options = {
         method: 'POST',
         url: 'https://run.glot.io/languages/' + obj.langName + '/latest',
@@ -26,13 +22,18 @@ amqp.connect('amqp://localhost:5672', function (err, conn) {
             "name": "main." + obj.ext, "content": obj.code
           }]
         }
-      }
+      };
 
       function callback(error, response, body) {
-        if (!error && response.statusCode == 200) {
-          console.log(response.body);
-        }
+        var resultQueue = 'resultQueue';
+        // ch.assertQueue(resultQueue, {durable: false});
+        ch.sendToQueue(resultQueue, new Buffer(JSON.stringify({
+          error: error,
+          response: response.body,
+          status: response.statusCode
+        })));
       }
+
       request(options, callback);
     }, {noAck: true});
   });

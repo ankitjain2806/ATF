@@ -1,9 +1,9 @@
 // db_connect.js
 var mongoose = require('mongoose');
 var envConfig = require('../config/env');
-// var mongoURI = 'mongodb://localhost:27017/ATF';
 
 mongoose.connect(envConfig.mongoURI, {
+  useMongoClient: true
 });
 
 var db = mongoose.connection;
