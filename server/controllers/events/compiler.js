@@ -14,7 +14,7 @@ router.post('/run', function (req, res, next) {
 
   amqp.connect('amqp://localhost:5672', function(err, conn) {
     conn.createChannel(function(err, ch) {
-      var q = 'queueToCompiler';
+      var q = 'compilerQueue';
       var code = req.body.code.replace(/(\n\t|\n|\t)/gm, " ");
       var language = req.body.language;
       var lang = langObj[language];
@@ -28,17 +28,13 @@ router.post('/run', function (req, res, next) {
       // Note: on Node 6 Buffer.from(msg) should be used
       ch.sendToQueue(q, new Buffer(JSON.stringify(obj)));
       res.send({data: 'socket is on the way'});
-
       var resultQueue = 'resultQueue';
       ch.assertQueue(resultQueue, {durable: false});
       ch.consume(resultQueue, function (msg) {
         console.log(JSON.parse(msg.content.toString()));
+        socket.send('testConnection', {data: JSON.parse(msg.content.toString())})
       }, {noAck: true});
     });
-    setTimeout(function () {
-      console.log('booom boooom sockettttt');
-      socket.send('testConnection', {data: 'testing'})
-    }, 1000);
     // setTimeout(function() { conn.close(); process.exit(0) }, 500);
   });
 });

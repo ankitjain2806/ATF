@@ -26,12 +26,15 @@ amqp.connect('amqp://localhost:5672', function (err, conn) {
 
       function callback(error, response, body) {
         var resultQueue = 'resultQueue';
-        // ch.assertQueue(resultQueue, {durable: false});
-        ch.sendToQueue(resultQueue, new Buffer(JSON.stringify({
+        var resultObj = {
           error: error,
           response: response.body,
           status: response.statusCode
-        })));
+        };
+        console.log(resultObj);
+
+        // ch.assertQueue(resultQueue, {durable: false});
+        ch.sendToQueue(resultQueue, new Buffer(JSON.stringify(resultObj)));
       }
 
       request(options, callback);
