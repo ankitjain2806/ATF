@@ -18,6 +18,7 @@ var superAdminController = require('./controllers/superadmin');
 var AuthController = require('./controllers/auth')
 
 
+
 var app = express();
 
 var server = require('http').Server(app);
@@ -76,8 +77,11 @@ var isLoggedIn = function (req, res, next) {
 app.use('/api/users', isLoggedIn, usersController);
 app.use('/api/events/compiler', isLoggedIn,compilerController);
 app.use('/api/events', isLoggedIn,eventsController);
-app.use('/api/superadmin/events', isLoggedIn, superAdminController);
+app.use('/api/superadmin', isLoggedIn, superAdminController);
 app.use('/auth', AuthController)
+
+
+
 
 // /api/users/getAll
 // Catch all other routes and return the index file
