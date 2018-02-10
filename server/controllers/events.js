@@ -2,6 +2,7 @@ var express = require('express');
 var EventModel = require('../models/Event');
 var TeamModel = require('../models/Team');
 var User = require('../models/User');
+var Resources = require('../models/Resources');
 var UserEventStateModel = require('../models/UserEventState');
 var router = express.Router();
 var async = require('async');
@@ -40,6 +41,48 @@ router.get('/getEventDetails/:slug', function (req, res, next) {
 
 });
 
+router.get('/resources/:slug', function (req, res, next) {
+  async.waterfall([
+    function (callback) {
+    console.log(req.body);
+      var query = {
+        slug: req.params.slug,
+      };
+      EventModel.findOne(query, function (err, event) {
+        console.log(event.name);
+        callback(null, event);
+      });
+    },
+    function (event, callback) {
+      console.log(event.name);
+      var query = {
+        eventId: event._id
+      };
+      Resources.find(query, function (err, resources) {
+        res.json(resources);
+        //callback(null, eventDetails);
+      });
+    }
+  ]);
+
+});
+
+router.post('/addResource', function (req, res, next) {
+  var resource ={
+    name: req.body.name,
+    body: req.body.body,
+    testCases: req.body.testCases,
+    eventId: req.body.eventId,
+    isActive: req.body.isActive,
+  }
+  console.log(resource);
+  var resour = new Resources(resource);
+  resour.save(function (err, data) {
+    if(err){
+      res.json(err);
+    }
+  })
+});
 
 router.get('/all', function (req, res, next) {
   var query = EventModel.find().select('name description slug');
@@ -56,6 +99,7 @@ router.post('/team-register', function (req, res, next) {
     captain: req.session.user._id,
     members: []
   };
+
   async.series([
       function (callback) {
         var users = req.body.members;
