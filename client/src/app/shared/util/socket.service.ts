@@ -19,6 +19,5 @@ export class SocketService {
         observer.next(data);
       });
     });
-
   }
 }
