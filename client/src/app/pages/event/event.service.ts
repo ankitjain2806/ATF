@@ -31,7 +31,7 @@ export class EventService {
   }
 
   runCompilerCode(form: CompilerForm) {
-    const url = '/api/events/compiler/run';
+    const url = this.local_base + 'compiler/run';
     return this.http.post(url, form);
   }
 
@@ -45,5 +45,10 @@ export class EventService {
     const params = {slug, user};
     const url = this.local_base + 'isended';
     return this.http.post(url, params);
+  }
+
+  getResources(slug: string): Observable<any> {
+    const url = this.local_base + '/resources/'+slug;
+    return this.http.get(url, {});
   }
 }

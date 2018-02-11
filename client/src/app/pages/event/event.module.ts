@@ -9,12 +9,13 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {EventComponent} from "./events/event.component";
 import {RegistrationComponent} from "./registration/registration.component";
 import {CompilerComponent} from "./compiler/compiler.component";
+import {CompilerIntroComponent} from "./compiler/compiler-intro/compiler-intro.component";
 
 import {EventService} from "./event.service";
-import {EventDetailComponent} from "./event-details/event-detail.component";
+import {EventDetailComponent} from "./events/event-details/event-detail.component";
 import {TreasurehuntService} from "./treasurehunt/treasurehunt.service";
-import {EventDetailsResolverService} from "./event-details/event-details-resolver.service";
-import { EventEndComponent } from './event-end/event-end.component';
+import {EventDetailsResolverService} from "./events/event-details/event-details-resolver.service";
+import {EventEndComponent} from './event-end/event-end.component';
 import {EventEndDetailsResolverService} from "./event-end/event-end-resolver.service";
 import {FinishedGuardService} from "./event-end/finished-guard.service";
 
@@ -33,6 +34,7 @@ import {FinishedGuardService} from "./event-end/finished-guard.service";
     RegistrationComponent,
     EventDetailComponent,
     CompilerComponent,
+    CompilerIntroComponent,
     EventEndComponent
   ],
   exports: [
