@@ -5,6 +5,10 @@ import {SocketService} from "../../../shared/util/socket.service";
 import {ActivatedRoute} from "@angular/router";
 import {AceEditorComponent} from "ng2-ace-editor"
 
+import 'brace/theme/clouds';
+import 'brace/mode/java.js';
+import 'brace/index';
+
 @Component({
   selector: 'app-compiler',
   templateUrl: './compiler.component.html',
@@ -14,13 +18,15 @@ export class CompilerComponent implements OnInit {
   resource;
   compilerForm: FormGroup;
   output: string;
+  text:string = "";
+  options:any = {maxLines: 1000, printMargin: false};
+
   languages = [
     {language: 'PHP', slug: 'php'},
     {language: 'JAVA', slug: 'java'},
     {language: 'Python', slug: 'python'}
-  ]
-  text: string = "";
-  options: any = {maxLines: 1000, printMargin: false};
+  ];
+
   @ViewChild("editor") editor: AceEditorComponent;
 
   constructor(private fb: FormBuilder,
@@ -50,6 +56,6 @@ export class CompilerComponent implements OnInit {
   }
 
   onChange(code) {
-    console.log("new code", code);
+    this.compilerForm.controls.code.setValue(code);
   }
 }

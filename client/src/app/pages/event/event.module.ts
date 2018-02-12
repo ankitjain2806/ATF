@@ -39,10 +39,12 @@ import {CompilerResolverService} from "./compiler/compiler-resolver.service";
     EventDetailComponent,
     CompilerComponent,
     CompilerIntroComponent,
+    AceEditorDirective,
     EventEndComponent
   ],
   exports: [
-    EventComponent
+    EventComponent,
+    AceEditorDirective
   ],
   providers: [
     EventService,
@@ -50,6 +52,7 @@ import {CompilerResolverService} from "./compiler/compiler-resolver.service";
     EventDetailsResolverService,
     FinishedGuardService,
     CompilerIntroResolverService,
+    CompilerResolverService,
 
   ]
 })

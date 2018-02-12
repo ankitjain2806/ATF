@@ -1,9 +1,23 @@
 <div class="container-fluid">
   <h1>{{resource.name}}</h1>
-  <div class="col-md-4 col-sm-12 col-4">
+  <div class="col-12">
     {{resource.body}}
     <form [formGroup]="compilerForm" novalidate (ngSubmit)="onSubmit()">
-      <!--<textarea name="code" title="code" formControlName="code" class="form-control"></textarea>-->
+      <div ace-editor
+           [(text)]="text"
+           [mode]="'java'"
+           [theme]="'clouds'"
+           [options]="options"
+           [readOnly]="false"
+           [autoUpdateContent]="true"
+           [durationBeforeCallback]="1000"
+           (textChanged)="onChange($event)"
+           class="editor-style col-12 form-control">
+      </div>
+      <div>
+
+      </div>
+      <!--<textarea name="code" title="code" ></textarea>-->
       <select class="form-control" formControlName="language">
         <option *ngFor="let language of languages" [value]="language.slug">{{language.language}}</option>
       </select>
