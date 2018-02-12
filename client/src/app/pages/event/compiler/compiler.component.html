@@ -1,6 +1,7 @@
 <div class="container-fluid">
-  <h1>Compiler</h1>
+  <h1>{{resource.name}}</h1>
   <div class="col-md-4 col-sm-12 col-4">
+    {{resource.body}}
     <form [formGroup]="compilerForm" novalidate (ngSubmit)="onSubmit()">
       <textarea name="code" title="code" formControlName="code" class="form-control"></textarea>
       <select class="form-control" formControlName="language">

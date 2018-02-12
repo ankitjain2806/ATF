@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormGroup, FormControl, FormBuilder, Validators, FormArray} from '@angular/forms';
 import {EventService} from "../event.service";
 import {SocketService} from "../../../shared/util/socket.service";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-compiler',
@@ -9,6 +10,7 @@ import {SocketService} from "../../../shared/util/socket.service";
   styleUrls: ['./compiler.component.scss']
 })
 export class CompilerComponent implements OnInit {
+  resource;
   compilerForm: FormGroup;
   output: string;
   languages = [
@@ -19,7 +21,11 @@ export class CompilerComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private eventService: EventService,
+              private route: ActivatedRoute,
               private socketService: SocketService) {
+    this.route.data.subscribe((res) => {
+      this.resource = res.resource;
+    });
   }
 
   ngOnInit() {

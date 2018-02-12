@@ -11,7 +11,7 @@ import {EventService} from "../../event.service";
 import 'rxjs/add/operator/map';
 
 @Injectable()
-export class EventDetailsResolverService implements Resolve<IEvent>{
+export class CompilerIntroResolverService implements Resolve<IEvent>{
 
   constructor(private service: EventService) {
   }

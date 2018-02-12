@@ -13,7 +13,7 @@ export class CompilerIntroComponent implements OnInit {
   resources;
   constructor(private route: ActivatedRoute) {
     this.route.data.subscribe((res) => {
-      this.resources = res.event;
+      this.resources = res.resources.resources;
     });
   }
 

@@ -18,6 +18,8 @@ import {EventDetailsResolverService} from "./events/event-details/event-details-
 import {EventEndComponent} from './event-end/event-end.component';
 import {EventEndDetailsResolverService} from "./event-end/event-end-resolver.service";
 import {FinishedGuardService} from "./event-end/finished-guard.service";
+import {CompilerIntroResolverService} from "./compiler/compiler-intro/compiler-intro-resolver.service";
+import {CompilerResolverService} from "./compiler/compiler-resolver.service";
 
 @NgModule({
   imports: [
@@ -44,7 +46,9 @@ import {FinishedGuardService} from "./event-end/finished-guard.service";
     EventService,
     TreasurehuntService,
     EventDetailsResolverService,
-    FinishedGuardService
+    FinishedGuardService,
+    CompilerIntroResolverService,
+    CompilerResolverService
   ]
 })
 export class EventModule {

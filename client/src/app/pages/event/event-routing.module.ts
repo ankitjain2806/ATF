@@ -11,9 +11,11 @@ import {EventDetailsResolverService} from "./events/event-details/event-details-
 import {EventEndComponent} from "./event-end/event-end.component";
 import {EventEndDetailsResolverService} from "./event-end/event-end-resolver.service";
 import {FinishedGuardService} from "./event-end/finished-guard.service";
+import {CompilerIntroResolverService} from "./compiler/compiler-intro/compiler-intro-resolver.service";
 
 import {CompilerComponent} from "./compiler/compiler.component";
 import {CompilerIntroComponent} from "./compiler/compiler-intro/compiler-intro.component";
+import {CompilerResolverService} from "./compiler/compiler-resolver.service";
 
 @NgModule({
   imports: [
@@ -51,12 +53,15 @@ import {CompilerIntroComponent} from "./compiler/compiler-intro/compiler-intro.c
         path: 'event/compiler/game',
         component: CompilerIntroComponent,
         resolve: {
-          resources: EventDetailsResolverService
+          resources: CompilerIntroResolverService
         }
       },
       {
-        path: 'event/compiler/run/:resourceId`',
-        component: CompilerComponent
+        path: 'event/compiler/solve/:resourceId',
+        component: CompilerComponent,
+        resolve: {
+          resource: CompilerResolverService
+        }
       },
     ])
   ],

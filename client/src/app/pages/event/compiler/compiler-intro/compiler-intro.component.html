@@ -1,3 +1,8 @@
 <div class="container-fluid">
   <h1>Compiler Intro</h1>
+  <div class="row">
+    <div class="col-12" *ngFor="let resource of resources; let i = index">
+      {{i+1}} ) <a [routerLink]="['/event/compiler', 'solve', resource._id]">{{resource.name}}</a>
+    </div>
+  </div>
 </div>

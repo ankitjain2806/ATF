@@ -48,7 +48,12 @@ export class EventService {
   }
 
   getResources(slug: string): Observable<any> {
-    const url = this.local_base + '/resources/'+slug;
+    const url = this.local_base + 'resources/'+slug;
+    return this.http.get(url, {});
+  }
+
+  getResourceById(resourceId: string): Observable<any> {
+    const url = this.local_base + 'getResource/'+resourceId;
     return this.http.get(url, {});
   }
 }
