@@ -30,8 +30,9 @@ export class EventService {
     return this.http.get(url, {});
   }
 
-  runCompilerCode(form: CompilerForm) {
-    const url = '/api/events/compiler/run';
+  runCompilerCode(form: CompilerForm, resourceId: string) {
+    form['resourceId'] = resourceId;
+    const url = this.local_base + 'compiler/run';
     return this.http.post(url, form);
   }
 
@@ -45,5 +46,15 @@ export class EventService {
     const params = {slug, user};
     const url = this.local_base + 'isended';
     return this.http.post(url, params);
+  }
+
+  getResources(slug: string): Observable<any> {
+    const url = this.local_base + 'resources/'+slug;
+    return this.http.get(url, {});
+  }
+
+  getResourceById(resourceId: string): Observable<any> {
+    const url = this.local_base + 'getResource/'+resourceId;
+    return this.http.get(url, {});
   }
 }

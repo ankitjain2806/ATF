@@ -5,14 +5,17 @@ import {RegistrationComponent} from "./registration/registration.component";
 import {TreasurehuntComponent} from "./treasurehunt/treasurehunt.component";
 import {OverviewComponent} from "./treasurehunt/overview/overview.component";
 import {IngameComponent} from "./treasurehunt/ingame/ingame.component";
-import {EventDetailComponent} from "./event-details/event-detail.component";
+import {EventDetailComponent} from "./events/event-details/event-detail.component";
 
-import {EventDetailsResolverService} from "./event-details/event-details-resolver.service";
+import {EventDetailsResolverService} from "./events/event-details/event-details-resolver.service";
 import {EventEndComponent} from "./event-end/event-end.component";
 import {EventEndDetailsResolverService} from "./event-end/event-end-resolver.service";
 import {FinishedGuardService} from "./event-end/finished-guard.service";
+import {CompilerIntroResolverService} from "./compiler/compiler-intro/compiler-intro-resolver.service";
 
 import {CompilerComponent} from "./compiler/compiler.component";
+import {CompilerIntroComponent} from "./compiler/compiler-intro/compiler-intro.component";
+import {CompilerResolverService} from "./compiler/compiler-resolver.service";
 
 @NgModule({
   imports: [
@@ -36,19 +39,29 @@ import {CompilerComponent} from "./compiler/compiler.component";
         data: {title: "Event Registration"},
       },
       {
-        path: 'event/:slug/finished',
+        path: 'event/treasurehunt/finished',
         component: EventEndComponent,
-        data: {title: "Event Completed!", path: 'event/:slug/finished'},
+        data: {title: "Event Completed!", path: 'event/treasurehunt/finished'},
         canActivate: [FinishedGuardService]
       },
       {
-        path: 'event/compiler/game',
-        component: CompilerComponent
+        path: 'event/treasurehunt/game',
+        data: {title: "Treasure Hunt!", path: 'event/treasurehunt/game'},
+        component: IngameComponent
       },
       {
-        path: 'event/:slug/game',
-        data: {title: "Treasure Hunt!", path: 'event/:slug/game'},
-        component: IngameComponent
+        path: 'event/compiler/game',
+        component: CompilerIntroComponent,
+        resolve: {
+          resources: CompilerIntroResolverService
+        }
+      },
+      {
+        path: 'event/compiler/solve/:resourceId',
+        component: CompilerComponent,
+        resolve: {
+          resource: CompilerResolverService
+        }
       },
     ])
   ],
