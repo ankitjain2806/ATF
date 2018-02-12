@@ -3,7 +3,7 @@ var router = express.Router();
 var EventModel = require('../models/Event');
 var User = require('../models/User');
 
-router.post('/events/add-new-event', function (req, res, next) {
+router.post('/events/addNewEvent', function (req, res, next) {
 
   if (req.body.name === null || req.body.name === undefined) {
     res.status(500).send({'error': 'cannot find the request body...'});
@@ -23,7 +23,7 @@ router.post('/events/add-new-event', function (req, res, next) {
   }
 });
 
-router.delete('/events/delete-event/:_id', function (req, res, next) {
+router.delete('/events/deleteEvent/:_id', function (req, res, next) {
   EventModel.findByIdAndRemove(req.params._id, function (err, data) {
     if (err)
       console.log(err);
@@ -34,7 +34,7 @@ router.delete('/events/delete-event/:_id', function (req, res, next) {
   });
 });
 
-router.put('/events/update-event/:_id', function (req, res, next) {
+router.put('/events/updateEvent/:_id', function (req, res, next) {
   EventModel.findById(req.params._id, function (err, event) {
     if (err)
       console.log(err);

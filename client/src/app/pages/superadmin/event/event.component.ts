@@ -1,14 +1,14 @@
 import {Component, OnInit} from '@angular/core';
-import {SuperAdminService} from "./superadmin.service";
+import {SuperAdminService} from "../superadmin.service";
 import {clone} from 'lodash';
-import {IEvent} from "../../models/event";
+import {IEvent} from "../../../models/event";
 
 @Component({
   moduleId: module.id,
-  templateUrl: 'superadmin.component.html'
+  templateUrl: 'event.component.html'
 })
 
-export class SuperAdminComponent implements OnInit {
+export class EventAdminComponent implements OnInit {
   events: IEvent[];
   selectedEvent: IEvent;
   eventForm: boolean = false;

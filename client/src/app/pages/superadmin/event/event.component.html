@@ -12,7 +12,7 @@
       </thead>
       <tbody>
       <tr *ngFor="let event of events; let i=index;">
-        <td>{{ i }}</td>
+        <td>{{ i+1 }}</td>
         <td>{{ event.name }}</td>
         <td>{{ event.description }}</td>
         <td>
@@ -38,32 +38,32 @@
       <h2>Add New Event</h2>
       <p>Name: <input type="text"
                       name="name"
-                      [(ngModel)]="newevent.name" /></p>
+                      [(ngModel)]="newEvent.name" /></p>
       <p>Description: <input type="text"
                              name="description"
-                             [(ngModel)]="newevent.description" /></p>
+                             [(ngModel)]="newEvent.description" /></p>
       <p>
         <button type="button"
                 class="btn btn-primary"
-                (click)="saveEvent(newevent)">Submit</button>
+                (click)="saveEvent(newEvent)">Submit</button>
         <button type="button"
                 class="btn btn-warning"
                 (click)="cancelNewEvent()">Cancel</button>
       </p>
     </form>
 
-    <form *ngIf="editeventForm">
+    <form *ngIf="editEventForm">
       <h2>Edit Event Details</h2>
       <p>Name: <input type="text"
                       name="name"
-                      [(ngModel)]="editedevent.name" /></p>
+                      [(ngModel)]="editedEvent.name" /></p>
       <p>Description: <input type="text"
                              name="description"
-                             [(ngModel)]="editedevent.description" /></p>
+                             [(ngModel)]="editedEvent.description" /></p>
       <p>
         <button type="button"
                 class="btn btn-primary"
-                (click)="updateEvent(editedevent)">Submit</button>
+                (click)="updateEvent(editedEvent)">Submit</button>
         <button type="button"
                 class="btn btn-warning"
                 (click)="cancelEdits()">Cancel</button>
