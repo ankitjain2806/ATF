@@ -30,7 +30,8 @@ export class EventService {
     return this.http.get(url, {});
   }
 
-  runCompilerCode(form: CompilerForm) {
+  runCompilerCode(form: CompilerForm, resourceId: string) {
+    form['resourceId'] = resourceId;
     const url = this.local_base + 'compiler/run';
     return this.http.post(url, form);
   }

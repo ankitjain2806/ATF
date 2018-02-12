@@ -36,12 +36,11 @@ export class CompilerComponent implements OnInit {
   }
 
   onSubmit() {
-    // console.log(this.compilerForm.value);
     this.socketService.receiveSocket('testConnection').subscribe((data)=>{
       this.output = data.data.response.stdout;
     });
 
-    this.eventService.runCompilerCode(this.compilerForm.value).subscribe((res: any) => {
+    this.eventService.runCompilerCode(this.compilerForm.value, this.resource._id).subscribe((res: any) => {
       this.output = res.stdout;
     })
   }
