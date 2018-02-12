@@ -18,6 +18,7 @@ amqp.connect('amqp://localhost:5672', function (err, conn) {
           'Content-type': 'application/json'
         },
         json: {
+          "stdin": obj.testCases.testCases[0].stdin,
           "files": [{
             "name": "main." + obj.ext, "content": obj.code
           }]
@@ -29,10 +30,12 @@ amqp.connect('amqp://localhost:5672', function (err, conn) {
         var resultObj = {
           error: error,
           response: response.body,
-          status: response.statusCode
+          status: response.statusCode,
+          matching:false
         };
-        console.log(resultObj);
-
+        if(obj.testCases.testCases[0].stdout == response.body.stdout){
+          resultObj.matching=true;
+        }
         // ch.assertQueue(resultQueue, {durable: false});
         ch.sendToQueue(resultQueue, new Buffer(JSON.stringify(resultObj)));
       }
