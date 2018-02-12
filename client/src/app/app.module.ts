@@ -28,7 +28,7 @@ import {SocketService} from "./shared/util/socket.service";
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    AceEditorDirective
+    // AceEditorDirective
   ],
   imports: [
     BrowserModule,

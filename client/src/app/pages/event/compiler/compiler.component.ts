@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormGroup, FormControl, FormBuilder, Validators, FormArray} from '@angular/forms';
 import {EventService} from "../event.service";
 import {SocketService} from "../../../shared/util/socket.service";
 import {ActivatedRoute} from "@angular/router";
+import {AceEditorComponent} from "ng2-ace-editor"
 
 @Component({
   selector: 'app-compiler',
@@ -18,6 +19,9 @@ export class CompilerComponent implements OnInit {
     {language: 'JAVA', slug: 'java'},
     {language: 'Python', slug: 'python'}
   ]
+  text: string = "";
+  options: any = {maxLines: 1000, printMargin: false};
+  @ViewChild("editor") editor: AceEditorComponent;
 
   constructor(private fb: FormBuilder,
               private eventService: EventService,
@@ -36,12 +40,16 @@ export class CompilerComponent implements OnInit {
   }
 
   onSubmit() {
-    this.socketService.receiveSocket('testConnection').subscribe((data)=>{
+    this.socketService.receiveSocket('testConnection').subscribe((data) => {
       this.output = data.data.response.stdout;
     });
 
     this.eventService.runCompilerCode(this.compilerForm.value, this.resource._id).subscribe((res: any) => {
       this.output = res.stdout;
     })
+  }
+
+  onChange(code) {
+    console.log("new code", code);
   }
 }
