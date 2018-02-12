@@ -9,7 +9,7 @@ import {EventService} from "../event.service";
 })
 export class EventEndComponent implements OnInit {
 
-  private data = {};
+  data;
 
   constructor(private service: EventService,
               private route: ActivatedRoute) { }

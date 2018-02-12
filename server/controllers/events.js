@@ -22,7 +22,7 @@ router.get('/getEventDetails/:slug', function (req, res, next) {
     function (event, callback) {
       console.log(event)
       var query = {
-        events: {"$in": [event._id]},
+        'events.eventId': {"$in": [event._id]},
         _id: req.session.user._id
       };
       User.findOne(query, function (err, user) {
@@ -163,7 +163,7 @@ router.post('/team-register', function (req, res, next) {
             if (!user.events) {
               user.events = [];
             }
-            user.events.push(eventId);
+            user.events.push({eventId : eventId, isBlocked: false});
             user.save(function (err, data) {
               next(null, data)
             })

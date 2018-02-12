@@ -6,6 +6,8 @@ import {IngameComponent} from './treasurehunt/ingame/ingame.component';
 import {OverviewComponent} from './treasurehunt/overview/overview.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
+import {AceEditorDirective} from 'ng2-ace-editor';
+
 import {EventComponent} from "./events/event.component";
 import {RegistrationComponent} from "./registration/registration.component";
 import {CompilerComponent} from "./compiler/compiler.component";
@@ -48,7 +50,7 @@ import {CompilerResolverService} from "./compiler/compiler-resolver.service";
     EventDetailsResolverService,
     FinishedGuardService,
     CompilerIntroResolverService,
-    CompilerResolverService
+
   ]
 })
 export class EventModule {
