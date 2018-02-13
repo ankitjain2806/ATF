@@ -53,8 +53,9 @@ export class RegistrationComponent implements OnInit {
 
   onSubmit() {
     this.eventService.registerEvent(this.registrationForm.value).subscribe((res) => {
+      console.log(res.data, res, res.data == 'success')
       if(res.data == 'success') {
-        this.router.navigate(['/event', this.eventSlug, '/game']);
+        this.router.navigate(['/event', this.eventSlug, 'game']);
       }
     })
   }
