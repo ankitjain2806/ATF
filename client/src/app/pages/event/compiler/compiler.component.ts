@@ -4,7 +4,7 @@ import {EventService} from "../event.service";
 import {SocketService} from "../../../shared/util/socket.service";
 import {ActivatedRoute} from "@angular/router";
 import {AceEditorComponent} from "ng2-ace-editor"
-
+import {Resource} from "../../../models/Resource";
 import 'brace/theme/clouds';
 import 'brace/mode/java.js';
 import 'brace/index';
@@ -14,8 +14,9 @@ import 'brace/index';
   templateUrl: './compiler.component.html',
   styleUrls: ['./compiler.component.scss']
 })
+
 export class CompilerComponent implements OnInit {
-  resource;
+  resource: Resource;
   compilerForm: FormGroup;
   output: string;
   text:string = "";
@@ -46,12 +47,12 @@ export class CompilerComponent implements OnInit {
   }
 
   onSubmit() {
-    this.socketService.receiveSocket('testConnection').subscribe((data) => {
-      this.output = data.data.response.stdout;
+    this.socketService.receiveSocket('compilerSocket').subscribe((data) => {
+      this.output = data.response.stdout;
     });
 
-    this.eventService.runCompilerCode(this.compilerForm.value, this.resource._id).subscribe((res: any) => {
-      this.output = res.stdout;
+    this.eventService.runCompilerCode(this.compilerForm.value, this.resource._id, this.resource.eventId).subscribe((res: any) => {
+      this.output = 'Brace yourself!! code is being compiled';
     })
   }
 

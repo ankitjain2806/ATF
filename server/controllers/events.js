@@ -2,7 +2,7 @@ var express = require('express');
 var EventModel = require('../models/Event');
 var TeamModel = require('../models/Team');
 var User = require('../models/User');
-var Resources = require('../models/Resources');
+var Resource = require('../models/Resource');
 var UserEventStateModel = require('../models/UserEventState');
 var router = express.Router();
 var async = require('async');
@@ -56,7 +56,7 @@ router.get('/resources/:slug', function (req, res, next) {
       var query = {
         eventId: event._id
       };
-      var query = Resources.find(query).select('name');
+      var query = Resource.find(query).select('name');
       query.exec(function (err, resources) {
         res.json({resources : resources});
       });
@@ -73,7 +73,7 @@ router.post('/addResource', function (req, res, next) {
     eventId: req.body.eventId,
     isActive: req.body.isActive,
   }
-  var resource = new Resources(resourceObj);
+  var resource = new Resource(resourceObj);
   resource.save(function (err, data) {
     if (err) {
       res.json(err);
@@ -84,7 +84,7 @@ router.post('/addResource', function (req, res, next) {
 });
 
 router.get('/getResource/:id', function (req, res, next) {
-  var query = Resources.findById(req.params.id).select('name body');
+  var query = Resource.findById(req.params.id).select('name body eventId');
   query.exec(query, function (err, data) {
     if (err) {
       res.json(err);
