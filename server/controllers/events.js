@@ -115,6 +115,7 @@ router.post('/team-register', function (req, res, next) {
         var users = req.body.members;
         async.times(users.length, function (n, next) {
           User.findOne({email: users[n].email}, function (err, person) {
+            console.trace(err, person)
             if (err) {
               callback(err, null)
             }
@@ -146,17 +147,20 @@ router.post('/team-register', function (req, res, next) {
       },
       function (callback) {
         EventModel.findOne({slug: req.body.slug}, function (err, event) {
-          eventId = event.id;
+          console.trace(err, event)
+          eventId = event._id;
           event.teams.push(teamData);
           event.save(function (err, data) {
+            console.trace(err, data)
             callback(err, event)
           })
         });
       },
       function (callback) {
+        console.trace(teamData)
         async.times(teamData.members.length, function (n, next) {
           User.findOne({_id: teamData.members[n]}, function (err, user) {
-            console.log(err, user)
+            console.trace(err, user)
             if (err) {
               next(err, null)
             }
