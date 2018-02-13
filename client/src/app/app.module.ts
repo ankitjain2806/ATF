@@ -3,7 +3,6 @@ import {NgModule} from '@angular/core';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {AceEditorDirective} from 'ng2-ace-editor';
 
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';

@@ -6,7 +6,7 @@ import {IngameComponent} from './treasurehunt/ingame/ingame.component';
 import {OverviewComponent} from './treasurehunt/overview/overview.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
-import {AceEditorDirective} from 'ng2-ace-editor';
+import {AceEditorModule} from 'ng2-ace-editor';
 
 import {EventComponent} from "./events/event.component";
 import {RegistrationComponent} from "./registration/registration.component";
@@ -28,7 +28,8 @@ import {CompilerResolverService} from "./compiler/compiler-resolver.service";
     CommonModule,
     EventRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AceEditorModule
   ],
   declarations: [
     TreasurehuntComponent,
@@ -39,12 +40,10 @@ import {CompilerResolverService} from "./compiler/compiler-resolver.service";
     EventDetailComponent,
     CompilerComponent,
     CompilerIntroComponent,
-    AceEditorDirective,
     EventEndComponent
   ],
   exports: [
-    EventComponent,
-    AceEditorDirective
+    EventComponent
   ],
   providers: [
     EventService,
