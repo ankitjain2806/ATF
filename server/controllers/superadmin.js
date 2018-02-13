@@ -12,7 +12,9 @@ router.post('/events/addNewEvent', function (req, res, next) {
     var event = new EventModel();
     event.name = req.body.name;
     event.description = req.body.description;
-    event.stages = null;
+    event.memberCount = req.body.memberCount;
+    event.slug = req.body.slug;
+    event.stages = [];
     event.lastUpdated = null;
     event.save(function (err) {
       if (err) {

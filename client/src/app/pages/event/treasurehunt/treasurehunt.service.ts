@@ -13,6 +13,7 @@ export class TreasurehuntService {
   }
 
   getUserState(userId, event) {
+    console.log(event)
     return this.httpService.post(this.local_base + '/get/state', {user: userId, event: event});
   }
 

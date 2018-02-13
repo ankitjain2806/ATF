@@ -30,6 +30,7 @@ router.get('/getEventDetails/:slug', function (req, res, next) {
           name: event.name,
           description: event.description,
           slug: event.slug,
+          memberCount: event.memberCount,
           isMember: (user) ? true : false
         }
         callback(null, eventDetails);
@@ -147,7 +148,6 @@ router.post('/team-register', function (req, res, next) {
       },
       function (callback) {
         EventModel.findOne({slug: req.body.slug}, function (err, event) {
-          console.trace(err, event)
           eventId = event._id;
           event.teams.push(teamData);
           event.save(function (err, data) {

@@ -31,24 +31,32 @@
 
     <button class="btn btn-success"
             (click)="showAddEventForm()"><i class="fa fa-plus"></i></button>
-    <br />
-    <br />
+    <br/>
+    <br/>
 
     <form *ngIf="eventForm">
       <h2>Add New Event</h2>
       <p>Name: <input type="text"
                       name="name"
-                      [(ngModel)]="newEvent.name" /></p>
+                      [(ngModel)]="newEvent.name"/></p>
       <p>Description: <input type="text"
                              name="description"
-                             [(ngModel)]="newEvent.description" /></p>
+                             [(ngModel)]="newEvent.description"/></p>
+      <p>Slug: <input type="text"
+                             name="slug"
+                             [(ngModel)]="newEvent.slug"/></p>
+      <p>Number of Members: <input type="text"
+                             name="memberCount"
+                             [(ngModel)]="newEvent.memberCount"/></p>
       <p>
         <button type="button"
                 class="btn btn-primary"
-                (click)="saveEvent(newEvent)">Submit</button>
+                (click)="saveEvent(newEvent)">Submit
+        </button>
         <button type="button"
                 class="btn btn-warning"
-                (click)="cancelNewEvent()">Cancel</button>
+                (click)="cancelNewEvent()">Cancel
+        </button>
       </p>
     </form>
 
@@ -56,17 +64,19 @@
       <h2>Edit Event Details</h2>
       <p>Name: <input type="text"
                       name="name"
-                      [(ngModel)]="editedEvent.name" /></p>
+                      [(ngModel)]="editedEvent.name"/></p>
       <p>Description: <input type="text"
                              name="description"
-                             [(ngModel)]="editedEvent.description" /></p>
+                             [(ngModel)]="editedEvent.description"/></p>
       <p>
         <button type="button"
                 class="btn btn-primary"
-                (click)="updateEvent(editedEvent)">Submit</button>
+                (click)="updateEvent(editedEvent)">Submit
+        </button>
         <button type="button"
                 class="btn btn-warning"
-                (click)="cancelEdits()">Cancel</button>
+                (click)="cancelEdits()">Cancel
+        </button>
       </p>
     </form>
   </div>

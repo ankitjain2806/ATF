@@ -8,7 +8,7 @@ var envConfig = {
       clientSecret: '44ui31IRScrmBYu13xmWYS8f',
       callbackUrl: '/auth/google/callback'
     },
-    mongoURI: 'mongodb://localhost:27017/ATF',
+    mongoURI: 'mongodb://localhost:27017/ATF2',
     sessionSecret: 'myKey',
     glotToken: 'Token 9b90f202-6a45-451d-bc8f-7a72707242c0'
   },

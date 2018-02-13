@@ -13,6 +13,8 @@ var UserSchema = new mongoose.Schema({
   lastUpdated: {type: Date, default: Date.now},
   isActive: {type: Boolean, default: false},
   isInvited: {type: Boolean, default: false},
+  isAdmin: {type: Boolean, default: false},
+  totalPoints: {type: Number, default: 0},
   events: [new mongoose.Schema({
       eventId: {type: mongoose.Schema.Types.ObjectId, ref: 'Event'},
       isBlocked: {type: Boolean, default: false}

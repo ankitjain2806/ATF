@@ -19,6 +19,7 @@ var EventSchema = new Schema({
   description: String,
   stages: [StageSchema],
   lastUpdated: {type: Date, default: Date.now},
+  memberCount: Number,
   teams: [TeamSchema]
 }, {strict: false});
 var Event = mongoose.model('Event', EventSchema);
