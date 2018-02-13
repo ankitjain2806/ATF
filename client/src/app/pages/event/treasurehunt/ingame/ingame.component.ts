@@ -31,10 +31,16 @@ export class IngameComponent implements OnInit {
 
   ngOnInit() {
     // const slug = this.activatedRouter.params['slug'];
-    this.paramsSub = this.activatedRouter.params.subscribe(params => {
+   /* this.paramsSub = this.activatedRouter.params.subscribe(params => {
       this.slug = params['slug'];
       this.getCurrentQuestion();
-    });
+    });*/
+    /**
+     * @todo  need to remove hardcoded
+     */
+    this.slug = 'treasurehunt';
+    this.getCurrentQuestion();
+
   }
 
   checkAnswerAndChangeState() {
@@ -73,6 +79,7 @@ export class IngameComponent implements OnInit {
   }
 
   private getCurrentQuestion() {
+
     this.treasurehuntService.getUserState(this.userSession._id, this.slug).subscribe(state => {
       this.state = state['data'][0];
       /** check state if completed or in progress*/
