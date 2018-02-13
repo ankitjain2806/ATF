@@ -14,10 +14,10 @@ npm install
 export NODE_ENV=development
 echo "Starting the server"
 #npm start
-nohup  npm start & > log1.js
+nohup  npm start & > /srv/logs/atf/log1.js
 
 cd microservices
 echo "Starting microservice"
-nohup node compiler.js & > log2.js
+nohup node compiler.js & > /srv/logs/atf/log2.js
 
 
