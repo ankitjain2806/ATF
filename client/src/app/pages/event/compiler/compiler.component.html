@@ -24,6 +24,10 @@
         <select class="form-control col-4" formControlName="language">
           <option *ngFor="let language of languages" [value]="language.slug">{{language.language}}</option>
         </select>
+        <div class="col-4">
+
+        </div>
+        <span>Last saved on : {{draft.lastUpdated}}</span>
       </div>
       <div class="form-group">
         <button type="submit" class="btn btn-primary">Submit Code</button>

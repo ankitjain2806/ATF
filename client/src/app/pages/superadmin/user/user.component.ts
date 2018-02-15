@@ -2,7 +2,6 @@ import {Component, Input, OnInit} from '@angular/core';
 import {SuperAdminService} from "../superadmin.service";
 import {clone} from 'lodash';
 import {IEvent} from "../../../models/event";
-import {UserEvent} from "../../../models/user-event";
 
 @Component({
   moduleId: module.id,
