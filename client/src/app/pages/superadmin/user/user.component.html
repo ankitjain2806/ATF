@@ -1,1 +1,19 @@
-hello
+<div class="container-fluid row">
+  <div class="col-md-4 offset-1">
+      <div *ngFor="let user of users">
+      <a type="button" class="btn btn-primary"(click)="getAllEvents(user._id)">{{user.providerData.displayName}}</a>
+    </div>
+  </div>
+  <div class="col-md-4 offset-1">
+    <div *ngIf="isUserSelected">
+      <div *ngFor="let event of events.events">
+        <strong>{{event.name}}</strong>
+        <button type="button" [disabled]="event.isBlocked== true" (click)="blockEvent(event.id)" ngClass="{{event.isBlocked == true ? 'btn btn-outline-secondary':'btn btn-outline-primary'}}">
+      <span>
+       Block
+      </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

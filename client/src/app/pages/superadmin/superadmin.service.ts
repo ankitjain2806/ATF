@@ -12,7 +12,7 @@ export class SuperAdminService {
   constructor(private http: HttpService) {
   }
 
-  getAllEvents(): Observable<any> {
+    getAllEvents(): Observable<any> {
     return this.http.get('/api/events/all', {});
   }
 
@@ -26,5 +26,21 @@ export class SuperAdminService {
 
   deleteEvent(event :IEvent): Observable<any>{
     return this.http.delete("/api/superadmin/events/deleteEvent/"+event._id, {});
+  }
+
+  getAllUsers():Observable<any>{
+    return this.http.get("/api/superadmin/users",{});
+  }
+
+  getEventByUserId(slug:string):Observable<any>{
+    return this.http.get("/api/superadmin/users/getEvents/"+slug, {});
+  }
+
+  blockEvent(userId:string, eventId:string){
+    return this.http.put("/api/superadmin/users/block",{userId,eventId});
+  }
+
+  addResource(resourceValue:any){
+    return this.http.post("/api/events/addResource", resourceValue);
   }
 }

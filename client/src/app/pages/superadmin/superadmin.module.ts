@@ -5,17 +5,21 @@ import {SuperAdminService} from "./superadmin.service";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {EventAdminComponent} from "./event/event.component";
 import {UserAdminComponent} from "./user/user.component";
+import {BrowserModule} from "@angular/platform-browser";
+import {ResourceComponent} from "./resource/resource.component";
 
 @NgModule({
   imports: [
     CommonModule,
     SuperAdminRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserModule
   ],
   declarations: [
     EventAdminComponent,
-    UserAdminComponent
+    UserAdminComponent,
+    ResourceComponent
   ],
   providers: [
     SuperAdminService
