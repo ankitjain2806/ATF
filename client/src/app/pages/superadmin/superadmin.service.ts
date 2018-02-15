@@ -41,6 +41,6 @@ export class SuperAdminService {
   }
 
   addResource(resourceValue:any){
-    return this.http.post("/api/events/addResource", resourceValue);
+    return this.http.post("/api/events/compiler/addResource", resourceValue);
   }
 }

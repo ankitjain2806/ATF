@@ -53,7 +53,6 @@ export class ResourceComponent implements OnInit {
       name:'',
       body:'',
       eventId:'',
-      isActive:'',
       testCases: this._fb.array([this.initTestCases()])
     });
   }
