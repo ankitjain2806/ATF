@@ -1,27 +1,34 @@
 <div class="container-fluid">
   <h1>{{resource.name}}</h1>
-  <div class="col-12">
-    {{resource.body}}
+  <div>
+    <div class="row">
+      <div class="col-12">
+        <label>Problem.&nbsp;</label>{{resource.body}}
+      </div>
+    </div>
     <form [formGroup]="compilerForm" novalidate (ngSubmit)="onSubmit()">
-      <div ace-editor
-           [(text)]="text"
-           [mode]="'java'"
-           [theme]="'dracula'"
-           [options]="options"
-           [readOnly]="false"
-           [autoUpdateContent]="true"
-           [durationBeforeCallback]="1000"
-           (textChanged)="onChange($event)"
-           class="editor-style col-12 form-control">
+      <div class="form-group">
+          <div ace-editor
+               [(text)]="text"
+               [mode]="'java'"
+               [theme]="'dracula'"
+               [options]="options"
+               [readOnly]="false"
+               [autoUpdateContent]="true"
+               [durationBeforeCallback]="1000"
+               (textChanged)="onChange($event)"
+               class="editor-style col-12 form-control">
+          </div>
       </div>
-      <div>
-
+      <div class="form-group">
+        <select class="form-control col-4" formControlName="language">
+          <option *ngFor="let language of languages" [value]="language.slug">{{language.language}}</option>
+        </select>
       </div>
-      <!--<textarea name="code" title="code" ></textarea>-->
-      <select class="form-control" formControlName="language">
-        <option *ngFor="let language of languages" [value]="language.slug">{{language.language}}</option>
-      </select>
-      <button type="submit" class="btn btn-primary">Submit Code</button>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary">Submit Code</button>
+        <button type="button" class="btn btn-info" (click)="saveDraft()">Save Draft</button>
+      </div>
     </form>
   </div>
   <div class="red">

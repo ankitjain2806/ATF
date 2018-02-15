@@ -15,9 +15,8 @@ export class CompilerService {
 
   }
 
-  runCompilerCode(form: CompilerForm, resourceId: string, Resource: string) {
+  runCompilerCode(form: CompilerForm, resourceId: string) {
     form['resourceId'] = resourceId;
-    form['Resource'] = Resource;
     const url = this.local_base + '/run';
     return this.http.post(url, form);
   }
@@ -30,5 +29,11 @@ export class CompilerService {
   getResourceById(resourceId: string): Observable<any> {
     const url = this.local_base + '/getResource/'+resourceId;
     return this.http.get(url, {});
+  }
+
+  saveDraft(form: CompilerForm, resourceId: string) {
+    form['resourceId'] = resourceId;
+    const url = this.local_base + '/saveDraft';
+    return this.http.post(url, form);
   }
 }

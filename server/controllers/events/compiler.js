@@ -2,6 +2,7 @@ var express = require('express');
 var EventModel = require('../../models/Event');
 var User = require('../../models/User');
 var CompilerResource = require('../../models/CompilerResource');
+var CompilerDrafts = require('../../models/CompilerDrafts');
 var EventLog = require('../../models/EventLog');
 
 var router = express.Router();
@@ -103,24 +104,61 @@ router.post('/addResource', function (req, res, next) {
   }
   var resource = new CompilerResource(resourceObj);
   resource.save(function (err, data) {
-    if (err) {
-      res.json(err);
-    } else {
-      res.json({msg : 'Resource Saved'})
-    }
-  })
-});
-
-router.get('/getResource/:id', function (req, res, next) {
-  var query = CompilerResource.findById(req.params.id).select('name body eventId');
-  query.exec(query, function (err, data) {
     res.locals.responseObj = {
       err: err,
       data: data,
-      msg: "compiler resources"
-    }
-    next()
+      msg: 'resource added'
+    };
+    next();
   })
 }, responseHandler);
 
+router.post('/saveDraft', function (req, res, next) {
+  var query = {
+    'userId': req.session.user._id,
+    'compilerResourceId': req.body.resourceId
+  };
+  var body = {
+    code: req.body.code,
+    language: req.body.language,
+    userId: req.session.user._id,
+    compilerResourceId: req.body.resourceId,
+    lastUpdated: new Date()
+  }
+  CompilerDrafts.findOneAndUpdate(query, body, {upsert: true, 'new': true}, function (err, data) {
+    res.locals.responseObj = {
+      err: err,
+      data: data,
+      msg: 'draft saved'
+    };
+    next();
+  });
+}, responseHandler)
+
+router.get('/getResource/:id', function (req, res, next) {
+  async.series({
+    resource: function (callback) {
+      var query = CompilerResource.findById(req.params.id).select('name body eventId');
+      query.exec(query, function (err, data) {
+        callback(err, data);
+      })
+    },
+    draft: function (callback) {
+      var query = {
+        'userId': req.session.user._id,
+        'compilerResourceId': req.params.id
+      };
+      CompilerDrafts.findOne(query, function (err, data) {
+        callback(err, data);
+      });
+    }
+  }, function (err, results) {
+    res.locals.responseObj = {
+      err: err,
+      data: results,
+      msg: "compiler resources"
+    }
+    next();
+  });
+}, responseHandler);
 module.exports = router;

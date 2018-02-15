@@ -18,10 +18,11 @@ import 'brace/index';
 
 export class CompilerComponent implements OnInit {
   resource: Resource;
+  draft;
   compilerForm: FormGroup;
   output: string;
-  text:string = "";
-  options:any = {maxLines: 1000, printMargin: false};
+  text: string = "";
+  options: any = {maxLines: 1000, printMargin: false};
 
   languages = [
     {language: 'PHP', slug: 'php'},
@@ -37,14 +38,18 @@ export class CompilerComponent implements OnInit {
               private route: ActivatedRoute,
               private socketService: SocketService) {
     this.route.data.subscribe((res) => {
-      this.resource = res.resource.data;
+      this.resource = res.resource.data.resource;
+      this.draft = res.resource.data.draft;
+      if (this.draft) {
+        this.text = this.draft.code;
+      }
     });
   }
 
   ngOnInit() {
     this.compilerForm = this.fb.group({
-      code: [''],
-      language: ['java'],
+      code: [(this.draft) ? this.draft.code : ''],
+      language: [(this.draft) ? this.draft.language : ''],
     });
   }
 
@@ -53,12 +58,18 @@ export class CompilerComponent implements OnInit {
       this.output = data.response.stdout;
     });
 
-    this.compilerService.runCompilerCode(this.compilerForm.value, this.resource._id, this.resource.eventId).subscribe((res: any) => {
+    this.compilerService.runCompilerCode(this.compilerForm.value, this.resource._id).subscribe((res) => {
       this.output = 'Brace yourself!! code is being compiled';
     })
   }
 
   onChange(code) {
     this.compilerForm.controls.code.setValue(code);
+  }
+
+  saveDraft() {
+    this.compilerService.saveDraft(this.compilerForm.value, this.resource._id).subscribe((res) => {
+      //@todo: show last draft
+    })
   }
 }
