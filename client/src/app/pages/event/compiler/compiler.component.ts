@@ -1,11 +1,12 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormGroup, FormControl, FormBuilder, Validators, FormArray} from '@angular/forms';
 import {EventService} from "../event.service";
+import {CompilerService} from "./compiler.service";
 import {SocketService} from "../../../shared/util/socket.service";
 import {ActivatedRoute} from "@angular/router";
 import {AceEditorComponent} from "ng2-ace-editor"
 import {Resource} from "../../../models/Resource";
-import 'brace/theme/clouds';
+import 'brace/theme/dracula';
 import 'brace/mode/java.js';
 import 'brace/index';
 
@@ -32,10 +33,11 @@ export class CompilerComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private eventService: EventService,
+              private compilerService: CompilerService,
               private route: ActivatedRoute,
               private socketService: SocketService) {
     this.route.data.subscribe((res) => {
-      this.resource = res.resource;
+      this.resource = res.resource.data;
     });
   }
 
@@ -51,7 +53,7 @@ export class CompilerComponent implements OnInit {
       this.output = data.response.stdout;
     });
 
-    this.eventService.runCompilerCode(this.compilerForm.value, this.resource._id, this.resource.eventId).subscribe((res: any) => {
+    this.compilerService.runCompilerCode(this.compilerForm.value, this.resource._id, this.resource.eventId).subscribe((res: any) => {
       this.output = 'Brace yourself!! code is being compiled';
     })
   }
