@@ -52,7 +52,7 @@ export class ResourceComponent implements OnInit {
     this.resourceForm = this._fb.group({
       name:'',
       body:'',
-      eventId:'',
+      isActive:'',
       testCases: this._fb.array([this.initTestCases()])
     });
   }
