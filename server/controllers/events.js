@@ -2,7 +2,7 @@ var express = require('express');
 var EventModel = require('../models/Event');
 var TeamModel = require('../models/Team');
 var User = require('../models/User');
-var Resource = require('../models/Resource');
+var Resource = require('../models/CompilerResource');
 var UserEventStateModel = require('../models/UserEventState');
 var router = express.Router();
 var async = require('async');
@@ -41,58 +41,6 @@ router.get('/getEventDetails/:slug', function (req, res, next) {
   });
 
 
-});
-
-router.get('/resources/:slug', function (req, res, next) {
-  async.waterfall([
-    function (callback) {
-      var query = {
-        slug: req.params.slug,
-      };
-      EventModel.findOne(query, function (err, event) {
-        callback(null, event);
-      });
-    },
-    function (event, callback) {
-      var query = {
-        eventId: event._id
-      };
-      var query = Resource.find(query).select('name');
-      query.exec(function (err, resources) {
-        res.json({resources : resources});
-      });
-    }
-  ]);
-
-});
-
-router.post('/addResource', function (req, res, next) {
-  var resourceObj = {
-    name: req.body.name,
-    body: req.body.body,
-    testCases: req.body.testCases,
-    eventId: req.body.eventId,
-    isActive: req.body.isActive,
-  }
-  var resource = new Resource(resourceObj);
-  resource.save(function (err, data) {
-    if (err) {
-      res.json(err);
-    } else {
-      res.json({msg : 'Resource Saved'})
-    }
-  })
-});
-
-router.get('/getResource/:id', function (req, res, next) {
-  var query = Resource.findById(req.params.id).select('name body eventId');
-  query.exec(query, function (err, data) {
-    if (err) {
-      res.json(err);
-    } else {
-      res.json(data)
-    }
-  })
 });
 
 router.get('/all', function (req, res, next) {

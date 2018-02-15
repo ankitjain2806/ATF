@@ -6,14 +6,14 @@ import {Resolve, ActivatedRouteSnapshot} from '@angular/router';
 import {HttpService} from '../../../shared/util/http.service';
 import {EventRegistration} from "../../../models/event-registration";
 import {IEvent} from "../../../models/event";
-import {EventService} from "../event.service";
+import {CompilerService} from "./compiler.service";
 
 import 'rxjs/add/operator/map';
 
 @Injectable()
 export class CompilerResolverService implements Resolve<IEvent>{
 
-  constructor(private service: EventService) {
+  constructor(private service: CompilerService) {
   }
 
   resolve(route: ActivatedRouteSnapshot): Observable <any> {

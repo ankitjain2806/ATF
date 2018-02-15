@@ -3,7 +3,7 @@ var router = express.Router();
 var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth2').Strategy;
 var User = require('../models/User');
-var responseHandler = require('../util/responseHandler');
+var responseHandler = require('../util/responseHandler').Response;
 var envConfig = require('../config/env');
 
 passport.serializeUser(function (user, done) {
@@ -65,7 +65,7 @@ router.get('/google',
   ));
 
 router.get('/google/callback', passport.authenticate('google', {
-  successRedirect: '/',
+  successRedirect: '/dashboard',
   failureRedirect: '/'
 }));
 
@@ -73,11 +73,16 @@ router.get('/google/callback', passport.authenticate('google', {
 router.get('/getCurrentSession', function (req, res, next) {
   var sessionObj = {user: null};
   if (req.session && req.session.user) {
-    sessionObj.user = req.session.user;
+    sessionObj.user = {
+      id: req.session.user._id,
+      email: req.session.user.email,
+      imageUrl: req.session.user.imageUrl,
+      name: req.session.user.providerData.name
+    }
   }
-  // responseHandler.response(res, 200, null, sessionObj)
-  res.json(sessionObj)
-});
+  res.locals.responseObj = sessionObj;
+  next();
+}, responseHandler);
 
 
 router.get('/logout', function (req, res, next) {

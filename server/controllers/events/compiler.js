@@ -1,7 +1,7 @@
 var express = require('express');
 var EventModel = require('../../models/Event');
 var User = require('../../models/User');
-var Resources = require('../../models/Resource');
+var CompilerResource = require('../../models/CompilerResource');
 var EventLog = require('../../models/EventLog');
 
 var router = express.Router();
@@ -11,6 +11,9 @@ var envConfig = require('../../config/env');
 var langObj = require('../../config/languageConst');
 var amqp = require('amqplib/callback_api');
 var socket = require('../../util/socket');
+
+var responseHandler = require('../../util/responseHandler').Response;
+
 router.post('/run', function (req, res, next) {
 
   // var amqp = require('amqplib/callback_api');
@@ -22,7 +25,7 @@ router.post('/run', function (req, res, next) {
       var language = req.body.language;
       var lang = langObj[language];
       var testCases;
-      var query = Resources.findById(req.body.resourceId).select('testCases');
+      var query = CompilerResource.findById(req.body.resourceId).select('testCases');
       async.series([
         function (callback) {
           query.exec(query, function (err, data) {
@@ -60,12 +63,13 @@ router.post('/run', function (req, res, next) {
               log: JSON.stringify(obj),
               points: (!response.err) ? 10 : -10
             };
-
+            console.log("===================================")
+            console.log(response)
+            console.log("===================================")
             var eventLog = new EventLog(eventLogObj);
             eventLog.save(function (err, data) {
               console.log(err, data)
             });
-
             socket.send('compilerSocket', response);
           }, {noAck: true});
         }
@@ -75,5 +79,48 @@ router.post('/run', function (req, res, next) {
   });
 });
 
+router.get('/resources', function (req, res, next) {
+  var query = {
+    isActive: true
+  };
+  var query = CompilerResource.find(query).select('name');
+  query.exec(function (err, resources) {
+    res.locals.responseObj = {
+      err: err,
+      data: resources,
+      msg: "compiler resources"
+    }
+    next();
+  });
+}, responseHandler);
+
+router.post('/addResource', function (req, res, next) {
+  var resourceObj = {
+    name: req.body.name,
+    body: req.body.body,
+    testCases: req.body.testCases,
+    isActive: req.body.isActive,
+  }
+  var resource = new CompilerResource(resourceObj);
+  resource.save(function (err, data) {
+    if (err) {
+      res.json(err);
+    } else {
+      res.json({msg : 'Resource Saved'})
+    }
+  })
+});
+
+router.get('/getResource/:id', function (req, res, next) {
+  var query = CompilerResource.findById(req.params.id).select('name body eventId');
+  query.exec(query, function (err, data) {
+    res.locals.responseObj = {
+      err: err,
+      data: data,
+      msg: "compiler resources"
+    }
+    next()
+  })
+}, responseHandler);
 
 module.exports = router;

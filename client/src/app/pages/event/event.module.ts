@@ -22,6 +22,7 @@ import {EventEndDetailsResolverService} from "./event-end/event-end-resolver.ser
 import {FinishedGuardService} from "./event-end/finished-guard.service";
 import {CompilerIntroResolverService} from "./compiler/compiler-intro/compiler-intro-resolver.service";
 import {CompilerResolverService} from "./compiler/compiler-resolver.service";
+import {CompilerService} from "./compiler/compiler.service";
 
 @NgModule({
   imports: [
@@ -52,7 +53,7 @@ import {CompilerResolverService} from "./compiler/compiler-resolver.service";
     FinishedGuardService,
     CompilerIntroResolverService,
     CompilerResolverService,
-
+    CompilerService
   ]
 })
 export class EventModule {
