@@ -20,7 +20,7 @@ export class CompilerComponent implements OnInit {
   resource: Resource;
   draft;
   compilerForm: FormGroup;
-  output: string;
+  output = [];
   text: string = "";
   options: any = {maxLines: 1000, printMargin: false};
 
@@ -55,11 +55,12 @@ export class CompilerComponent implements OnInit {
 
   onSubmit() {
     this.socketService.receiveSocket('compilerSocket').subscribe((data) => {
-      this.output = data.response.stdout;
+      this.output.push(data);
     });
 
     this.compilerService.runCompilerCode(this.compilerForm.value, this.resource._id).subscribe((res) => {
-      this.output = 'Brace yourself!! code is being compiled';
+      // this.output = 'Brace yourself!! code is being compiled';
+      this.output = [];
     })
   }
 
