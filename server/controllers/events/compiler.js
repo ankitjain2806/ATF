@@ -144,6 +144,9 @@ router.get('/getResource/:id', function (req, res, next) {
       CompilerDrafts.findOne(query, function (err, data) {
         callback(err, data);
       });
+    },
+    language: function(callback){
+      callback(null,langObj);
     }
   }, function (err, results) {
     res.locals.responseObj = {
