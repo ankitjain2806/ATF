@@ -49,7 +49,7 @@ export class CompilerComponent implements OnInit {
   ngOnInit() {
     this.compilerForm = this.fb.group({
       code: [(this.draft) ? this.draft.code : ''],
-      language: [(this.draft) ? this.draft.language : ''],
+      language: [(this.draft) ? this.draft.language : 'java'],
     });
   }
 

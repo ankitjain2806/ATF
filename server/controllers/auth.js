@@ -77,7 +77,8 @@ router.get('/getCurrentSession', function (req, res, next) {
       id: req.session.user._id,
       email: req.session.user.email,
       imageUrl: req.session.user.imageUrl,
-      name: req.session.user.providerData.name
+      name: req.session.user.providerData,
+      role: (req.session.user.isAdmin) ? 'admin':'user'
     }
   }
   res.locals.responseObj = sessionObj;

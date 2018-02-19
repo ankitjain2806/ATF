@@ -14,6 +14,7 @@ var index = require('./controllers/index');
 var usersController = require('./controllers/users');
 var eventsController = require('./controllers/events');
 var compilerController = require('./controllers/events/compiler');
+var treasureHuntController = require('./controllers/events/treasurehunt');
 var superAdminController = require('./controllers/superadmin');
 var AuthController = require('./controllers/auth')
 
@@ -70,14 +71,23 @@ var isLoggedIn = function (req, res, next) {
   if (req.session && typeof req.session.user !== undefined) {
     next();
   } else {
-    res.redirect('/');
+    res.sendStatus(401);
+  }
+};
+
+var isAdmin = function (req, res, next) {
+  if (req.session && typeof req.session.user !== undefined && req.session.user.isAdmin) {
+    next();
+  } else {
+    res.sendStatus(401);
   }
 };
 
 app.use('/api/users', isLoggedIn, usersController);
 app.use('/api/events/compiler', isLoggedIn,compilerController);
-app.use('/api/events', isLoggedIn,eventsController);
-app.use('/api/superadmin', isLoggedIn, superAdminController);
+app.use('/api/events/treasurehunt', isLoggedIn, treasureHuntController);
+app.use('/api/events', isLoggedIn, eventsController);
+app.use('/api/superadmin', isAdmin, superAdminController);
 app.use('/auth', AuthController)
 
 
