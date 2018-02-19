@@ -3,20 +3,22 @@ var router = express.Router();
 var async = require('async');
 var request = require('request');
 var responseHandler = require('../../util/responseHandler').Response;
-
-router.post('/treasurehunt/addResource', function (req, res, next) {
+var THResources = require('../../models/THResources')
+router.post('/addResource', function (req, res, next) {
   var resourceObj = {
     title: req.body.name,
     body: req.body.body,
     options: req.body.options,
     answer: req.body.answer,
-    isMCQ: (req.body.options.length > 0) ? true: false
+    stage: req.body.stage,
+    isMCQ: (Object.keys(req.body.options).length > 0) ? true: false
   }
-  var resource = new CompilerResource(resourceObj);
+  var resource = new THResources(resourceObj);
   resource.save(function (err, data) {
+    console.log(err, data);
     res.locals.responseObj = {
       err: err,
-      data: data,
+      data: null,
       msg: 'resource added'
     };
     next();

@@ -1,6 +1,5 @@
 var express = require('express');
 var EventModel = require('../models/Event');
-var TeamModel = require('../models/Team');
 var User = require('../models/User');
 var Resource = require('../models/CompilerResource');
 var UserEventStateModel = require('../models/UserEventState');

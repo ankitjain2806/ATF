@@ -8,16 +8,17 @@ var TeamSchema = new Schema({
   members: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
 });
 
+/*
 var StageSchema = new Schema({
   question: String,
   type: String
-}, {strict: false})
+}, {strict: false})*/
 
 var EventSchema = new Schema({
   name: String,
   slug: String,
   description: String,
-  stages: [StageSchema],
+  // stages: [StageSchema],
   lastUpdated: {type: Date, default: Date.now},
   memberCount: Number,
   teams: [TeamSchema]
