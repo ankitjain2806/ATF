@@ -6,8 +6,11 @@
 
   <div class="collapse navbar-collapse" id="navbarColor01">
     <ul class="navbar-nav mr-auto">
+      <li class="nav-item" *ngIf="userSession && userSession.role == 'admin'">
+        <a class="nav-link" [routerLink]="['superadmin']">Admin</a>
+      </li>
       <li class="nav-item" *ngIf="userSession">
-        <a class="nav-link" [routerLink]="['dashboard']">Dashboard<span class="sr-only">(current)</span></a>
+        <a class="nav-link" [routerLink]="['dashboard']">Dashboard</a>
       </li>
     </ul>
     <span class="text-white" *ngIf="userSession">

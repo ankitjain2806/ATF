@@ -36,6 +36,9 @@
     </form>
   </div>
   <div class="red">
-    output : {{output}}
+    output :
+    <div *ngFor="let result of output;">
+      TestCase #{{result.testCaseNumber}} : <span class="">{{result.testCasePass ? 'Pass': 'Fail'}}</span>
+    </div>
   </div>
 </div>

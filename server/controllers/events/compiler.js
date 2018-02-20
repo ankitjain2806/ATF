@@ -3,7 +3,7 @@ var EventModel = require('../../models/Event');
 var User = require('../../models/User');
 var CompilerResource = require('../../models/CompilerResource');
 var CompilerDrafts = require('../../models/CompilerDrafts');
-var EventLog = require('../../models/EventLog');
+var CompilerLog = require('../../models/CompilerLog');
 
 var router = express.Router();
 var async = require('async');
@@ -16,9 +16,6 @@ var socket = require('../../util/socket');
 var responseHandler = require('../../util/responseHandler').Response;
 
 router.post('/run', function (req, res, next) {
-
-  // var amqp = require('amqplib/callback_api');
-
   amqp.connect('amqp://localhost:5672', function (err, conn) {
     conn.createChannel(function (err, ch) {
       var q = 'compilerQueue';
@@ -51,27 +48,26 @@ router.post('/run', function (req, res, next) {
           // Note: on Node 6 Buffer.from(msg) should be used
           ch.sendToQueue(q, new Buffer(JSON.stringify(obj)));
           res.send({data: 'socket is on the way'});
+
+          /*-----------------------------------------------------------*/
           var resultQueue = 'resultQueue';
           ch.assertQueue(resultQueue, {durable: false});
           ch.consume(resultQueue, function (msg) {
-            // console.log(JSON.parse(msg.content.toString()));
             var response = JSON.parse(msg.content.toString())
-            delete obj.token;
-            var eventLogObj = {
+            /* var logObj = {
               userId: req.session.user._id,
-              eventId: req.body.eventId,
               resourceId: req.body.resourceId,
-              log: JSON.stringify(obj),
+              code: code,
               points: (!response.err) ? 10 : -10
             };
-            console.log("===================================")
-            console.log(response)
-            console.log("===================================")
             var eventLog = new EventLog(eventLogObj);
             eventLog.save(function (err, data) {
               console.log(err, data)
+            });*/
+            socket.send('compilerSocket', {
+              testCaseNumber: response.index,
+              testCasePass: response.testCasePass
             });
-            socket.send('compilerSocket', response);
           }, {noAck: true});
         }
       ]);
@@ -161,4 +157,5 @@ router.get('/getResource/:id', function (req, res, next) {
     next();
   });
 }, responseHandler);
+
 module.exports = router;

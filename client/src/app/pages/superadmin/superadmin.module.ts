@@ -7,6 +7,7 @@ import {EventAdminComponent} from "./event/event.component";
 import {UserAdminComponent} from "./user/user.component";
 import {BrowserModule} from "@angular/platform-browser";
 import {ResourceComponent} from "./resource/resource.component";
+import {AdminComponent} from "./admin/admin.component";
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import {ResourceComponent} from "./resource/resource.component";
   declarations: [
     EventAdminComponent,
     UserAdminComponent,
-    ResourceComponent
+    ResourceComponent,
+    AdminComponent
   ],
   providers: [
     SuperAdminService
