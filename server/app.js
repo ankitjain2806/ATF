@@ -15,8 +15,8 @@ var usersController = require('./controllers/users');
 var eventsController = require('./controllers/events');
 var compilerController = require('./controllers/events/compiler');
 var superAdminController = require('./controllers/superadmin');
-var AuthController = require('./controllers/auth')
-
+var AuthController = require('./controllers/auth');
+var HCKController = require('./controllers/events/HCK');
 
 
 var app = express();
@@ -78,7 +78,11 @@ app.use('/api/users', isLoggedIn, usersController);
 app.use('/api/events/compiler', isLoggedIn,compilerController);
 app.use('/api/events', isLoggedIn,eventsController);
 app.use('/api/superadmin', isLoggedIn, superAdminController);
-app.use('/auth', AuthController)
+app.use('/auth', AuthController);
+app.use('/api/events/HCK', isLoggedIn,HCKController);
+
+
+
 
 
 
