@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var EventModel = require('../models/Event');
 var User = require('../models/User');
+var HCKinfoModel = require('../models/HCKinfo');
 
 router.post('/events/addNewEvent', function (req, res, next) {
 
@@ -54,55 +55,100 @@ router.put('/events/updateEvent/:_id', function (req, res, next) {
 });
 
 
-
 //User Part
 
 router.get('/users', function (req, res, next) {
-    var query = User.find({});
-    query.exec(query, function (err, doc) {
-        if (err) {
-            console.log(err);
-        }
-        res.json(doc);
-        res.end();
-    });
+  var query = User.find({});
+  query.exec(query, function (err, doc) {
+    if (err) {
+      console.log(err);
+    }
+    res.json(doc);
+    res.end();
+  });
 });
 
 
 router.get('/users/getEvents/:userId', function (req, res, next) {
-    var query = User.findById(req.params.userId).select({'events': 1}).populate('events.id');
-    query.exec(query, function (err, doc) {
-        res.json(doc);
-        res.end();
-    });
+  var query = User.findById(req.params.userId).select({'events': 1});
+  query.exec(query, function (err, doc) {
+    res.json(doc);
+    res.end();
+  });
 });
 
 
 router.put('/users/block', function (req, res, next) {
-    // we expect 2 things from front  end
-    //1 = User id - req.body.userId
-    //2 = Event id - req.body.eventId
-    User.findById(req.body.userId, function (err, user) {
-        if (err)
-            console.log(err);
-        else {
-            var eventArray = user.events;
-            //loop through events to find matching event & set isBlocked as true for that event
-            for (var i = 0; i < eventArray.length; i++) {
-                if (eventArray[i].eventId === req.body.eventId) {
-                    eventArray[i].isBlocked = true;
-                    break;
-                }
-            }
-            user.save(function (err) {
-                if (err) {
-                    res.send(err);
-                }
-                res.json({"message": "Blocked Successfully"});
-                res.end();
-            });
+  // we expect 2 things from front  end
+  //1 = User id - req.body.userId
+  //2 = Event id - req.body.eventId
+  User.findById(req.body.userId, function (err, user) {
+    if (err)
+      console.log(err);
+    else {
+      var eventArray = user.events;
+      //loop through events to find matching event & set isBlocked as true for that event
+      for (var i = 0; i < eventArray.length; i++) {
+        if (eventArray[i].eventId === req.body.eventId) {
+          eventArray[i].isBlocked = true;
+          break;
         }
-    });
+      }
+      user.save(function (err) {
+        if (err) {
+          res.send(err);
+        }
+        res.json({"message": "Blocked Successfully"});
+        res.end();
+      });
+    }
+  });
+});
+
+//api to list all the teams registered for HCK
+router.get('/teams/getHCKteams', function (req, res, next) {
+  var query = EventModel.find({slug: 'hackathon'}).select({'teams':1});
+  query.exec(query, function (err, doc) {
+    if (err) {
+      console.log(err);
+    }
+    res.json(doc);
+    res.end();
+  });
+
+});
+//api to display details of the selected team
+router.get('/teams/HCK/showdetails/:teamId', function (req, res, next) {
+  var query = HCKinfoModel.findById(req.params.teamId);
+  query.exec(query, function (err, doc) {
+    res.json(doc);
+    res.end();
+  });
+});
+
+
+
+//api to approve Hackathon team
+router.put('/teams/HCK/approve', function (req, res, next) {
+
+  HCKinfoModel.findbyId(req.body.teamId, function (err, HCKinfo){
+
+    if (err) {
+      console.log(err);
+    }
+    else {
+      HCKinfo.isApproved = true ;
+      HCKinfo.save(function (err) {
+        if (err) {
+          res.send(err);
+        }
+        res.json({"message": "Approved Successfully"});
+        res.end();
+      });
+
+    }
+  });
+
 });
 
 

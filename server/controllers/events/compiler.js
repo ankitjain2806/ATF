@@ -54,7 +54,7 @@ router.post('/run', function (req, res, next) {
           ch.assertQueue(resultQueue, {durable: false});
           ch.consume(resultQueue, function (msg) {
             var response = JSON.parse(msg.content.toString())
-            var logObj = {
+            /* var logObj = {
               userId: req.session.user._id,
               resourceId: req.body.resourceId,
               code: code,
@@ -63,8 +63,11 @@ router.post('/run', function (req, res, next) {
             var eventLog = new EventLog(eventLogObj);
             eventLog.save(function (err, data) {
               console.log(err, data)
+            });*/
+            socket.send('compilerSocket', {
+              testCaseNumber: response.index,
+              testCasePass: response.testCasePass
             });
-            socket.send('compilerSocket', response);
           }, {noAck: true});
         }
       ]);

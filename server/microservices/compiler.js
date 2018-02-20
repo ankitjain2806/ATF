@@ -2,126 +2,66 @@ var express = require('express')
 var app = express()
 var amqp = require('amqplib/callback_api');
 var async = require('async');
-var request = require('request')
+var request = require('request');
+var _ = require('lodash');
+
 amqp.connect('amqp://localhost:5672', function (err, conn) {
-  // console.log(err,conn)
   conn.createChannel(function (err, ch) {
     var compilerQueue = 'compilerQueue';
     ch.assertQueue(compilerQueue, {durable: false});
     ch.consume(compilerQueue, function (msg) {
-      var obj = msg.content.toString();
-      obj = JSON.parse(obj);
-      var options = {
+      var userInput = msg.content.toString();
+      userInput = JSON.parse(userInput);
+      var testCases = userInput.testCases.testCases;
+      var optionsObj = {
         method: 'POST',
-        url: 'https://run.glot.io/languages/' + obj.langName + '/latest',
+        url: 'https://run.glot.io/languages/' + userInput.langName + '/latest',
         headers: {
-          'Authorization': obj.token,
+          'Authorization': userInput.token,
           'Content-type': 'application/json'
         },
         json: {
-          "stdin": obj.testCases.testCases[0].stdin,
+          "stdin": null,
           "files": [{
-            "name": "main." + obj.ext, "content": obj.code
+            "name": "main." + userInput.ext, "content": userInput.code
           }]
-        }
+        },
+        stdout: null
       };
 
-      function callback(error, response, body) {
-        var resultQueue = 'resultQueue';
-        var resultObj = {
-          error: error,
-          response: response.body,
-          status: response.statusCode,
-          matching:false
-        };
-        if(obj.testCases.testCases[0].stdout == response.body.stdout){
-          resultObj.matching=true;
-        }
-        // ch.assertQueue(resultQueue, {durable: false});
+      var callGlot = function (codeObj) {
+        request(codeObj, function (err, res, body) {
+          var resultQueue = 'resultQueue';
+          var resultObj = {
+            error: err,
+            response: res.body,
+            status: res.statusCode,
+            testCasePass: (body.stdout == codeObj.stdout) ? true : false,
+            index : codeObj.index
+          };
+          // ch.assertQueue(resultQueue, {durable: false});
           ch.sendToQueue(resultQueue, new Buffer(JSON.stringify(resultObj)));
+        })
       }
-      var i;
-      var a=[];
-      for(i=0;i<obj.testCases.testCases.length;i++){
-        a[i]=function(i) {
-            options.json.stdin=obj.testCases.testCases[i].stdin;
-            console.log("Test1 in loop" + obj.testCases.testCases[i].stdin);
-            request(options, function(err, res, body) {
-                var resultObj = {
-                    error: err,
-                    response: body,
-                    status: res.statusCode,
-                    matching:false
-                };
-                if(obj.testCases.testCases[i].stdout == body.stdout){
-                    resultObj.matching=true;
-                    console.log("Test "+i+" pass:");
-                }
-                console.log("resulta : "+  JSON.stringify(resultObj));
-                //send to queue obj.testCases.testCases[0].stdout
-            });
-        }
-      }
-      console.log("value of a"+ a);
-      async.parallel([
-            function() {
-              options.json.stdin=obj.testCases.testCases[0].stdin;
-              console.log("Test1" + obj.testCases.testCases[0].stdin);
-              request(options, function(err, res, body) {
-                var resultObj = {
-                  error: err,
-                  response: body,
-                  status: res.statusCode,
-                  matching:false
-                };
-                if(obj.testCases.testCases[0].stdout == body.stdout){
-                  resultObj.matching=true;
-                  console.log("Test 0 pass:");
-                }
-                console.log("resulta : "+  JSON.stringify(resultObj));
-                //send to queue obj.testCases.testCases[0].stdout
-              });
-            },
-            function() {
-              options.json.stdin=obj.testCases.testCases[1].stdin;
-              request(options, function(err, res, body) {
-                var resultObj = {
-                  error: err,
-                  response: body,
-                  status: res.statusCode,
-                  matching:false
-                };
-                if(obj.testCases.testCases[1].stdout == body.stdout){
-                  resultObj.matching=true;
-                  console.log("Test 1 pass:");
-                }
-                console.log("resultb : "+ JSON.stringify(resultObj));
-                //send to queue obj.testCases.testCases[0].stdout
-              });
-            },
-          function() {
-              options.json.stdin=obj.testCases.testCases[2].stdin;
-              request(options, function(err, res, body) {
-                  var resultObj = {
-                      error: err,
-                      response: body,
-                      status: res.statusCode,
-                      matching:false
-                  };
-                  if(obj.testCases.testCases[2].stdout == body.stdout){
-                      resultObj.matching=true;
-                      console.log("Test 2  pass:");
-                  }
-                  console.log("resultb : "+ JSON.stringify(resultObj));
-                  //send to queue obj.testCases.testCases[0].stdout
-              });
-          }
-          ]);
-          request(options, callback);
 
+      var optionArr = []
+      async.times(testCases.length, function (n, next) {
+        var tempObj = _.cloneDeep(optionsObj)
+        tempObj.json.stdin = testCases[n].stdin;
+        tempObj.stdout = testCases[n].stdout;
+        tempObj.index = n;
+        next(null, tempObj);
+      }, function (err, data) {
+        async.map(data, function (x, callback) {
+          callback(null, callGlot(x))
+        }, function (err, result) {
+          // @todo need to remove
+        })
+      });
     }, {noAck: true});
   });
 });
+
 
 app.listen(3100, function () {
   console.log('Example app listening on port 3100!')

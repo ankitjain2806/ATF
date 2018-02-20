@@ -16,8 +16,8 @@ var eventsController = require('./controllers/events');
 var compilerController = require('./controllers/events/compiler');
 var treasureHuntController = require('./controllers/events/treasurehunt');
 var superAdminController = require('./controllers/superadmin');
-var AuthController = require('./controllers/auth')
-
+var AuthController = require('./controllers/auth');
+var HCKController = require('./controllers/events/HCK');
 
 
 var app = express();
@@ -88,7 +88,11 @@ app.use('/api/events/compiler', isLoggedIn,compilerController);
 app.use('/api/events/treasurehunt', isLoggedIn, treasureHuntController);
 app.use('/api/events', isLoggedIn, eventsController);
 app.use('/api/superadmin', isAdmin, superAdminController);
-app.use('/auth', AuthController)
+app.use('/auth', AuthController);
+app.use('/api/events/HCK', isLoggedIn,HCKController);
+
+
+
 
 
 
