@@ -51,13 +51,15 @@ export class CompilerComponent implements OnInit {
       code: [(this.draft) ? this.draft.code : ''],
       language: [(this.draft) ? this.draft.language : 'java'],
     });
+    this.socketService.receiveMessage('compilerSocket').subscribe((data) => {
+      this.output.push(data);
+    });
   }
 
   onSubmit() {
-    this.socketService.receiveSocket('compilerSocket').subscribe((data) => {
-      this.output.push(data);
-    });
+    /**/
 
+    // this.socketService.sendMessage('testing')
     this.compilerService.runCompilerCode(this.compilerForm.value, this.resource._id).subscribe((res) => {
       // this.output = 'Brace yourself!! code is being compiled';
       this.output = [];

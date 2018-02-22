@@ -15,6 +15,33 @@ var socket = require('../../util/socket');
 
 var responseHandler = require('../../util/responseHandler').Response;
 
+var compilerMQSocket = function (user) {
+  amqp.connect('amqp://localhost:5672', function (err, conn) {
+    conn.createChannel(function (err, ch) {
+      var resultQueue = 'resultQueue';
+      ch.assertQueue(resultQueue, {durable: false});
+      ch.consume(resultQueue, function (msg) {
+        var response = JSON.parse(msg.content.toString())
+        /* var logObj = {
+          userId: req.session.user._id,
+          resourceId: req.body.resourceId,
+          code: code,
+          points: (!response.err) ? 10 : -10
+        };
+        var eventLog = new EventLog(eventLogObj);
+        eventLog.save(function (err, data) {
+          console.log(err, data)
+        });*/
+        socket.send('compilerSocket', {
+          testCaseNumber: response.index,
+          testCasePass: response.testCasePass
+        }, response.userId);
+      }, {noAck: true});
+    });
+  });
+};
+
+compilerMQSocket();
 router.post('/run', function (req, res, next) {
   amqp.connect('amqp://localhost:5672', function (err, conn) {
     conn.createChannel(function (err, ch) {
@@ -30,45 +57,28 @@ router.post('/run', function (req, res, next) {
             if (err) {
               res.json(err);
             } else {
-              console.log('data    ' + data);
+              // .log('data    ' + data);
               testCases = data;
               callback();
             }
           })
         },
         function (callback) {
-          console.log('testCase  ' + testCases)
+          // console.log('testCase  ' + testCases)
           var obj = {
             langName: lang.name,
             token: envConfig.glotToken,
             ext: lang.ext,
             code: code,
-            testCases: testCases
+            testCases: testCases,
+            userId: req.session.user._id
           };
           // Note: on Node 6 Buffer.from(msg) should be used
           ch.sendToQueue(q, new Buffer(JSON.stringify(obj)));
           res.send({data: 'socket is on the way'});
 
           /*-----------------------------------------------------------*/
-          var resultQueue = 'resultQueue';
-          ch.assertQueue(resultQueue, {durable: false});
-          ch.consume(resultQueue, function (msg) {
-            var response = JSON.parse(msg.content.toString())
-            /* var logObj = {
-              userId: req.session.user._id,
-              resourceId: req.body.resourceId,
-              code: code,
-              points: (!response.err) ? 10 : -10
-            };
-            var eventLog = new EventLog(eventLogObj);
-            eventLog.save(function (err, data) {
-              console.log(err, data)
-            });*/
-            socket.send('compilerSocket', {
-              testCaseNumber: response.index,
-              testCasePass: response.testCasePass
-            });
-          }, {noAck: true});
+
         }
       ]);
     });

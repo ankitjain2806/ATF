@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {HeaderService} from './header.service'
 import {UserSessionService} from "../shared/util/user-session.service";
+import {SocketService} from "../shared/util/socket.service";
 
 @Component({
   selector: 'app-header',
@@ -13,6 +14,7 @@ export class HeaderComponent implements OnInit {
 
   constructor(private router: Router,
               private session: UserSessionService,
+              private socketService: SocketService,
               private headerService: HeaderService) {
     this.headerService.getUserSession()
       .subscribe(res => {
@@ -20,8 +22,13 @@ export class HeaderComponent implements OnInit {
         if (res.user != null) {
           localStorage.setItem('userSession', JSON.stringify(res.user));
           this.userSession = res.user;
+          this.socketService.sendMessage('new_con', {
+            userId : res.user.id
+          });
         }
       });
+
+
   }
 
   ngOnInit() {

@@ -12,6 +12,7 @@ amqp.connect('amqp://localhost:5672', function (err, conn) {
     ch.consume(compilerQueue, function (msg) {
       var userInput = msg.content.toString();
       userInput = JSON.parse(userInput);
+      var userId = userInput.userId;
       var testCases = userInput.testCases.testCases;
       var optionsObj = {
         method: 'POST',
@@ -37,7 +38,8 @@ amqp.connect('amqp://localhost:5672', function (err, conn) {
             response: res.body,
             status: res.statusCode,
             testCasePass: (body.stdout == codeObj.stdout) ? true : false,
-            index : codeObj.index
+            index : codeObj.index+1,
+            userId: userId
           };
           // ch.assertQueue(resultQueue, {durable: false});
           ch.sendToQueue(resultQueue, new Buffer(JSON.stringify(resultObj)));
@@ -49,7 +51,7 @@ amqp.connect('amqp://localhost:5672', function (err, conn) {
         var tempObj = _.cloneDeep(optionsObj)
         tempObj.json.stdin = testCases[n].stdin;
         tempObj.stdout = testCases[n].stdout;
-        tempObj.index = n;
+        tempObj.index = n
         next(null, tempObj);
       }, function (err, data) {
         async.map(data, function (x, callback) {
