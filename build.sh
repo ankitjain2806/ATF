@@ -21,7 +21,7 @@ export PID_COMPILER_FILE=$PID_DIR/atf-compiler.pid
 export LOG_PATH=/opt/live/apps/ATF/logs
 export LOG_FILE=$LOG_DIR/server.log
 forever stop ./bin/www
-forever start -o $LOG_PATH/server_out.log -e $LOG_PATH/server_err.log 1 --pidFile $PID_SERVER_FILE ./bin/www
+forever start -o $LOG_PATH/server_out.log -e $LOG_PATH/server_err.log ./bin/www
 # forever start -o /opt/live/apps/ATF/logs/server_out.log -e /opt/live/apps/ATF/logs/server_err.log ./bin/www
 
 cd microservices
