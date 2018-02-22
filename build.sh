@@ -2,6 +2,7 @@
 
 echo "Fetching updates from repository"
 git pull
+export PATH=/usr/local/bin
 cd client
 echo "Updating client npm"
 npm install
