@@ -70,8 +70,11 @@ router.get('/users', function (req, res, next) {
 
 
 router.get('/users/getEvents/:userId', function (req, res, next) {
-  var query = User.findById(req.params.userId).select({'events': 1});
+  var query = User.findById(req.params.userId).select({'events': 1}).populate({path : 'events.eventId', select: 'name'});
   query.exec(query, function (err, doc) {
+    if(err) {
+      console.log(err);
+    }
     res.json(doc);
     res.end();
   });
@@ -117,10 +120,13 @@ router.get('/teams/getHCKteams', function (req, res, next) {
   });
 
 });
+
 //api to display details of the selected team
 router.get('/teams/HCK/showdetails/:teamId', function (req, res, next) {
-  var query = HCKinfoModel.findById(req.params.teamId);
-  query.exec(query, function (err, doc) {
+  HCKinfoModel.find({"teamId":req.params.teamId}, function (err, doc) {
+    if (err) {
+      console.log(err);
+    }
     res.json(doc);
     res.end();
   });
@@ -128,21 +134,20 @@ router.get('/teams/HCK/showdetails/:teamId', function (req, res, next) {
 
 
 
-//api to approve Hackathon team
+//api to approve/reject Hackathon team
 router.put('/teams/HCK/approve', function (req, res, next) {
 
-  HCKinfoModel.findbyId(req.body.teamId, function (err, HCKinfo){
-
+  HCKinfoModel.findOne({"teamId":req.body.teamId}, function (err, doc){
     if (err) {
       console.log(err);
     }
     else {
-      HCKinfo.isApproved = true ;
-      HCKinfo.save(function (err) {
+      doc.isApproved = req.body.isApproved ;
+      doc.save(function (err) {
         if (err) {
           res.send(err);
         }
-        res.json({"message": "Approved Successfully"});
+        res.json({"message": "Updated Successfully"});
         res.end();
       });
 
@@ -150,6 +155,7 @@ router.put('/teams/HCK/approve', function (req, res, next) {
   });
 
 });
+
 
 
 module.exports = router;
