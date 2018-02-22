@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 export PATH=/usr/local/bin
 echo "Fetching updates from repository"
