@@ -45,7 +45,7 @@ import {HackathonHomeComponent} from "./hackathon/hackathon-home/hackathon-home.
         data: {title: "Hackathon"}
       },
       {
-        path: 'compiler/game',
+        path: 'compiler/intro',
         component: CompilerIntroComponent,
         resolve: {
           resources: CompilerIntroResolverService
@@ -73,7 +73,7 @@ import {HackathonHomeComponent} from "./hackathon/hackathon-home/hackathon-home.
         component: IngameComponent
       },*/
       {
-        path: 'event/compiler/solve/:resourceId',
+        path: 'compiler/solve/:resourceId',
         component: CompilerComponent,
         resolve: {
           resource: CompilerResolverService
