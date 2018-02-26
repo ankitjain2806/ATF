@@ -88,7 +88,8 @@ router.post('/run', function (req, res, next) {
 
 router.get('/resources', function (req, res, next) {
   var query = {
-    isActive: true
+    isActive: true,
+    isCurrent: true,
   };
   var query = CompilerResource.find(query).select('name');
   query.exec(function (err, resources) {
@@ -144,7 +145,7 @@ router.post('/saveDraft', function (req, res, next) {
 router.get('/getResource/:id', function (req, res, next) {
   async.series({
     resource: function (callback) {
-      var query = CompilerResource.findById(req.params.id).select('name body eventId');
+      var query = CompilerResource.findOne({id: req.params.id, isCurrent: true}).select('name body eventId');
       query.exec(query, function (err, data) {
         callback(err, data);
       })
