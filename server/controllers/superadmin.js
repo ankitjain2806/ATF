@@ -110,7 +110,7 @@ router.put('/users/block', function (req, res, next) {
 
 //api to list all the teams registered for HCK
 router.get('/teams/getHCKteams', function (req, res, next) {
-  var query = EventModel.find({slug: 'hackathon'}).select({'teams':1});
+  var query = EventModel.findOne({slug: 'hackathon'}).select({'teams':1});
   query.exec(query, function (err, doc) {
     if (err) {
       console.log(err);
@@ -123,7 +123,7 @@ router.get('/teams/getHCKteams', function (req, res, next) {
 
 //api to display details of the selected team
 router.get('/teams/HCK/showdetails/:teamId', function (req, res, next) {
-  HCKinfoModel.find({"teamId":req.params.teamId}, function (err, doc) {
+  HCKinfoModel.findOne({"teamId":req.params.teamId}, function (err, doc) {
     if (err) {
       console.log(err);
     }
@@ -147,6 +147,20 @@ router.put('/teams/HCK/approve', function (req, res, next) {
         if (err) {
           res.send(err);
         }
+
+        if(req.body.isApproved == true)
+        {
+        //Query to fetch gitids of the team members of this team
+        HCKinfoModel.findOne({"teamId":req.body.teamId}, function (err, doc){
+          if(err){console.log(err);}
+          if(!doc.isGitRepoCreated)
+          {
+            console.log(doc.gitIds);
+            //Create git repos here nad update it in hckinfos collection
+          }
+          });
+        }
+
         res.json({"message": "Updated Successfully"});
         res.end();
       });
