@@ -1,8 +1,38 @@
-Check out all the amazing events
-<!--<ul>-->
-<div class="col-md-5 offset-md-3">
-  <div *ngFor="let event of events">
-    <app-event [data]="event"></app-event>
+<div class="container-fluid">
+  <h1 class="heading text-center">Events Dashboard</h1>
+  <div class="row margin-top-50">
+    <div class="col-4 event-block">
+      <div class="event-block-head">Compiler</div>
+      <div class="event-block-body">
+        This is going to be Compiler details
+      </div>
+      <div class="event-block-footer">
+        <a class="btn btn-info text-white" (click)="eventRegistration('compiler')" *ngIf="userEvent.indexOf('compiler') < 0">Register</a>
+        <a class="btn btn-info text-white" (click)="eventContinue('compiler')" *ngIf="userEvent.indexOf('compiler') > 0">Continue</a>
+        <a class="btn btn-primary text-white pull-right" [routerLink]="['/compiler']">View More..</a>
+      </div>
+    </div>
+    <div class="col-4 event-block">
+      <div class="event-block-head">Treasure Hunt</div>
+      <div class="event-block-body">
+        This is going to be Treasure Hunt details
+      </div>
+      <div class="event-block-footer">
+        <a class="btn btn-info text-white" (click)="eventRegistration('treasurehunt')" *ngIf="userEvent.indexOf('treasurehunt') < 0">Register</a>
+        <a class="btn btn-info text-white" (click)="eventContinue('treasurehunt')" *ngIf="userEvent.indexOf('treasurehunt') > 0">Continue</a>
+        <a class="btn btn-primary text-white pull-right" [routerLink]="['/treasurehunt']">View More..</a>
+      </div>
+    </div>
+    <div class="col-4 event-block">
+      <div class="event-block-head">Hackathon</div>
+      <div class="event-block-body">
+        This is going to be Hackathon details
+      </div>
+      <div class="event-block-footer">
+        <a class="btn btn-info text-white" (click)="eventRegistration('hackathon')" *ngIf="userEvent.indexOf('hackathon') < 0">Register</a>
+        <a class="btn btn-info text-white" (click)="eventContinue('hackathon')" *ngIf="userEvent.indexOf('hackathon') > 0">Continue</a>
+        <a class="btn btn-primary text-white pull-right" [routerLink]="['/hackathon']">View More..</a>
+      </div>
+    </div>
   </div>
 </div>
-<!--</ul>-->
