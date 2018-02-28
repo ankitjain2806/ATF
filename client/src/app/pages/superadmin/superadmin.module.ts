@@ -8,6 +8,7 @@ import {UserAdminComponent} from "./user/user.component";
 import {BrowserModule} from "@angular/platform-browser";
 import {ResourceComponent} from "./resource/resource.component";
 import {AdminComponent} from "./admin/admin.component";
+import {HackathonComponent} from "./event/hackathon/hackathon.component";
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import {AdminComponent} from "./admin/admin.component";
     EventAdminComponent,
     UserAdminComponent,
     ResourceComponent,
-    AdminComponent
+    AdminComponent,
+    HackathonComponent
   ],
   providers: [
     SuperAdminService

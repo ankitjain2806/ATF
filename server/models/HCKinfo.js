@@ -7,7 +7,13 @@ var HCKinfoSchema = new mongoose.Schema({
     gitIds: [String],
     idea: String,
     resources : [String],
-    isApproved : {type: Boolean, default: false}
+    isApproved : {type: Boolean, default: false},
+    isGitRepoCreated : {type: Boolean, default: false},
+    gitRepo : String,
+    teamName : String,
+    html_url : String,
+    gitRepoId : String,
+    gitRepo : String
 });
 var HCKinfo = mongoose.model('HCKinfo', HCKinfoSchema);
 module.exports = HCKinfo;

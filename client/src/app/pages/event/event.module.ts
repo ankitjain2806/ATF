@@ -24,6 +24,12 @@ import {CompilerIntroResolverService} from "./compiler/compiler-intro/compiler-i
 import {CompilerResolverService} from "./compiler/compiler-resolver.service";
 import {CompilerService} from "./compiler/compiler.service";
 
+import {CompilerHomeComponent} from "./compiler/compiler-home/compiler-home.component";
+import {TreasurehuntHomeComponent} from "./treasurehunt/treasurehunt-home/treasurehunt-home.component";
+import {HackathonHomeComponent} from "./hackathon/hackathon-home/hackathon-home.component";
+import {HackathonTeamInfoComponet} from "./hackathon/hackathon-team-detail/hackathon-team-info.component";
+import {HackathonComponet} from "./hackathon/hackathon.componet";
+
 @NgModule({
   imports: [
     CommonModule,
@@ -41,10 +47,15 @@ import {CompilerService} from "./compiler/compiler.service";
     EventDetailComponent,
     CompilerComponent,
     CompilerIntroComponent,
-    EventEndComponent
+    EventEndComponent,
+    CompilerHomeComponent,
+    TreasurehuntHomeComponent,
+    HackathonHomeComponent,
+    HackathonComponet,
+    HackathonTeamInfoComponet
   ],
   exports: [
-    EventComponent
+    // EventComponent
   ],
   providers: [
     EventService,

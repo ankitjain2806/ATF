@@ -58,4 +58,12 @@ export class EventService {
     const url = this.local_base + 'getResource/'+resourceId;
     return this.http.get(url, {});
   }
+
+  getTeamInfoById(teamId: string):Observable<any>{
+    return this.http.get("/api/superadmin/teams/HCK/showdetails/"+teamId,{});
+  }
+
+  completeHackathonRegistration(resources: any){
+    return this.http.post("/api/superadmin/teams/",resources);
+  }
 }

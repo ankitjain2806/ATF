@@ -9,13 +9,22 @@ export class SocketService {
 
   constructor() {
     this.socket = io();
+    console.log(this.socket);
+    /*this.receiveMessage('new_con').subscribe((data) => {
+      console.log(data)
+    });*/
   }
 
-  // Consume: on gist saved
-  receiveSocket(socket): Observable<any> {
+  sendMessage(socket, msg = null) {
+    this.socket.emit(socket, msg)
+  }
+
+  receiveMessage(socket): Observable<any> {
+    console.log(socket, ' is listening ')
     let self = this;
     return Rx.Observable.create(function (observer) {
       self.socket.on(socket, (data) => {
+        console.log(data, 'in client');
         observer.next(data);
       });
     });

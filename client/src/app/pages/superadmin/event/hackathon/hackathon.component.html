@@ -1,0 +1,21 @@
+<div class="col-md-4 offset-md-3">
+  <div id="accordion">
+    <div class="card" *ngFor="let team of teams">
+      <div class="card-header">
+        <span class="mb-0">
+          <a class="btn btn-link collapsed" href="/event/hackathon/teamInfo/{{team._id}}">
+            {{team.teamName}}
+          </a>
+        </span>
+        <button class="btn btn-primary pull-right" (click)="acceptRejectTeam(team._id, true)"><i class="fa fa-check-square"></i> Accept</button>
+        <button class="btn btn-danger pull-right" (click)="acceptRejectTeam(team._id, false)"><i class="fa fa-ban"></i> Reject</button>
+      </div>
+      <div id="{{team._id}}" class="collapse" data-parent="#accordion">
+        <div class="card-body">
+          <button class="btn btn-primary" (click)="acceptRejectTeam(team._id, true)"><i class="fa fa-check-square"></i> Accept</button>
+          <button class="btn btn-danger" (click)="acceptRejectTeam(team._id, false)"><i class="fa fa-ban"></i> Reject</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
