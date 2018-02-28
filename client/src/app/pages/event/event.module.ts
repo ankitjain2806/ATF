@@ -27,6 +27,8 @@ import {CompilerService} from "./compiler/compiler.service";
 import {CompilerHomeComponent} from "./compiler/compiler-home/compiler-home.component";
 import {TreasurehuntHomeComponent} from "./treasurehunt/treasurehunt-home/treasurehunt-home.component";
 import {HackathonHomeComponent} from "./hackathon/hackathon-home/hackathon-home.component";
+import {HackathonTeamInfoComponet} from "./hackathon/hackathon-team-detail/hackathon-team-info.component";
+import {HackathonComponet} from "./hackathon/hackathon.componet";
 
 @NgModule({
   imports: [
@@ -48,7 +50,9 @@ import {HackathonHomeComponent} from "./hackathon/hackathon-home/hackathon-home.
     EventEndComponent,
     CompilerHomeComponent,
     TreasurehuntHomeComponent,
-    HackathonHomeComponent
+    HackathonHomeComponent,
+    HackathonComponet,
+    HackathonTeamInfoComponet
   ],
   exports: [
     // EventComponent

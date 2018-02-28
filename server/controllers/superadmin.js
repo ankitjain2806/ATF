@@ -3,6 +3,7 @@ var router = express.Router();
 var EventModel = require('../models/Event');
 var User = require('../models/User');
 var HCKinfoModel = require('../models/HCKinfo');
+var request = require('request');
 
 router.post('/events/addNewEvent', function (req, res, next) {
 
@@ -153,10 +154,46 @@ router.put('/teams/HCK/approve', function (req, res, next) {
         //Query to fetch gitids of the team members of this team
         HCKinfoModel.findOne({"teamId":req.body.teamId}, function (err, doc){
           if(err){console.log(err);}
-          if(!doc.isGitRepoCreated)
+          if(doc.isGitRepoCreated == false)
           {
-            console.log(doc.gitIds);
-            //Create git repos here nad update it in hckinfos collection
+
+            //Create git repos here and update it in hckinfos collection
+              const gitUrl = "https://api.github.com/user/repos?access_token=";
+              const access_token = "f656c6b6124bf2bc32050e6e857618452610c707";
+              const gitData = {
+                  "name": doc.teamName,
+                  "description": "This is your first repository",
+                  "homepage": "https://github.com",
+                  "private": false,
+                  "has_issues": true,
+                  "has_projects": true,
+                  "has_wiki": true
+              };
+
+              var options = {
+                  uri: gitUrl+access_token,
+                  method: 'POST',
+                  headers: {
+                      'User-Agent': 'request',
+                      'content-type' : 'application/json'
+                  },
+                  json: gitData
+              };
+
+              request.post(options, function(error, response, body) {
+                console.log(response.statusCode);
+                if (!error && response.statusCode == 201) {
+                      doc.isGitRepoCreated = true;
+                      doc.gitRepoId = body.id;
+                      doc.html_url = body.html_url;
+                      doc.save(function (err) {
+                          if(err)
+                            console.log(err);
+                      });
+                  }
+                  else
+                    console.log("Error"+error);
+              });
           }
           });
         }

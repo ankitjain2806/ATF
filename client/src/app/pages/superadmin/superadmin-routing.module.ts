@@ -4,6 +4,7 @@ import {EventAdminComponent} from "./event/event.component";
 import {UserAdminComponent} from "./user/user.component";
 import {AdminComponent} from "./admin/admin.component";
 import {ResourceComponent} from "./resource/resource.component";
+import {HackathonComponent} from "./event/hackathon/hackathon.component";
 
 @NgModule({
   imports: [
@@ -25,6 +26,10 @@ import {ResourceComponent} from "./resource/resource.component";
       {
         path: 'superadmin/add-resource',
         component: ResourceComponent
+      },
+      {
+        path: 'superadmin/hackathon-register-users-detail',
+        component: HackathonComponent
       }
     ])
   ],

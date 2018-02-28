@@ -20,6 +20,8 @@ import {CompilerResolverService} from "./compiler/compiler-resolver.service";
 import {CompilerHomeComponent} from "./compiler/compiler-home/compiler-home.component";
 import {TreasurehuntHomeComponent} from "./treasurehunt/treasurehunt-home/treasurehunt-home.component";
 import {HackathonHomeComponent} from "./hackathon/hackathon-home/hackathon-home.component";
+import {HackathonComponet} from "./hackathon/hackathon.componet";
+import {HackathonTeamInfoComponet} from "./hackathon/hackathon-team-detail/hackathon-team-info.component";
 
 @NgModule({
   imports: [
@@ -56,11 +58,11 @@ import {HackathonHomeComponent} from "./hackathon/hackathon-home/hackathon-home.
         component: HackathonHomeComponent,
         data: {title: "Hackathon"}
       },
-      /*{
+      {
         path: 'event/registration/:slug',
         component: RegistrationComponent,
         data: {title: "Event Registration"},
-      },*/
+      },
       /*{
         path: 'event/treasurehunt/finished',
         component: EventEndComponent,
@@ -79,6 +81,14 @@ import {HackathonHomeComponent} from "./hackathon/hackathon-home/hackathon-home.
           resource: CompilerResolverService
         }
       },
+      {
+        path: 'event/hackathon/complete-registration',
+        component: HackathonComponet
+      },
+      {
+        path: 'event/hackathon/teamInfo/:teamId',
+        component: HackathonTeamInfoComponet
+      }
     ])
   ],
   exports: [RouterModule]

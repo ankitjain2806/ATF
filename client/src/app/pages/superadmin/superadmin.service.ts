@@ -43,4 +43,12 @@ export class SuperAdminService {
   addResource(resourceValue:any){
     return this.http.post("/api/events/compiler/addResource", resourceValue);
   }
+
+  getHackathonRegisterdUser(){
+    return this.http.get("/api/superadmin/teams/getHCKteams",{})
+  }
+
+  acceptRejectTeam(teamId:string, isApproved:boolean){
+    return this.http.put("/api/superadmin/teams/HCK/approve",{teamId, isApproved});
+  }
 }
