@@ -4,7 +4,7 @@ import {HttpService} from "../../../shared/util/http.service";
 @Injectable()
 export class TreasurehuntService {
 
-  private local_base = '/api/events/treasurehunt';
+  private local_base = '/api/treasurehunt';
 
   constructor(private httpService: HttpService) { }
 

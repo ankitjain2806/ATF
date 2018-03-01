@@ -54,7 +54,6 @@ router.post('/team-register', function (req, res, next) {
   var eventId = null;
   var teamData = {
     teamName: req.body.teamName,
-    captain: req.session.user._id,
     members: []
   };
 
@@ -63,7 +62,6 @@ router.post('/team-register', function (req, res, next) {
         var users = req.body.members;
         async.times(users.length, function (n, next) {
           User.findOne({email: users[n].email}, function (err, person) {
-            console.trace(err, person)
             if (err) {
               callback(err, null)
             }

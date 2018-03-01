@@ -9,7 +9,7 @@ import {CompilerForm} from "../../../models/compiler-form";
 @Injectable()
 export class CompilerService {
 
-  private local_base = '/api/events/compiler';
+  private local_base = '/api/compiler';
 
   constructor(private http: HttpService) {
 

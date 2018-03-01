@@ -9,6 +9,7 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/events', function (req, res, next) {
+  console.log(req.session.user, "========>");
   User.findById(req.session.user._id).select('events').populate('events.eventId').exec(function(err, events){
     console.log(events);
     var userEvents = events.events.map(function (event) {

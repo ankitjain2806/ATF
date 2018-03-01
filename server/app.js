@@ -68,33 +68,30 @@ app.use(cors());
  * @param next
  */
 var isLoggedIn = function (req, res, next) {
+  console.log(req.session , typeof req.session.user,  typeof req.session.user !== 'undefined', "===============================>")
   if (req.session && typeof req.session.user !== undefined) {
     next();
   } else {
     res.sendStatus(401);
+    res.end();
   }
 };
 
 var isAdmin = function (req, res, next) {
-  if (req.session && typeof req.session.user !== undefined && req.session.user.isAdmin) {
+  if (req.session && typeof req.session.user !== 'undefined' && req.session.user.isAdmin) {
     next();
   } else {
     res.sendStatus(401);
+    res.end();
   }
 };
-
-app.use('/api/users', isLoggedIn, usersController);
-app.use('/api/events/compiler', isLoggedIn,compilerController);
-app.use('/api/events/treasurehunt', isLoggedIn, treasureHuntController);
-app.use('/api/events', isLoggedIn, eventsController);
-app.use('/api/superadmin', isAdmin, superAdminController);
 app.use('/auth', AuthController);
-app.use('/api/events/HCK', isLoggedIn,HCKController);
-
-
-
-
-
+app.use('/api/users', isLoggedIn, usersController);
+app.use('/api/events', isLoggedIn, eventsController);
+app.use('/api/compiler', isLoggedIn, compilerController);
+app.use('/api/treasurehunt', isLoggedIn, treasureHuntController);
+app.use('/api/HCK', isLoggedIn, HCKController);
+app.use('/api/superadmin', isAdmin, superAdminController);
 
 
 // /api/users/getAll

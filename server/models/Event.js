@@ -4,7 +4,6 @@ var Schema = mongoose.Schema;
 
 var TeamSchema = new Schema({
   teamName: String,
-  captain: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
   members: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
 });
 

@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router, ActivatedRoute} from "@angular/router";
 
 import {DashboardService} from "./dashboard.service";
+import {EventRegistration} from "../../models/event-registration";
 
 @Component({
   selector: 'app-dashboard',
@@ -28,7 +29,28 @@ export class DashboardComponent implements OnInit {
   }
 
   eventRegistration(eventSlug: string) {
-    //
+    switch (eventSlug) {
+      case 'compiler':
+        let compilerObj : EventRegistration = {
+          teamName: '',
+          members: [],
+          slug: 'compiler'
+        }
+        this.dashboardService.registerEvent(compilerObj).subscribe(() => {
+          this.router.navigate(['/compiler/intro']);
+        })
+        break;
+      case 'compiler':
+        let thObj : EventRegistration = {
+          teamName: '',
+          members: [],
+          slug: 'treasurehunt'
+        }
+        this.dashboardService.registerEvent(thObj).subscribe(() => {
+          this.router.navigate(['/treasurehunt/intro']);
+        })
+        break;
+    }
   }
 
   eventContinue(eventSlug: string) {

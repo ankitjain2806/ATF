@@ -4,10 +4,12 @@ import {Observable} from "rxjs/Observable";
 import 'rxjs/add/operator/map';
 
 import {HttpService} from '../../shared/util/http.service';
+import {EventRegistration} from "../../models/event-registration";
 
 
 @Injectable()
 export class DashboardService {
+  private local_base = '/api/events/';
 
   constructor(private http: HttpService) {
 
@@ -19,5 +21,9 @@ export class DashboardService {
 
   getUserEvents(): Observable<any> {
     return this.http.get('/api/users/events', {});
+  }
+
+  registerEvent(form: EventRegistration): Observable<any> {
+    return this.http.post(this.local_base + 'team-register', form);
   }
 }
