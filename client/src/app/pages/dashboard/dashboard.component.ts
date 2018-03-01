@@ -16,7 +16,6 @@ export class DashboardComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router) {
     this.route.data.subscribe((res) => {
-      console.log(res)
       this.userEvent = res.events.data;
     });
   }
@@ -36,6 +35,8 @@ export class DashboardComponent implements OnInit {
     switch (eventSlug) {
       case 'compiler':
         this.router.navigate(['/compiler/intro']);
+        break;
+        //case 'treas'
     }
   }
 }
