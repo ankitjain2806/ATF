@@ -149,63 +149,57 @@ router.put('/teams/HCK/approve', function (req, res, next) {
           res.send(err);
         }
 
-        if(req.body.isApproved == true)
+        if(req.body.isApproved == true && doc.isGitRepoCreated == false)
         {
-        //Query to fetch gitids of the team members of this team
-        HCKinfoModel.findOne({"teamId":req.body.teamId}, function (err, doc){
-          if(err){console.log(err);}
-          if(doc.isGitRepoCreated == false)
-          {
+          //Create git repos here and update it in hckinfos collection
+          const gitUrl = "https://api.github.com/user/repos?access_token=";
+          const access_token = "f656c6b6124bf2bc32050e6e857618452610c707";
+          const gitData = {
+            "name": doc.teamName,
+            "description": "This is your first repository",
+            "homepage": "https://github.com",
+            "private": false,
+            "has_issues": true,
+            "has_projects": true,
+            "has_wiki": true
+          };
+          var options = {
+            uri: gitUrl+access_token,
+            method: 'POST',
+            headers: {
+              'User-Agent': 'request',
+              'content-type' : 'application/json'
+            },
+            json: gitData
+          };
 
-            //Create git repos here and update it in hckinfos collection
-              const gitUrl = "https://api.github.com/user/repos?access_token=";
-              const access_token = "f656c6b6124bf2bc32050e6e857618452610c707";
-              const gitData = {
-                  "name": doc.teamName,
-                  "description": "This is your first repository",
-                  "homepage": "https://github.com",
-                  "private": false,
-                  "has_issues": true,
-                  "has_projects": true,
-                  "has_wiki": true
-              };
-
-              var options = {
-                  uri: gitUrl+access_token,
-                  method: 'POST',
-                  headers: {
-                      'User-Agent': 'request',
-                      'content-type' : 'application/json'
-                  },
-                  json: gitData
-              };
-
-              request.post(options, function(error, response, body) {
-                console.log(response.statusCode);
-                if (!error && response.statusCode == 201) {
-                      doc.isGitRepoCreated = true;
-                      doc.gitRepoId = body.id;
-                      doc.html_url = body.html_url;
-                      doc.save(function (err) {
-                          if(err)
-                            console.log(err);
-                      });
-                  }
-                  else
-                    console.log("Error"+error);
-              });
+          request.post(options, function(error, response, body) {
+            console.log(response.statusCode);
+            if (!error && response.statusCode == 201) {
+              doc.isGitRepoCreated = true;
+              doc.gitRepoId = body.id;
+              doc.gitRepo = body.html_url;
+              doc.save(function (err) {
+                if(err)
+                  console.log(err);
+                });
+              }
+              else
+                console.log("Error"+error);
+            });
           }
-          });
-        }
+
+        });
 
         res.json({"message": "Updated Successfully"});
         res.end();
+    }
       });
 
-    }
+
   });
 
-});
+
 
 
 
