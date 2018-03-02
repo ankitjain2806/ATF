@@ -31,7 +31,7 @@ export class DashboardComponent implements OnInit {
   eventRegistration(eventSlug: string) {
     switch (eventSlug) {
       case 'compiler':
-        let compilerObj : EventRegistration = {
+        let compilerObj: EventRegistration = {
           teamName: '',
           members: [],
           slug: 'compiler'
@@ -40,14 +40,14 @@ export class DashboardComponent implements OnInit {
           this.router.navigate(['/compiler/intro']);
         })
         break;
-      case 'compiler':
-        let thObj : EventRegistration = {
+      case 'treasurehunt':
+        let thObj: EventRegistration = {
           teamName: '',
           members: [],
           slug: 'treasurehunt'
         }
         this.dashboardService.registerEvent(thObj).subscribe(() => {
-          this.router.navigate(['/treasurehunt/intro']);
+          this.router.navigate(['/treasurehunt/game']);
         })
         break;
     }
@@ -58,7 +58,10 @@ export class DashboardComponent implements OnInit {
       case 'compiler':
         this.router.navigate(['/compiler/intro']);
         break;
-        //case 'treas'
+      case 'treasurehunt':
+        this.router.navigate(['/treasurehunt/game']);
+        break;
+      //case 'treas'
     }
   }
 }

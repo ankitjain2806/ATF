@@ -59,6 +59,11 @@ import {HackathonTeamInfoComponet} from "./hackathon/hackathon-team-detail/hacka
         data: {title: "Hackathon"}
       },
       {
+        path: 'treasurehunt/game',
+        data: {title: "Treasure Hunt!", path: 'treasurehunt/game'},
+        component: IngameComponent
+      },
+      {
         path: 'event/registration/:slug',
         component: RegistrationComponent,
         data: {title: "Event Registration"},
