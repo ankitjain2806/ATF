@@ -29,6 +29,7 @@ import {TreasurehuntHomeComponent} from "./treasurehunt/treasurehunt-home/treasu
 import {HackathonHomeComponent} from "./hackathon/hackathon-home/hackathon-home.component";
 import {HackathonTeamInfoComponet} from "./hackathon/hackathon-team-detail/hackathon-team-info.component";
 import {HackathonComponet} from "./hackathon/hackathon.componet";
+import {HackathonRegistrationComponent} from "./hackathon/hackathon-registration/hackathon-registration.component";
 
 @NgModule({
   imports: [
@@ -52,7 +53,8 @@ import {HackathonComponet} from "./hackathon/hackathon.componet";
     TreasurehuntHomeComponent,
     HackathonHomeComponent,
     HackathonComponet,
-    HackathonTeamInfoComponet
+    HackathonTeamInfoComponet,
+    HackathonRegistrationComponent
   ],
   exports: [
     // EventComponent

@@ -63,6 +63,9 @@ export class EventService {
     return this.http.get("/api/superadmin/teams/HCK/showdetails/"+teamId,{});
   }
 
+  getHCKteamInfo() : Observable <any> {
+    return this.http.get("/api/HCK/getTeamDetail",{});
+  }
   completeHackathonRegistration(resources: any){
     return this.http.post("/api/superadmin/teams/",resources);
   }

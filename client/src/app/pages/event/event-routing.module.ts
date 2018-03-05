@@ -22,6 +22,7 @@ import {TreasurehuntHomeComponent} from "./treasurehunt/treasurehunt-home/treasu
 import {HackathonHomeComponent} from "./hackathon/hackathon-home/hackathon-home.component";
 import {HackathonComponet} from "./hackathon/hackathon.componet";
 import {HackathonTeamInfoComponet} from "./hackathon/hackathon-team-detail/hackathon-team-info.component";
+import {HackathonRegistrationComponent} from "./hackathon/hackathon-registration/hackathon-registration.component";
 
 @NgModule({
   imports: [
@@ -55,8 +56,8 @@ import {HackathonTeamInfoComponet} from "./hackathon/hackathon-team-detail/hacka
       },
       {
         path: 'hackathon/registration',
-        component: HackathonHomeComponent,
-        data: {title: "Hackathon"}
+        component: HackathonRegistrationComponent,
+        data: {title: "Hackathon Registration"}
       },
       {
         path: 'treasurehunt/game',

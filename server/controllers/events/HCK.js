@@ -25,5 +25,4 @@ router.post('/postinfo/:teamId', function (req, res, next) {
 
 });
 
-
 module.exports = router;

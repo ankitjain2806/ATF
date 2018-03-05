@@ -50,6 +50,16 @@ export class DashboardComponent implements OnInit {
           this.router.navigate(['/treasurehunt/game']);
         })
         break;
+      case 'hackathon':
+        let hckObj: EventRegistration = {
+          teamName: '',
+          members: [],
+          slug: 'hackathon'
+        }
+        this.dashboardService.registerEvent(hckObj).subscribe(() => {
+          this.router.navigate(['/hackathon/registration']);
+        })
+        break;
     }
   }
 
@@ -61,7 +71,9 @@ export class DashboardComponent implements OnInit {
       case 'treasurehunt':
         this.router.navigate(['/treasurehunt/game']);
         break;
-      //case 'treas'
+      case 'hackathon':
+        this.router.navigate(['/hackathon/registration']);
+        break;
     }
   }
 }

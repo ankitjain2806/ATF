@@ -145,7 +145,7 @@ router.post('/saveDraft', function (req, res, next) {
 router.get('/getResource/:id', function (req, res, next) {
   async.series({
     resource: function (callback) {
-      var query = CompilerResource.findOne({id: req.params.id, isCurrent: true}).select('name body eventId');
+      var query = CompilerResource.findOne({_id: req.params.id, isCurrent: true}).select('name body');
       query.exec(query, function (err, data) {
         callback(err, data);
       })
