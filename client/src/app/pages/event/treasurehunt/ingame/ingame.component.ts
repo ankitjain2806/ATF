@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {reject} from "q";
 import {HttpService} from "../../../../shared/util/http.service";
 import {UserSessionService} from "../../../../shared/util/user-session.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -80,7 +79,7 @@ export class IngameComponent implements OnInit {
 
   private getCurrentQuestion() {
 
-    this.treasurehuntService.getUserState(this.userSession._id, this.slug).subscribe(state => {
+    this.treasurehuntService.getUserState(this.userSession.id, this.slug).subscribe(state => {
       this.state = state['data'][0];
       /** check state if completed or in progress*/
       if (this.state['completed']) {
@@ -92,7 +91,7 @@ export class IngameComponent implements OnInit {
   }
 
   private requestAndRenderQuestion() {
-    this.treasurehuntService.getUserStageQuestion(this.userSession._id, this.slug).subscribe((response) => {
+    this.treasurehuntService.getUserStageQuestion(this.userSession.id, this.slug).subscribe((response) => {
       /** showing new question for state*/
       this.showNext = false;
       this.question = response['data'];
