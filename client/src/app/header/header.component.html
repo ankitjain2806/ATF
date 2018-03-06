@@ -16,7 +16,7 @@
     <span class="text-white" *ngIf="userSession">
       <a [routerLink]="['user/profile']" class="text-white">
       <img [src]="userSession.imageUrl" class="user-image" width="50" /> {{userSession.email}} </a>
-      <a href="/auth/logout" class="btn btn-primary ">Logout</a>
+      <a href="/auth/logout" class="btn btn-primary" (click)="handleLogout()">Logout</a>
     </span>
     <span *ngIf="!userSession">
       <a href="/auth/google" class="btn btn-primary">Login</a>

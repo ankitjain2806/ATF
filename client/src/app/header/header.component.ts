@@ -33,4 +33,8 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  handleLogout() {
+    localStorage.removeItem('userSession');
+  }
 }

@@ -21,6 +21,7 @@ import {SuperAdminModule} from "./pages/superadmin/superadmin.module";
 import {HttpService} from './shared/util/http.service';
 import {UserSessionService} from "./shared/util/user-session.service";
 import {SocketService} from "./shared/util/socket.service";
+import {AuthGuardService} from "./shared/util/auth-guard.service";
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import {SocketService} from "./shared/util/socket.service";
     HttpService,
     AppService,
     UserSessionService,
-    SocketService
+    SocketService,
+    AuthGuardService
   ],
   bootstrap: [AppComponent]
 })
