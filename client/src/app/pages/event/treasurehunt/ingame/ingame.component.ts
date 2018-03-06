@@ -19,6 +19,7 @@ export class IngameComponent implements OnInit {
   state = {};
   showNext: Boolean = false;
   userSession = null;
+  options :string;
   private paramsSub: any;
 
   constructor(private session: UserSessionService,
@@ -27,6 +28,7 @@ export class IngameComponent implements OnInit {
               private treasurehuntService: TreasurehuntService) {
     this.userSession = this.session.getSession();
     this.question = {};
+    this.options ="";
   }
 
   ngOnInit() {
@@ -43,11 +45,9 @@ export class IngameComponent implements OnInit {
 
   }
 
-  checkAnswerAndChangeState() {
-    const userAnswer = this.treasurehuntService.getAnswerParam(this.answer, this.question['type']);
-    this.answer = this.treasurehuntService.resetAnswer();
+  checkAnswerAndChangeState(userAnswer) {
     this.treasurehuntService.checkIsCorrectAnswer({
-      user: this.userSession._id,
+      user: this.userSession.id,
       event: this.slug,
       answer: userAnswer
     }).subscribe(response => {
@@ -67,6 +67,7 @@ export class IngameComponent implements OnInit {
 
   private performIfUserWrong() {
     alert('Wrong answer!!! try again');
+    this.options = "";
   }
 
   private toggleAnswersSelected(selected) {

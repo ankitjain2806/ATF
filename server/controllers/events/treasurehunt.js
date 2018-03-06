@@ -93,13 +93,14 @@ router.post('/question', function (req, res, next) {
   });
 });
 
-router.post('/treasurehunt/question/check', function (req, res, next) {
+router.post('/question/check', function (req, res, next) {
   if (req.body.answer === null || req.body.answer === undefined) {
     res.status(500).send({'error': 'cannot find the answer in the request buddy...'});
   } else {
     eventService.getUserStageQuestion(req, res, function (question) {
       _q = question.toObject();
-      const isCorrectAnswer = eventService.checkAnswersSubmitted(req.body.answer, _q.answer);
+      const isCorrectAnswer = req.body.answer === _q.answer;
+      console.log('correct ans', isCorrectAnswer);
       isCorrectAnswer ? res.json({data: true}) : res.json({data: false});
 
       // update the state of the user
