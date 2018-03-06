@@ -1,11 +1,13 @@
 var EventModel = require('../models/Event');
 var UserEventStateModel = require('../models/UserEventState');
+var THResourceModel = require('../models/THResources');
 
 var service = {};
 
 service.getUserStateForEvent = function(req, res, cb) {
     const userId = req.body.user;
     const event = req.body.event;
+    console.log('check value', userId, event);
     if (userId === undefined || event === undefined || userId === null || event === null) {
         cb({'error': 'data supplied is not sufficient buddy..'});
         return;
@@ -34,15 +36,16 @@ service.getUserStateForEvent = function(req, res, cb) {
 service.getUserStageQuestion = function (req, res, cb) {
     service.getUserStateForEvent(req, res, function (currentState) {
         // get current stage [index] from stages
-        console.log('current state of user ', currentState[0]);
-        const query = EventModel.findOne({'slug': req.body.event})
-            .select({'stages': 1, '_id': 0});
-        query.exec(function (err, data) {
-            // console.log('questions ', data['stages'][currentState[0].stage]);
-            const index = currentState[0].stage - 1;
-            const currentStageQuestion = data['stages'][index];
-            cb(currentStageQuestion);
-        });
+        //TODo check for the current stage of particular user_id 
+        if(currentState && currentState[0].stage) {
+            const query = THResourceModel.findOne({'stage': currentState[0].stage});
+            query.exec(function (err, data) {
+                cb(data);
+            });
+        } else {
+            console.log('no stage entry in the userstage');
+            cb(null);
+        }
     });
 };
 

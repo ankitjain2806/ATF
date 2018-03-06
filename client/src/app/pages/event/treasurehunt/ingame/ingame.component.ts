@@ -26,6 +26,7 @@ export class IngameComponent implements OnInit {
               private router: Router,
               private treasurehuntService: TreasurehuntService) {
     this.userSession = this.session.getSession();
+    this.question = {};
   }
 
   ngOnInit() {

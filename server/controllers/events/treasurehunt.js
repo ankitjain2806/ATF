@@ -2,8 +2,11 @@ var express = require('express');
 var router = express.Router();
 var async = require('async');
 var request = require('request');
+var THResource = require('../../models/THResources');
+var eventService = require('../../service/events.service');
 var responseHandler = require('../../util/responseHandler').Response;
-var THResources = require('../../models/THResources')
+var userEventState = require('../../models/UserEventState');
+
 router.post('/addResource', function (req, res, next) {
   var resourceObj = {
     title: req.body.name,
@@ -25,14 +28,41 @@ router.post('/addResource', function (req, res, next) {
   })
 }, responseHandler);
 
-router.post('/treasurehunt/get/state', function (req, res, next) {
-  eventService.getUserStateForEvent(req, res, function (state) {
-    res.json({data: state});
-    res.end();
+router.post('/get/state', function (req, res, next) {
+  //add entry first 
+  eventService.getUserStateForEvent(req ,res, function(currentState) {
+    //check if there is no userevent exist
+    if(!currentState) {
+      const model = new userEventState({
+      user: req.body.user,
+      events: [{
+        event: req.body.event,
+        stage: 1,
+        multiplier: 1,
+        completed: false,
+        slug : req.body.event
+        }]
+      });
+      model.save(function (err, model) {
+        if(err) {
+          res.json({error: 'not registered', data: err});
+          res.end();
+          return;
+        }
+        res.json({data : true});
+      });
+    } else {
+        res.locals.responseObj = {
+        data : currentState,
+        msg : 'user current state'
+        }
+        next();
+    }
   });
-});
+    
+}, responseHandler);
 
-router.post('/treasurehunt/set/state', function (req, res, next) {
+router.post('/set/state', function (req, res, next) {
   console.log('user ', req.body.user);
   const model = new UserEventStateModel({
     user: req.body.user,
@@ -54,7 +84,7 @@ router.post('/treasurehunt/set/state', function (req, res, next) {
   });
 });
 
-router.post('/treasurehunt/question', function (req, res, next) {
+router.post('/question', function (req, res, next) {
   eventService.getUserStageQuestion(req, res, function (currentStageQuestion) {
     const _response = currentStageQuestion.toObject();
     delete _response.answer;

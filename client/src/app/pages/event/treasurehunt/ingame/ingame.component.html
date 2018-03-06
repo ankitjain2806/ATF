@@ -1,23 +1,21 @@
-<h1><strong>Question no: {{state['stage']}}</strong></h1>
+<h1><strong>Question no: {{question['stage']}}</strong></h1>
 
 <!--<h2>{{question['question']}}</h2>-->
-<div [innerHtml]="question['question']"></div>
-
-
-<div *ngIf="question['type'] === 'NORMAL'">
+<div [innerHtml]="question['body']"></div>
+<!--
+<div *ngIf="!question['isMCQ']">
   <input type="text" [(ngModel)]="answer['text']">
-</div>
+</div>-->
 
-<div *ngIf="question['type'] === 'MCQ'">
-  <ul>
-    <label *ngFor="let opt of question['options']">
-      <input type="checkbox"
-             name="options"
-             value="{{opt}}"
-             (click)="toggleAnswersSelected(opt)" />
-      {{opt}}
-    </label>
-  </ul>
+<div *ngIf="question['isMCQ']">
+    <div *ngFor="let opt of question['options'];  let i=index; ">
+        <label>{{i + ').'}}</label>
+        <input type="radio"
+              name="options"
+              value="{{opt}}"
+              (click)="toggleAnswersSelected(opt)" />
+              <label>{{opt}}</label>
+    </div>
 </div>
 
 <input *ngIf="!showNext" type="button" class="btn btn-primary" value="submit" (click)="checkAnswerAndChangeState()">

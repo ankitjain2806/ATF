@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 var THResourceSchema = new Schema({
   title: String,
   body: String,
-  options: Schema.Types.Mixed,
+  options: [{type: String}],
   answer: String,
   hint: String,
   stage: Number,
