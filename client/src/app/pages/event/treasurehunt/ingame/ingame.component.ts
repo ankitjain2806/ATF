@@ -63,6 +63,7 @@ export class IngameComponent implements OnInit {
   private performIfUserCorrect() {
     alert('correct answer!!!');
     this.showNext = true;
+    this.options ="";
   }
 
   private performIfUserWrong() {
@@ -85,7 +86,8 @@ export class IngameComponent implements OnInit {
       this.state = state['data'][0];
       /** check state if completed or in progress*/
       if (this.state['completed']) {
-        this.router.navigate(['/event', 'treasurehunt', 'finished']);
+        //redirect to the finish event route once the event is finished
+        this.router.navigate(['/event', 'finished', 'treasurehunt' ]);
       } else {
         this.requestAndRenderQuestion();
       }

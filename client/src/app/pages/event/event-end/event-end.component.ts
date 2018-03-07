@@ -10,9 +10,14 @@ import {EventService} from "../event.service";
 export class EventEndComponent implements OnInit {
 
   data;
+  eventName : string = "Event";
 
   constructor(private service: EventService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute) { 
+      this.route.params.subscribe(routeParams => {
+      this.eventName = routeParams.eventName + "Event";
+    }) 
+  }
 
   ngOnInit() {
     const slug = this.route.params['slug'];

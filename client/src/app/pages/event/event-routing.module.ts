@@ -69,12 +69,12 @@ import {HackathonRegistrationComponent} from "./hackathon/hackathon-registration
         component: RegistrationComponent,
         data: {title: "Event Registration"},
       },
-      /*{
-        path: 'event/treasurehunt/finished',
+      {
+        path: 'event/finished/:eventName',
         component: EventEndComponent,
         data: {title: "Event Completed!", path: 'event/treasurehunt/finished'},
-        canActivate: [FinishedGuardService]
-      },*/
+        // canActivate: [FinishedGuardService]
+      },
       /*{
         path: 'event/treasurehunt/game',
         data: {title: "Treasure Hunt!", path: 'event/treasurehunt/game'},
