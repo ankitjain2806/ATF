@@ -18,6 +18,7 @@ var EventSchema = new Schema({
   slug: String,
   description: String,
   // stages: [StageSchema],
+    stages :Number,
   lastUpdated: {type: Date, default: Date.now},
   memberCount: Number,
   teams: [TeamSchema]

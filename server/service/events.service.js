@@ -49,7 +49,7 @@ service.getUserStageQuestion = function (req, res, cb) {
     });
 };
 
-service.neatlyUpdateUserState = function (userId, event, res, updateObj, cb) {
+service.neatlyUpdateUserState = function (userId, event, res, updateObj, cb, resJson) {
     UserEventStateModel.update({
         'user': userId,
         'events.slug': event
@@ -58,8 +58,8 @@ service.neatlyUpdateUserState = function (userId, event, res, updateObj, cb) {
         if (err) {
             res['error'] = 'cannot update the user state';
             res['data'] = err;
-            cb();
         }
+        cb(resJson);
     });
 };
 
@@ -76,18 +76,22 @@ service.updateUserEventState = function (req, res, state, cb) {
     /**update user current stage*/
     const stagesQuery = EventModel.find({'slug': event}).select({'stages': 1});
     stagesQuery.exec(function (err, rDoc) {
-        const numberOfStages = rDoc[0].stages.length || 0;
+        var resJson = {};
+        const numberOfStages = rDoc[0].stages|| 0;
         const updateQueryObj = {};
         if(numberOfStages === state[0].stage) {
             /**update state to completed */
             updateQueryObj['$set'] = {'events.$.completed': true};
+            resJson = {'completed':true};
         } else {
             updateQueryObj['$inc'] = {'events.$.stage': 1};
+            resJson = {'completed':false};
         }
-        service.neatlyUpdateUserState(userId, event, res, updateQueryObj, cb);
+        service.neatlyUpdateUserState(userId, event, res, updateQueryObj, cb, resJson);
     });
 };
 
+/*
 service.checkAnswersSubmitted = function (submitted, correct) {
     if(submitted.length !== correct.length) {
         return false;
@@ -95,11 +99,12 @@ service.checkAnswersSubmitted = function (submitted, correct) {
     for(let i=0; i<submitted.length; i++) {
         const _i = correct.findIndex(x => x === submitted[i]);
         if(_i < 0) {
-            /** wrong answer */
+            /!** wrong answer *!/
             return false;
         }
     }
     return true;
 }
+*/
 
 module.exports = service;
