@@ -1,4 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
+import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
+import {EventService} from "../../event.service";
 
 @Component({
   selector: 'app-hackathon-registration',
@@ -8,19 +10,59 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 
 export class HackathonRegistrationComponent implements OnInit {
 
-  constructor() {
+  public resourceForm: FormGroup;
+  events : any = null;
 
-  }
+  constructor(private _fb: FormBuilder, private eventService: EventService) { }
 
   ngOnInit() {
-
+    this.initForm();
   }
 
-  onSubmit() {
-
+  initForm(){
+    this.resourceForm = this._fb.group({
+      members:this._fb.array([this.initGitIds()]),
+      idea:'',
+      resources: this._fb.array([this.initResources()]),
+      isApproved:false,
+      teamName : '',
+      slug : 'hackathon',
+      userGitId : ''
+    });
   }
 
-  saveDraft() {
+  initGitIds() {
+    return this._fb.group({
+      email : [''],
+      gitId:['']
+    });
+  }
 
+  initResources() {
+    return this._fb.group({
+      resource: [''],
+    });
+  }
+
+  addNewRow(formField:string) {
+    const control = <FormArray>this.resourceForm.controls[formField];
+    if(formField === 'resources') {
+      control.push(this.initResources());
+    }
+    else if(formField === 'members'){
+      control.push(this.initGitIds());
+    }
+  }
+
+  deleteRow(index: number, formField: string) {
+    const control = <FormArray>this.resourceForm.controls[formField];
+    control.removeAt(index);
+  }
+
+  completeRegistration(resourceForm: any){
+    console.log(resourceForm);
+    this.eventService.completeHackathonRegistration(resourceForm).subscribe(data=>{
+      console.log(data);
+    })
   }
 }

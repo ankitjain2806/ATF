@@ -7,6 +7,7 @@ import {HttpService} from '../../shared/util/http.service';
 
 import {EventRegistration} from "../../models/event-registration";
 import {CompilerForm} from "../../models/compiler-form";
+import {HackathonRegistration} from "../../models/hackathon-registration";
 
 @Injectable()
 export class EventService {
@@ -66,7 +67,7 @@ export class EventService {
   getHCKteamInfo() : Observable <any> {
     return this.http.get("/api/HCK/getTeamDetail",{});
   }
-  completeHackathonRegistration(resources: any){
-    return this.http.post("/api/superadmin/teams/",resources);
+  completeHackathonRegistration(resources: HackathonRegistration){
+    return this.http.post("/api/events/team-register",resources);
   }
 }
