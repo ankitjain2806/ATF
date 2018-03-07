@@ -14,7 +14,7 @@ router.post('/addResource', function (req, res, next) {
     options: req.body.options,
     answer: req.body.answer,
     stage: req.body.stage,
-    isMCQ: (Object.keys(req.body.options).length > 0) ? true: false
+    isMCQ: (Object.keys(req.body.options).length > 0) ? true : false
   }
   var resource = new THResources(resourceObj);
   resource.save(function (err, data) {
@@ -29,37 +29,37 @@ router.post('/addResource', function (req, res, next) {
 }, responseHandler);
 
 router.post('/get/state', function (req, res, next) {
-  //add entry first 
-  eventService.getUserStateForEvent(req ,res, function(currentState) {
+  //add entry first
+  eventService.getUserStateForEvent(req, res, function (currentState) {
     //check if there is no userevent exist
-    if(!currentState) {
+    if (!currentState) {
       const model = new userEventState({
-      user: req.body.user,
-      events: [{
-        event: req.body.event,
-        stage: 1,
-        multiplier: 1,
-        completed: false,
-        slug : req.body.event
+        user: req.body.user,
+        events: [{
+          event: req.body.event,
+          stage: 1,
+          multiplier: 1,
+          completed: false,
+          slug: req.body.event
         }]
       });
       model.save(function (err, model) {
-        if(err) {
+        if (err) {
           res.json({error: 'not registered', data: err});
           res.end();
           return;
         }
-        res.json({data : true});
+        res.json({data: true});
       });
     } else {
-        res.locals.responseObj = {
-        data : currentState,
-        msg : 'user current state'
-        }
-        next();
+      res.locals.responseObj = {
+        data: currentState,
+        msg: 'user current state'
+      }
+      next();
     }
   });
-    
+
 }, responseHandler);
 
 router.post('/set/state', function (req, res, next) {
@@ -100,17 +100,20 @@ router.post('/question/check', function (req, res, next) {
     eventService.getUserStageQuestion(req, res, function (question) {
       _q = question.toObject();
       const isCorrectAnswer = req.body.answer === _q.answer;
-      console.log('correct ans', isCorrectAnswer);
-      isCorrectAnswer ? res.json({data: true}) : res.json({data: false});
+      //console.log('correct ans', isCorrectAnswer);
+      var checkRes = (isCorrectAnswer) ? {data: true, completed: false} : {data: false, completed: false};
 
       // update the state of the user
       if (isCorrectAnswer) {
         eventService.getUserStateForEvent(req, res, function (state) {
-          eventService.updateUserEventState(req, res, state, function () {
+          eventService.updateUserEventState(req, res, state, function (resJson) {
+            checkRes.completed = resJson.completed;
+            res.json(checkRes);
             res.end();
           });
         });
       } else {
+        res.json(checkRes);
         res.end();
       }
     });
