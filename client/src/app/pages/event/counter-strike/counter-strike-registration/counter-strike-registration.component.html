@@ -1,0 +1,27 @@
+<div class="col-md-6 offset-md-3">
+  <h1>Welcome to Counter Strike</h1>
+  <h3>Enter the team details</h3>
+  <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+    <div class="form-group row">
+      <label class="col-md-3 col-sm-6 col-4">Team Name :<span style="color: red">*</span></label>
+      <div class="col-md-8 col-sm-6 col-8">
+        <input type="text" placeholder="Enter Team Name" formControlName="teamName" class="form-control" required>
+      </div>
+    </div>
+    <div formArrayName="members">
+      <div *ngFor="let itemrow of registrationForm['controls'].members['controls']; let i=index" [formGroupName]="i">
+        <div class="form-group row">
+          <label class="col-md-3 col-sm-6 col-4">Email Id :<span style="color: red">*</span></label>
+          <div class="col-md-8 col-sm-6 col-8">
+            <input type="email" placeholder="Enter Email Id" formControlName="email" class="form-control" required>
+          </div>
+          <i class="fa fa-plus-circle" (click)="addMembers()" *ngIf="registrationForm.controls.members.controls.length < 3" style="color:blueviolet"></i>&nbsp;&nbsp;
+          <i class="fa fa-minus-circle" (click)="removeMembers(i)" *ngIf="registrationForm.controls.members.controls.length > 1" style="color: red"></i>
+        </div>
+      </div>
+    </div>
+    <div class="offset-md-5">
+      <button class="btn btn-primary" type="submit" [disabled]="!registrationForm.valid">Register</button>
+    </div>
+  </form>
+</div>
