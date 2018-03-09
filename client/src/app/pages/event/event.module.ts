@@ -30,6 +30,8 @@ import {HackathonHomeComponent} from "./hackathon/hackathon-home/hackathon-home.
 import {HackathonTeamInfoComponet} from "./hackathon/hackathon-team-detail/hackathon-team-info.component";
 import {HackathonComponet} from "./hackathon/hackathon.componet";
 import {HackathonRegistrationComponent} from "./hackathon/hackathon-registration/hackathon-registration.component";
+import {CounterStrikeRegistrationComponent} from "./counter-strike/counter-strike-registration/counter-strike-registration.component";
+import {CounterStrikeHomeComponent} from "./counter-strike/counter-strike-home/counter-strike-home.component";
 
 @NgModule({
   imports: [
@@ -54,7 +56,9 @@ import {HackathonRegistrationComponent} from "./hackathon/hackathon-registration
     HackathonHomeComponent,
     HackathonComponet,
     HackathonTeamInfoComponet,
-    HackathonRegistrationComponent
+    HackathonRegistrationComponent,
+    CounterStrikeRegistrationComponent,
+    CounterStrikeHomeComponent
   ],
   exports: [
     // EventComponent

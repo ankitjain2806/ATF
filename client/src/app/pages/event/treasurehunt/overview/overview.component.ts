@@ -33,7 +33,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
         this.info = data.data;
       });
 
-      this.treasurehuntService.getUserState(this.userSession._id, this.eventId).subscribe((response) => {
+      this.treasurehuntService.getUserStage(this.userSession._id, this.eventId).subscribe((response) => {
         if (response['error']) {
           // user is not present; redirect to home
         } else {

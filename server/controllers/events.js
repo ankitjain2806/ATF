@@ -2,11 +2,11 @@ var express = require('express');
 var EventModel = require('../models/Event');
 var User = require('../models/User');
 var Resource = require('../models/CompilerResource');
-var UserEventStateModel = require('../models/UserEventState');
 var router = express.Router();
 var async = require('async');
 var eventService = require('../service/events.service');
 var HCKinfoModel = require('../models/HCKinfo');
+var CSinfoModel = require('../models/CSinfo');
 
 router.get('/getEventDetails/:slug', function (req, res, next) {
   var loggedInUser = req.session.user;
@@ -97,6 +97,7 @@ router.post('/team-register', function (req, res, next) {
                 }, function (err, members) {
                     members.push(req.session.user._id)
                     teamData.members = members;
+                    console.log("Team Data-------------------------====================",teamData);
                     callback(null, members);
                 });
             },
@@ -105,33 +106,53 @@ router.post('/team-register', function (req, res, next) {
                     eventId = event._id;
                     event.teams.push(teamData);
                     event.save(function (err, data) {
-                        console.log(data.teams.length);
-                        var _teamId ;
-                        for(var i=0; i<data.teams.length; i++){
-                            if(data.teams[i].teamName === req.body.teamName)
-                                _teamId = data.teams[i]._id;
+                        if(req.body.slug === 'hackathon') {
+                            var _teamId;
+                            for (var i = 0; i < data.teams.length; i++) {
+                                if (data.teams[i].teamName === req.body.teamName)
+                                    _teamId = data.teams[i]._id;
+                            }
+
+                            var _members = [];
+                            _members = req.body.members;
+                            _members.push({'email': req.session.user.email, 'gitId': req.body.userGitId})
+                            var HCKData = new HCKinfoModel({
+                                teamId: _teamId,
+                                members: _members,
+                                idea: req.body.idea,
+                                resources: req.body.resources,
+                                isApproved: false,
+                                teamName: req.body.teamName,
+                                gitRepoId: "",
+                                gitRepo: "",
+                            });
+
+                            HCKData.save(function (err) {
+                                if (err)
+                                    console.log("Error in HCKInfo    ----------------", err);
+                            });
+                            callback(err, event)
                         }
-
-                        var _members = [];
-                        _members= req.body.members;
-                        _members.push({'email':req.session.user.email, 'gitId':req.body.userGitId})
-                        console.log("Email ------------------------------------",_members);
-                        var HCKData = new HCKinfoModel({
-                            teamId: _teamId,
-                            members: _members,
-                            idea: req.body.idea,
-                            resources: req.body.resources,
-                            isApproved: false,
-                            teamName: req.body.teamName,
-                            gitRepoId : "",
-                            gitRepo : "",
-                        });
-
-                        HCKData.save(function (err) {
-                            if(err)
-                                console.log("Error in HCKInfo    ----------------",err);
-                        });
-                        callback(err, event)
+                        else if(req.body.slug === 'counterStrike'){
+                            var _teamId;
+                            for (var i = 0; i < data.teams.length; i++) {
+                                if (data.teams[i].teamName === req.body.teamName)
+                                    _teamId = data.teams[i]._id;
+                            }
+                            var _members = [];
+                            _members = req.body.members;
+                            _members.push({'email': req.session.user.email});
+                            var CSData = new CSinfoModel({
+                                teamId : _teamId,
+                                teamName : req.body.teamName,
+                                members : _members
+                            });
+                            CSData.save(function(err){
+                                if(err)
+                                    console.trace(err);
+                            });
+                            callback(err, event)
+                        }
                     });
                 });
             },
