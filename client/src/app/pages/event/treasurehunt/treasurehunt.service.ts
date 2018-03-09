@@ -12,9 +12,9 @@ export class TreasurehuntService {
     return this.httpService.get(this.local_base + '/details', {});
   }
 
-  getUserState(userId, event) {
+  getUserStage(userId, event) {
     console.log(event)
-    return this.httpService.post(this.local_base + '/get/state', {user: userId, event: event});
+    return this.httpService.post(this.local_base + '/get/stage', {user: userId, event: event});
   }
 
   setUserState(user, state, eventId) {
@@ -33,7 +33,6 @@ export class TreasurehuntService {
   }
 
   getUserStageQuestion(userId, event) {
-    console.log('questions');
     return this.httpService.post(this.local_base + '/question', {user: userId, event: event});
   }
 

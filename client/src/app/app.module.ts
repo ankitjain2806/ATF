@@ -30,6 +30,8 @@ import {AuthGuardService} from "./shared/util/auth-guard.service";
     FooterComponent
   ],
   imports: [
+    NgbModule,
+    NgbModule.forRoot(),
     BrowserModule,
     ReactiveFormsModule,
     FormsModule,

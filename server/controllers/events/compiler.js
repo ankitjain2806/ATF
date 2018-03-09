@@ -14,8 +14,9 @@ var amqp = require('amqplib/callback_api');
 var socket = require('../../util/socket');
 
 var responseHandler = require('../../util/responseHandler').Response;
-
-var compilerMQSocket = function (user) {
+var savePoints = require('../../util/transaction').savePoints;
+var user;
+var compilerMQSocket = function () {
   amqp.connect('amqp://localhost:5672', function (err, conn) {
     conn.createChannel(function (err, ch) {
       var resultQueue = 'resultQueue';
@@ -32,6 +33,18 @@ var compilerMQSocket = function (user) {
         eventLog.save(function (err, data) {
           console.log(err, data)
         });*/
+        var tempObj = {
+          user: response.userId,
+          fromUser: null,
+          eventId:  'compiler',
+          description: ' this is desc',
+          points: -5
+        };
+        if(response.testCasePass) {
+          tempObj.points = 10;
+        }
+
+        savePoints(tempObj)
         socket.send('compilerSocket', {
           testCaseNumber: response.index,
           testCasePass: response.testCasePass
@@ -43,6 +56,7 @@ var compilerMQSocket = function (user) {
 
 compilerMQSocket();
 router.post('/run', function (req, res, next) {
+  user =  req.session.user;
   amqp.connect('amqp://localhost:5672', function (err, conn) {
     conn.createChannel(function (err, ch) {
       var q = 'compilerQueue';

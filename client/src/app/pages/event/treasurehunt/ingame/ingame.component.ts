@@ -16,7 +16,7 @@ export class IngameComponent implements OnInit {
   answer = {
     value: []
   };
-  state = {};
+  stage = {};
   showNext: Boolean = false;
   userSession = null;
   options :string;
@@ -81,11 +81,10 @@ export class IngameComponent implements OnInit {
   }
 
   private getCurrentQuestion() {
-
-    this.treasurehuntService.getUserState(this.userSession.id, this.slug).subscribe(state => {
-      this.state = state['data'][0];
+    this.treasurehuntService.getUserStage(this.userSession.id, this.slug).subscribe(stage => {
+      this.stage = stage['data'];
       /** check state if completed or in progress*/
-      if (this.state['completed']) {
+      if (this.stage['completed']) {
         //redirect to the finish event route once the event is finished
         this.router.navigate(['/event', 'finished', 'treasurehunt' ]);
       } else {

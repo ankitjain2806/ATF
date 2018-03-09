@@ -68,7 +68,6 @@ app.use(cors());
  * @param next
  */
 var isLoggedIn = function (req, res, next) {
-  console.log(req.session , typeof req.session.user,  typeof req.session.user !== 'undefined', "===============================>")
   if (req.session && typeof req.session.user !== 'undefined') {
     next();
   } else {

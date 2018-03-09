@@ -4,9 +4,12 @@ import {DashboardRoutingModule} from './dashboard-routing.module'
 import {DashboardComponent} from "./dashboard.component";
 import {DashboardService} from "./dashboard.service";
 import {DashboardResolverService} from "./dashboard-resolver.service";
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   imports: [
+    NgbModule,
+    NgbModule.forRoot(),
     CommonModule,
     DashboardRoutingModule
   ],

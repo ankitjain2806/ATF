@@ -5,8 +5,10 @@ var request = require('request');
 var THResource = require('../../models/THResources');
 var eventService = require('../../service/events.service');
 var responseHandler = require('../../util/responseHandler').Response;
-var userEventState = require('../../models/UserEventState');
+//var userEventState = require('../../models/UserEventState');
+var THUserStage = require('../../models/THUserStage');
 
+/*
 router.post('/addResource', function (req, res, next) {
   var resourceObj = {
     title: req.body.name,
@@ -27,21 +29,16 @@ router.post('/addResource', function (req, res, next) {
     next();
   })
 }, responseHandler);
-
-router.post('/get/state', function (req, res, next) {
+*/
+router.post('/get/stage', function (req, res, next) {
   //add entry first
-  eventService.getUserStateForEvent(req, res, function (currentState) {
+  eventService.getUserStage(req, res, function (currentStage) {
     //check if there is no userevent exist
-    if (!currentState) {
-      const model = new userEventState({
+    if (!currentStage) {
+      const model = new THUserStage({
         user: req.body.user,
-        events: [{
-          event: req.body.event,
-          stage: 1,
-          multiplier: 1,
-          completed: false,
-          slug: req.body.event
-        }]
+        stage: 1,
+        completed: false,
       });
       model.save(function (err, model) {
         if (err) {
@@ -53,8 +50,8 @@ router.post('/get/state', function (req, res, next) {
       });
     } else {
       res.locals.responseObj = {
-        data: currentState,
-        msg: 'user current state'
+        data: currentStage,
+        msg: 'user current stage'
       }
       next();
     }
@@ -62,6 +59,7 @@ router.post('/get/state', function (req, res, next) {
 
 }, responseHandler);
 
+/*
 router.post('/set/state', function (req, res, next) {
   console.log('user ', req.body.user);
   const model = new UserEventStateModel({
@@ -83,7 +81,7 @@ router.post('/set/state', function (req, res, next) {
     res.end();
   });
 });
-
+*/
 router.post('/question', function (req, res, next) {
   eventService.getUserStageQuestion(req, res, function (currentStageQuestion) {
     const _response = currentStageQuestion.toObject();
@@ -105,8 +103,8 @@ router.post('/question/check', function (req, res, next) {
 
       // update the state of the user
       if (isCorrectAnswer) {
-        eventService.getUserStateForEvent(req, res, function (state) {
-          eventService.updateUserEventState(req, res, state, function (resJson) {
+        eventService.getUserStage(req, res, function (stage) {
+          eventService.updateUserStage(req, res, stage, function (resJson) {
             checkRes.completed = resJson.completed;
             res.json(checkRes);
             res.end();
