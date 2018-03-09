@@ -2,7 +2,6 @@ var express = require('express');
 var EventModel = require('../models/Event');
 var User = require('../models/User');
 var Resource = require('../models/CompilerResource');
-var UserEventStateModel = require('../models/UserEventState');
 var router = express.Router();
 var async = require('async');
 var eventService = require('../service/events.service');
