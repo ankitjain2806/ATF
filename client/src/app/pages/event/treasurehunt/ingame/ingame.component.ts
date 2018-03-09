@@ -81,7 +81,6 @@ export class IngameComponent implements OnInit {
   }
 
   private getCurrentQuestion() {
-
     this.treasurehuntService.getUserState(this.userSession.id, this.slug).subscribe(state => {
       this.state = state['data'][0];
       /** check state if completed or in progress*/

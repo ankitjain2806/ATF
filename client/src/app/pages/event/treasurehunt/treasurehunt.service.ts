@@ -33,7 +33,6 @@ export class TreasurehuntService {
   }
 
   getUserStageQuestion(userId, event) {
-    console.log('questions');
     return this.httpService.post(this.local_base + '/question', {user: userId, event: event});
   }
 
