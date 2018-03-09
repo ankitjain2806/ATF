@@ -8,20 +8,22 @@ var TransactionUtil = {
     console.log('----------------------------------------');
 
     // transactionData = JSON.parse(transactionData);
-    var amount = transactionData.amount;
-    User.findOne({email: transactionData.toUser}, function (err, person) {
-      console.trace(err, person)
+    var amount = transactionData.points;
+    User.findById(transactionData.user, function (err, person) {
+      console.log("PERSON is :" + person._id);
       if (err) {
         callback(err, null)
       }
       if (person) {
+        console.log("inside update points",person.totalPoints);
         person.totalPoints += amount;
+				console.log("inside update points again ",person.totalPoints);
         person.save(function (err, data) {
         })
       }
     });
     if (transactionData.fromUser !== null) {
-      User.findOne({email: transactionData.fromUser}, function (err, person) {
+      User.findOne({_id: transactionData.fromUser}, function (err, person) {
         console.trace(err, person)
         if (err) {
           callback(err, null)

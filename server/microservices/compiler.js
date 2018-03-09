@@ -32,17 +32,21 @@ amqp.connect('amqp://localhost:5672', function (err, conn) {
 
       var callGlot = function (codeObj) {
         request(codeObj, function (err, res, body) {
-          var resultQueue = 'resultQueue';
-          var resultObj = {
-            error: err,
-            response: res.body,
-            status: res.statusCode,
-            testCasePass: (body.stdout == codeObj.stdout) ? true : false,
-            index : codeObj.index+1,
-            userId: userId
-          };
-          // ch.assertQueue(resultQueue, {durable: false});
-          ch.sendToQueue(resultQueue, new Buffer(JSON.stringify(resultObj)));
+					var resultObj;
+          if(!err) {
+						var resultQueue = 'resultQueue';
+						resultObj = {
+							error: body.stderr,
+							response: res.body,
+							status: res.statusCode,
+							testCasePass: (body.stdout == codeObj.stdout) ? true : false,
+							index : codeObj.index+1,
+							userId: userId
+						};
+						console.log(resultObj);
+						// ch.assertQueue(resultQueue, {durable: false});
+						ch.sendToQueue(resultQueue, new Buffer(JSON.stringify(resultObj)));
+          }
         })
       }
 
@@ -63,7 +67,6 @@ amqp.connect('amqp://localhost:5672', function (err, conn) {
     }, {noAck: true});
   });
 });
-
 
 app.listen(3100, function () {
   console.log('Example app listening on port 3100!')
