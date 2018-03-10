@@ -12,7 +12,6 @@ amqp.connect('amqp://localhost:5672', function (err, conn) {
 		
 		ch.assertQueue(q, {durable: false});
 		ch.prefetch(1);
-		
 		console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", q);
 		ch.consume(q, function (msg) {
 			//do stuff here
@@ -35,6 +34,7 @@ amqp.connect('amqp://localhost:5672', function (err, conn) {
 					person.totalPoints += amount;
 					console.log("inside update points again ", person.totalPoints);
 					person.save(function (err, data) {
+						ch.ack(msg);
 					})
 				}
 			});
@@ -61,7 +61,7 @@ amqp.connect('amqp://localhost:5672', function (err, conn) {
 			var transaction = new TransactionLog(transData);
 			transaction.save(function (err, data) {
 				console.log(err, data)
-				ch.ack(msg);
+				//ch.ack(msg);
 			})
 		}, {noAck: false});
 	});
