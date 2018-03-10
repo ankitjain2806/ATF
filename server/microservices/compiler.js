@@ -44,6 +44,7 @@ amqp.connect('amqp://localhost:5672', function (err, conn) {
 							userId: userId
 						};
 						console.log(resultObj);
+						updatePoints(resultObj);
 						// ch.assertQueue(resultQueue, {durable: false});
 						ch.sendToQueue(resultQueue, new Buffer(JSON.stringify(resultObj)));
           }
@@ -67,6 +68,28 @@ amqp.connect('amqp://localhost:5672', function (err, conn) {
     }, {noAck: true});
   });
 });
+
+
+var updatePoints = function(resultObj){
+	amqp.connect('amqp://localhost:5672', function (err, conn) {
+		conn.createChannel(function (err, ch) {
+			var q = 'transactionQueue';
+			var tempObj = {
+				user: resultObj.userId,
+				fromUser: null,
+				eventId:  'compiler',
+				description: ' this is desc',
+				points: -5
+			};
+			if(resultObj.testCasePass) {
+				tempObj.points = 10;
+			}
+			console.log('inside updatePoints Queue');
+			ch.assertQueue(q, {durable: false});
+			ch.sendToQueue(q, new Buffer(JSON.stringify(tempObj)),{persistent: true});
+		});
+	});
+}
 
 app.listen(3100, function () {
   console.log('Example app listening on port 3100!')

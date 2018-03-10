@@ -44,7 +44,7 @@ var compilerMQSocket = function () {
           tempObj.points = 10;
         }
 
-        savePoints(tempObj)
+        //savePoints(tempObj)
         socket.send('compilerSocket', {
           testCaseNumber: response.index,
           testCasePass: response.testCasePass
