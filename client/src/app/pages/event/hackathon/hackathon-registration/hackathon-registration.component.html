@@ -1,53 +1,58 @@
   <div class="col-md-4 offset-md-3">
-    <h3 class="page-header">Add Details for Hackathon</h3>
-    <form [formGroup]="resourceForm" (ngSubmit)="completeRegistration(resourceForm.value)">
-      <div class="form-group row">
-        <label for="teamname" class="col-md-4 col-sm-6 col-4">Team Name</label>
-        <div class="col-md-8 col-sm-6 col-8">
-          <input type="text" class="form-control" id="teamname" placeholder="Enter Team Name" formControlName="teamName">
+    <h3 class="page-header">Team Details for Hackathon</h3>
+    <div *ngIf="">
+
+    </div>
+    <div>
+      <form [formGroup]="resourceForm" (ngSubmit)="completeRegistration(resourceForm.value)">
+        <div class="form-group row">
+          <label for="teamname" class="col-md-4 col-sm-6 col-4">Team Name</label>
+          <div class="col-md-8 col-sm-6 col-8">
+            <input type="text" class="form-control" id="teamname" placeholder="Enter Team Name" formControlName="teamName">
+          </div>
         </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-md-4 col-sm-6 col-4">Your GitId</label>
-        <div class="col-md-8 col-sm-6 col-8">
-          <input type="text" class="form-control" id="userGitId" placeholder="Enter Your GitId" formControlName="userGitId">
+        <div class="form-group row">
+          <label class="col-md-4 col-sm-6 col-4">Your GitId</label>
+          <div class="col-md-8 col-sm-6 col-8">
+            <input type="text" class="form-control" id="userGitId" placeholder="Enter Your GitId" formControlName="userGitId">
+          </div>
         </div>
-      </div>
-      <div formArrayName="members">
-        <div *ngFor="let itemrow of resourceForm['controls'].members['controls']; let i=index" [formGroupName]="i">
-          <div class="form-group row">
-            <label class="col-md-4 col-sm-6 col-4">Member's EmailId</label>
-            <div class="col-md-8 col-sm-6 col-8">
-              <input type="text" class="form-control" formControlName="email" class="form-control" required placeholder="Please Enter email Id!">
+        <div formArrayName="members">
+          <div *ngFor="let itemrow of resourceForm['controls'].members['controls']; let i=index" [formGroupName]="i">
+            <div class="form-group row">
+              <label class="col-md-4 col-sm-6 col-4">Member's EmailId</label>
+              <div class="col-md-8 col-sm-6 col-8">
+                <input type="text" class="form-control" formControlName="email" class="form-control" required placeholder="Please Enter email Id!">
+              </div>
             </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-md-4 col-sm-6 col-4">Member's GitId</label>
-            <div class="col-md-8 col-sm-6 col-8">
-              <input type="text" class="form-control" formControlName="gitId" class="form-control" required placeholder="Please Enter Git Id!">
+            <div class="form-group row">
+              <label class="col-md-4 col-sm-6 col-4">Member's GitId</label>
+              <div class="col-md-8 col-sm-6 col-8">
+                <input type="text" class="form-control" formControlName="gitId" class="form-control" required placeholder="Please Enter Git Id!">
+              </div>
+              <button *ngIf="resourceForm.controls.members.controls.length > 1" (click)="deleteRow(i,'members')" class="btn btn-danger">Remove GitId</button>
             </div>
-            <button *ngIf="resourceForm.controls.members.controls.length > 1" (click)="deleteRow(i,'members')" class="btn btn-danger">Remove GitId</button>
+            <button class="btn btn-primary" (click)="addNewRow('members')"type="button">Add GitId</button><br>
           </div>
-          <button class="btn btn-primary" (click)="addNewRow('members')"type="button">Add GitId</button><br>
         </div>
-      </div>
-      <label>Description/Idea</label>
-      <textarea formControlName="idea" class="form-control" required></textarea>
-      <div formArrayName="resources">
-        <div *ngFor="let itemrow of resourceForm['controls'].resources['controls']; let i=index" [formGroupName]="i">
-          <h4>Resource/Software #{{ i + 1 }}</h4>
-          <div class="form-group">
-            <label>Required Resources/ Software</label>
-            <input formControlName="resource" class="form-control">
+        <label>Description/Idea</label>
+        <textarea formControlName="idea" class="form-control" required></textarea>
+        <div formArrayName="resources">
+          <div *ngFor="let itemrow of resourceForm['controls'].resources['controls']; let i=index" [formGroupName]="i">
+            <h4>Resource/Software #{{ i + 1 }}</h4>
+            <div class="form-group">
+              <label>Required Resources/ Software</label>
+              <input formControlName="resource" class="form-control">
+            </div>
+            <button *ngIf="resourceForm.controls.resources.controls.length > 1" (click)="deleteRow(i,'resources')" class="btn btn-danger">Remove Resource</button>
           </div>
-          <button *ngIf="resourceForm.controls.resources.controls.length > 1" (click)="deleteRow(i,'resources')" class="btn btn-danger">Remove Resource</button>
         </div>
-      </div>
-      <button type="button" class="btn btn-primary" (click)="addNewRow('resources')">Add New Resource</button><br>
-      <div class="offset-md-3">
-        <button type="submit" class="btn btn-primary">Register</button>
-      </div>
-    </form>
+        <button type="button" class="btn btn-primary" (click)="addNewRow('resources')">Add New Resource</button><br>
+        <div class="offset-md-3">
+          <button type="submit" class="btn btn-primary">Register</button>
+        </div>
+      </form>
+    </div>
   </div>
   <a class="btn btn-primary text-white" [routerLink]="['/dashboard']">Back</a>
 

@@ -91,5 +91,15 @@ router.post('/postinfo/:teamId', function (req, res, next) {
   });
 });
 
+router.get('/getRegistration', function (req, res, next) {
+  HCKinfo.find({'members.userId' : req.session.user._id}, function (err, data) {
+    res.locals.responseObj = {
+      err: err,
+      data: data,
+      msg: "members saved"
+    }
+    next();
+  })
+}, responseHandler)
 
 module.exports = router;
