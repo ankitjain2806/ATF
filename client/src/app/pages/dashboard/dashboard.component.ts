@@ -12,6 +12,7 @@ import {EventRegistration} from "../../models/event-registration";
 export class DashboardComponent implements OnInit {
 
   userEvent = [];
+  showAlert: boolean = false;
 
   constructor(private dashboardService: DashboardService,
               private route: ActivatedRoute,
@@ -29,38 +30,33 @@ export class DashboardComponent implements OnInit {
   }
 
   eventRegistration(eventSlug: string) {
+    let api;
+    let obj: EventRegistration = {
+      teamName: '',
+      members: [],
+      slug: null
+    }
     switch (eventSlug) {
-      case 'compiler':
-        let compilerObj: EventRegistration = {
-          teamName: '',
-          members: [],
-          slug: 'compiler'
-        }
-        this.dashboardService.registerEvent(compilerObj).subscribe(() => {
-          this.router.navigate(['/compiler/intro']);
-        })
-        break;
       case 'treasurehunt':
-        let thObj: EventRegistration = {
-          teamName: '',
-          members: [],
-          slug: 'treasurehunt'
-        }
-        this.dashboardService.registerEvent(thObj).subscribe(() => {
-          this.router.navigate(['/treasurehunt/game']);
-        })
+        obj.slug = 'treasurehunt'
+        api = '/treasurehunt/game';
+        break;
+      case 'compiler':
+        obj.slug = 'compiler'
+        api = '/compiler/intro';
         break;
       case 'hackathon':
-        let hckObj: EventRegistration = {
-          teamName: '',
-          members: [],
-          slug: 'hackathon'
-        }
-        this.dashboardService.registerEvent(hckObj).subscribe(() => {
-          this.router.navigate(['/hackathon/registration']);
-        })
+        obj.slug = 'hackathon'
+        api = '/hackathon/registration';
         break;
     }
+    this.dashboardService.registerEvent(obj).subscribe(() => {
+      this.showAlert = true;
+      this.dashboardService.getUserEvents().subscribe((events) =>{
+        this.userEvent = events;
+      })
+      // this.router.navigate([api]);
+    })
   }
 
   eventContinue(eventSlug: string) {

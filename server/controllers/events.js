@@ -7,6 +7,7 @@ var async = require('async');
 var eventService = require('../service/events.service');
 var HCKinfoModel = require('../models/HCKinfo');
 var CSinfoModel = require('../models/CSinfo');
+var _ =  require('lodash');
 
 router.get('/getEventDetails/:slug', function (req, res, next) {
   var loggedInUser = req.session.user;
@@ -58,126 +59,123 @@ router.post('/team-register', function (req, res, next) {
     members: []
   };
 
-    async.series([
-            function (callback) {
-                var users = req.body.members;
-                async.times(users.length, function (n, next) {
-                    User.findOne({email: users[n].email}, function (err, person) {
-                        if(err)
-                            console.log("Error in find User -----------",err);
-                        console.log("Person-----------",person);
-
-                        if (err) {
-                            callback(err, null)
-                        }
-                        if (person) {
-                            next(null, person.id)
-                        } else {
-                            var user = new User({
-                                name: {
-                                    familyName: "",
-                                    givenName: ""
-                                },
-                                isActive: false,
-                                email: users[n].email,
-                                imageUrl: "",
-                                provider: "",
-                                isInvited: true,
-                                providerData: ""
-                            });
-                            user.save(function (err, data) {
-                                if(err)
-                                    console.log("Error in save User -----------",err);
-                                else
-                                    console.log("No error--------",data)
-                                next(null, data._id)
-                            })
-                        }
-                    });
-                }, function (err, members) {
-                    members.push(req.session.user._id)
-                    teamData.members = members;
-                    console.log("Team Data-------------------------====================",teamData);
-                    callback(null, members);
+  async.series([
+        function (callback) {
+          var users = req.body.members;
+          async.times(users.length, function (n, next) {
+            User.findOne({email: users[n].email}, function (err, person) {
+              if (err) {
+                callback(err, null)
+              }
+              if (person) {
+                next(null, person.id)
+              } else {
+                var user = new User({
+                  name: {
+                    familyName: "",
+                    givenName: ""
+                  },
+                  isActive: false,
+                  email: users[n].email,
+                  imageUrl: "",
+                  provider: "",
+                  isInvited: true,
+                  providerData: ""
                 });
-            },
-            function (callback) {
-                EventModel.findOne({slug: req.body.slug}, function (err, event) {
-                    eventId = event._id;
-                    event.teams.push(teamData);
-                    event.save(function (err, data) {
-                        if(req.body.slug === 'hackathon') {
-                            var _teamId;
-                            for (var i = 0; i < data.teams.length; i++) {
-                                if (data.teams[i].teamName === req.body.teamName)
-                                    _teamId = data.teams[i]._id;
-                            }
+                user.save(function (err, data) {
+                  if (err)
+                    console.log("Error in save User -----------", err);
+                  else
+                    console.log("No error--------", data)
+                  next(null, data._id)
+                })
+              }
+            });
+          }, function (err, members) {
+            members.push(req.session.user._id);
+            teamData.members = members;
+            callback(null, members);
+          });
+        },
+        /*function (callback) {
+          EventModel.findOne({slug: req.body.slug}, function (err, event) {
+            eventId = event._id;
+            event.teams.push(teamData);
+            event.save(function (err, data) {
+              if (req.body.slug === 'hackathon') {
+                var _teamId;
+                for (var i = 0; i < data.teams.length; i++) {
+                  if (data.teams[i].teamName === req.body.teamName)
+                    _teamId = data.teams[i]._id;
+                }
 
-                            var _members = [];
-                            _members = req.body.members;
-                            _members.push({'email': req.session.user.email, 'gitId': req.body.userGitId})
-                            var HCKData = new HCKinfoModel({
-                                teamId: _teamId,
-                                members: _members,
-                                idea: req.body.idea,
-                                resources: req.body.resources,
-                                isApproved: false,
-                                teamName: req.body.teamName,
-                                gitRepoId: "",
-                                gitRepo: "",
-                            });
+                var _members = [];
+                _members = req.body.members;
+                _members.push({'email': req.session.user.email, 'gitId': req.body.userGitId})
+                var HCKData = new HCKinfoModel({
+                  teamId: _teamId,
+                  members: _members,
+                  idea: req.body.idea,
+                  resources: req.body.resources,
+                  isApproved: false,
+                  teamName: req.body.teamName,
+                  gitRepoId: "",
+                  gitRepo: "",
+                });
 
-                            HCKData.save(function (err) {
-                                if (err)
-                                    console.log("Error in HCKInfo    ----------------", err);
-                            });
-                            callback(err, event)
-                        }
-                        else if(req.body.slug === 'counterStrike'){
-                            var _teamId;
-                            for (var i = 0; i < data.teams.length; i++) {
-                                if (data.teams[i].teamName === req.body.teamName)
-                                    _teamId = data.teams[i]._id;
-                            }
-                            var _members = [];
-                            _members = req.body.members;
-                            _members.push({'email': req.session.user.email});
-                            var CSData = new CSinfoModel({
-                                teamId : _teamId,
-                                teamName : req.body.teamName,
-                                members : _members
-                            });
-                            CSData.save(function(err){
-                                if(err)
-                                    console.trace(err);
-                            });
-                            callback(err, event)
-                        }
-                    });
+                HCKData.save(function (err) {
+
                 });
-            },
-            function (callback) {
-                console.log("team data------------------",teamData);
-                async.times(teamData.members.length, function (n, next) {
-                    User.findOne({_id: teamData.members[n]}, function (err, user) {
-                        console.log(err);
-                        if (err) {
-                            next(err, null)
-                        }
-                        if (!user.events) {
-                            user.events = [];
-                        }
-                        user.events.push({eventId : eventId, isBlocked: false});
-                        user.save(function (err, data) {
-                            next(null, data)
-                        })
-                    });
-                }, function (err, members) {
-                    res.json({data: 'success'})
+              }
+              else if (req.body.slug === 'counterStrike') {
+                var _teamId;
+                for (var i = 0; i < data.teams.length; i++) {
+                  if (data.teams[i].teamName === req.body.teamName)
+                    _teamId = data.teams[i]._id;
+                }
+                var _members = [];
+                _members = req.body.members;
+                _members.push({'email': req.session.user.email});
+                var CSData = new CSinfoModel({
+                  teamId: _teamId,
+                  teamName: req.body.teamName,
+                  members: _members
                 });
-            },
-        ]
-    );
+                CSData.save(function (err) {
+                  // callback(err, event)
+                });
+              }
+              callback(err, event)
+            });
+          });
+        },*/
+        function (callback) {
+          async.times(teamData.members.length, function (n, next) {
+            User.findOne({_id: teamData.members[n]}, function (err, user) {
+              console.log(err);
+              if (err) {
+                next(err, null)
+              }
+              if (!user.events) {
+                user.events = [];
+              }
+
+              var userEvents = _.find(user.events, function(o) { return o.eventId == eventId; });
+              if(userEvents.length == 0) {
+                user.events.push({eventId: eventId, isBlocked: false});
+                user.save(function (err, data) {
+                  next(null, data)
+                })
+              } else {
+                next(null, data)
+              }
+            });
+          }, function (err, members) {
+            res.json({data: 'success'})
+          });
+        },
+      ]
+  );
 });
 
 router.post('/end', function (req, res) {
@@ -213,10 +211,10 @@ router.post('/isended', function (req, res) {
   const user = req.body.user;
   console.log(event, user);
   const query = UserEventStateModel.find(
-    {
-      'user': user,
-      'events.slug': event
-    }
+      {
+        'user': user,
+        'events.slug': event
+      }
   );
   query.exec(function (err, rDoc) {
     if (err) {

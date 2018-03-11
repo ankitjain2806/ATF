@@ -14,16 +14,14 @@ export class HackathonComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.superAdminService.getHackathonRegisterdUser().subscribe(data=>{
-      console.log(data);
-      this.teams = data.teams;
+    this.superAdminService.getHackathonRegisterdUser().subscribe((teams)=>{
+      this.teams = teams.data;
     });
   }
 
   acceptRejectTeam(teamId:string, isApproved :boolean){
-    this.superAdminService.acceptRejectTeam(teamId, isApproved).subscribe(data=>{
+    this.superAdminService.acceptRejectTeam(teamId, isApproved).subscribe((data)=>{
       console.log(data);
     });
   }
-
 }

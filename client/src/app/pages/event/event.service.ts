@@ -34,7 +34,7 @@ export class EventService {
   runCompilerCode(form: CompilerForm, resourceId: string, Resource: string) {
     form['resourceId'] = resourceId;
     form['Resource'] = Resource;
-    const url = this.local_base + 'compiler/run';
+    const url = '/api/compiler/run';
     return this.http.post(url, form);
   }
 
@@ -68,6 +68,7 @@ export class EventService {
     return this.http.get("/api/HCK/getTeamDetail",{});
   }
   completeHackathonRegistration(resources: HackathonRegistration){
-    return this.http.post("/api/events/team-register",resources);
+    console.log(resources);
+    return this.http.post("/api/HCK/saveRegistration", resources);
   }
 }

@@ -1,9 +1,10 @@
 <div class="container-fluid">
   <h1 class="heading text-center">Events Dashboard</h1>
-  <div class="alert alert-dismissible alert-success">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-    <strong>Well done!</strong> You successfully read <a href="#" class="alert-link">this important alert message</a>.
-  </div>
+  <p *ngIf="showAlert">
+    <ngb-alert [type]="'success'" [dismissible]="true" (close)="showAlert = false;">
+      <strong>Congratulations!</strong> You are registered in event. Please click Continue.
+    </ngb-alert>
+  </p>
   <div class="row margin-top-50">
     <div class="col-4 event-block">
       <div class="event-block-head">Compiler</div>

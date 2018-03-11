@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {SuperAdminService} from "../superadmin.service";
 import {clone} from 'lodash';
+import {Router, ActivatedRoute} from "@angular/router";
 
 @Component({
   moduleId: module.id,

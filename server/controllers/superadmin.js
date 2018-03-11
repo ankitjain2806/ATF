@@ -2,8 +2,9 @@ var express = require('express');
 var router = express.Router();
 var EventModel = require('../models/Event');
 var User = require('../models/User');
-var HCKinfoModel = require('../models/HCKinfo');
+var HCKInfoModel = require('../models/HCKinfo');
 var request = require('request');
+var responseHandler = require('../util/responseHandler').Response;
 
 router.post('/events/addNewEvent', function (req, res, next) {
 
@@ -71,9 +72,9 @@ router.get('/users', function (req, res, next) {
 
 
 router.get('/users/getEvents/:userId', function (req, res, next) {
-  var query = User.findById(req.params.userId).select({'events': 1}).populate({path : 'events.eventId', select: 'name'});
+  var query = User.findById(req.params.userId).select({'events': 1}).populate({path: 'events.eventId', select: 'name'});
   query.exec(query, function (err, doc) {
-    if(err) {
+    if (err) {
       console.log(err);
     }
     res.json(doc);
@@ -111,20 +112,20 @@ router.put('/users/block', function (req, res, next) {
 
 //api to list all the teams registered for HCK
 router.get('/teams/getHCKteams', function (req, res, next) {
-  var query = EventModel.findOne({slug: 'hackathon'}).select({'teams':1});
+  var query = HCKInfoModel.find({});
   query.exec(query, function (err, doc) {
-    if (err) {
-      console.log(err);
+    res.locals.responseObj = {
+      err: err,
+      data: doc,
+      msg: "hackathon teams"
     }
-    res.json(doc);
-    res.end();
+    next();
   });
-
-});
+}, responseHandler);
 
 //api to display details of the selected team
 router.get('/teams/HCK/showdetails/:teamId', function (req, res, next) {
-  HCKinfoModel.findOne({"teamId":req.params.teamId}, function (err, doc) {
+  HCKInfoModel.findOne({"teamId": req.params.teamId}, function (err, doc) {
     if (err) {
       console.log(err);
     }
@@ -132,90 +133,83 @@ router.get('/teams/HCK/showdetails/:teamId', function (req, res, next) {
     res.end();
   });
 });
-
 
 
 //api to approve/reject Hackathon team
 router.put('/teams/HCK/approve', function (req, res, next) {
+  HCKInfoModel.findById(req.body.teamId, function (err, team) {
+    res.locals.responseObj = {
+      err: err,
+      data: team,
+      msg: "hackathon teams"
+    }
+    next();
 
-    HCKinfoModel.findOne({"teamId":req.body.teamId}, function (err, doc){
-        console.log("TeamId  ----------------------------------------------------",req.body.teamId);
-        if (err) {
-            console.log(err);
-        }
-        else {
-            doc.isApproved = req.body.isApproved ;
-            doc.save(function (err) {
-                if (err) {
-                    res.send(err);
-                }
+    if (!err) {
+      team.isCheckedByAdmin = true;
+      team.isApproved = team.isApproved;
+      team.save(function (err, data) {
+        if (!err) {
+          if (req.body.isApproved == true && doc.isGitRepoCreated == false) {
+            //Create git repos here and update it in hckinfos collection
+            const gitUrl = "https://api.github.com/user/repos?access_token=";
+            const access_token = "9a4d9408161d531513424c4cf78e9810577a130e";
+            const gitData = {
+              "name": doc.teamName,
+              "description": "This is your first repository",
+              "homepage": "https://github.com",
+              "private": false,
+              "has_issues": true,
+              "has_projects": true,
+              "has_wiki": true
+            };
+            var options = {
+              uri: gitUrl + access_token,
+              method: 'POST',
+              headers: {
+                'User-Agent': 'request',
+                'content-type': 'application/json'
+              },
+              json: gitData
+            };
 
-                if(req.body.isApproved == true && doc.isGitRepoCreated == false)
-                {
-                    //Create git repos here and update it in hckinfos collection
-                    const gitUrl = "https://api.github.com/user/repos?access_token=";
-                    const access_token = "9a4d9408161d531513424c4cf78e9810577a130e";
-                    const gitData = {
-                        "name": doc.teamName,
-                        "description": "This is your first repository",
-                        "homepage": "https://github.com",
-                        "private": false,
-                        "has_issues": true,
-                        "has_projects": true,
-                        "has_wiki": true
-                    };
-                    var options = {
-                        uri: gitUrl+access_token,
-                        method: 'POST',
+            request(options, function (error, response, body) {
+              console.log("Document..................", doc);
+              if (!error && response.statusCode == 201) {
+                doc.isGitRepoCreated = true;
+                doc.gitRepoId = body.id;
+                doc.gitRepo = body.html_url;
+                doc.save(function (err) {
+                  if (err)
+                    console.log(err);
+                  else {
+                    for (var i = 0; i < doc.members.length; i++) {
+                      var option = {
+                        uri: "https://api.github.com/repos/divyanshu-18/" + doc.teamName + "/collaborators/" + doc.members[i].gitId + "?access_token=" + access_token,
+                        method: 'PUT',
                         headers: {
-                            'User-Agent': 'request',
-                            'content-type' : 'application/json'
+                          'User-Agent': 'request',
+                          'content': 'application/json'
                         },
-                        json: gitData
-                    };
-
-                    request(options, function(error, response, body) {
-                        console.log("Document..................",doc);
-
-                        if (!error && response.statusCode == 201) {
-                            doc.isGitRepoCreated = true;
-                            doc.gitRepoId = body.id;
-                            doc.gitRepo = body.html_url;
-                            doc.save(function (err) {
-                                if(err)
-                                    console.log(err);
-                                else{
-                                    for(var i=0; i<doc.members.length;i++ ) {
-                                        var option = {
-                                            uri: "https://api.github.com/repos/divyanshu-18/" + doc.teamName + "/collaborators/"+doc.members[i].gitId+"?access_token=" + access_token,
-                                            method: 'PUT',
-                                            headers: {
-                                                'User-Agent': 'request',
-                                                'content': 'application/json'
-                                            },
-                                            json: {
-                                                "permission": "pull,push"
-                                            }
-                                        };
-                                        console.log("Option -------- ",option);
-                                        request(option, function (error, response, body) {
-
-                                        });
-                                    }
-                                }
-                            });
+                        json: {
+                          "permission": "pull,push"
                         }
-                        else
-                            console.log("Error"+error);
-                    });
-                }
+                      };
+                      console.log("Option -------- ", option);
+                      request(option, function (error, response, body) {
+
+                      });
+                    }
+                  }
+                });
+              }
+
             });
-            res.json({"message": "Updated Successfully"});
-            res.end();
+          }
         }
-    });
-
-
+      });
+    }
   });
+}, responseHandler);
 
 module.exports = router;

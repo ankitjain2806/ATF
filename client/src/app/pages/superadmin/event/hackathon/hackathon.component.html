@@ -1,4 +1,4 @@
-<div class="col-md-4 offset-md-3">
+<!--<div class="col-md-4 offset-md-3">
   <div id="accordion">
     <div class="card" *ngFor="let team of teams">
       <div class="card-header">
@@ -16,6 +16,45 @@
           <button class="btn btn-danger" (click)="acceptRejectTeam(team._id, false)"><i class="fa fa-ban"></i> Reject</button>
         </div>
       </div>
+    </div>
+  </div>
+</div>-->
+
+<div class="container-fluid">
+  <h1>Hackathon Teams</h1>
+  <div class="row">
+    <div class="col-md-8 text-center">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>
+              Team Name
+            </th>
+            <th>
+              Status
+            </th>
+            <th>
+              Action
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let team of teams">
+            <td>
+              <a class="btn btn-link collapsed" href="/event/hackathon/teamInfo/{{team._id}}">
+                {{team.teamName}}
+              </a>
+            </td>
+            <td>
+              {{team.isApproved ? 'Approved' : 'Not Approved' }}
+            </td>
+            <td>
+              <button class="btn btn-primary" (click)="acceptRejectTeam(team._id, true)" *ngIf="!team.isApproved"><i class="fa fa-check-square"></i> Accept</button>
+              <button class="btn btn-danger" (click)="acceptRejectTeam(team._id, false)"><i class="fa fa-ban"></i> Reject</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>

@@ -84,14 +84,14 @@ var isAdmin = function (req, res, next) {
     res.end();
   }
 };
-app.use('/auth', AuthController);
+
 app.use('/api/users', isLoggedIn, usersController);
 app.use('/api/events', isLoggedIn, eventsController);
 app.use('/api/compiler', isLoggedIn, compilerController);
 app.use('/api/treasurehunt', isLoggedIn, treasureHuntController);
 app.use('/api/HCK', isLoggedIn, HCKController);
 app.use('/api/superadmin', isAdmin, superAdminController);
-
+app.use('/auth', AuthController);
 
 // /api/users/getAll
 // Catch all other routes and return the index file
@@ -103,7 +103,7 @@ app.get('*', function (req, res) {
 // rewrite virtual urls to angular app to enable refreshing of internal pages
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-  console.log(err)
+  console.error(err)
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
