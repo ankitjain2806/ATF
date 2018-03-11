@@ -25,7 +25,7 @@ import {HackathonTeamInfoComponet} from "./hackathon/hackathon-team-detail/hacka
 import {HackathonRegistrationComponent} from "./hackathon/hackathon-registration/hackathon-registration.component";
 import {CounterStrikeRegistrationComponent} from "./counter-strike/counter-strike-registration/counter-strike-registration.component";
 import {CounterStrikeHomeComponent} from "./counter-strike/counter-strike-home/counter-strike-home.component";
-
+import {HackathonRegistrationResolver} from './hackathon/hackathon-registration/hackathon-registration-resolver.service'
 @NgModule({
   imports: [
     RouterModule.forChild([
@@ -59,7 +59,10 @@ import {CounterStrikeHomeComponent} from "./counter-strike/counter-strike-home/c
       {
         path: 'hackathon/registration',
         component: HackathonRegistrationComponent,
-        data: {title: "Hackathon Registration"}
+        data: {title: "Hackathon Registration"},
+        resolve: {
+          team: HackathonRegistrationResolver
+        }
       },
       {
         path: 'treasurehunt/game',

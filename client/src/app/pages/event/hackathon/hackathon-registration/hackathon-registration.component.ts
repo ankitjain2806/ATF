@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
 import {EventService} from "../../event.service";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-hackathon-registration',
@@ -13,7 +14,15 @@ export class HackathonRegistrationComponent implements OnInit {
   public resourceForm: FormGroup;
   events : any = null;
 
-  constructor(private _fb: FormBuilder, private eventService: EventService) { }
+  constructor(
+    private _fb: FormBuilder,
+    private eventService: EventService,
+    private route: ActivatedRoute
+  ) {
+    this.route.data.subscribe((res) => {
+      console.log(res)
+    });
+  }
 
   ngOnInit() {
     this.initForm();

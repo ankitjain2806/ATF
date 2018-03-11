@@ -71,4 +71,7 @@ export class EventService {
     console.log(resources);
     return this.http.post("/api/HCK/saveRegistration", resources);
   }
+  getHackathonRegistration() {
+    return this.http.get("/api/HCK/getRegistration", {});
+  }
 }
