@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-user',
@@ -6,11 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-  user = JSON.parse(localStorage.getItem("userSession"));
+  profile;
 
-  constructor() { }
+  constructor(private route: ActivatedRoute) {
+    this.route.data.subscribe((res) => {
+      this.profile = res.profile.data
+    });
+  }
 
   ngOnInit() {
-  	}
-
+  }
 }

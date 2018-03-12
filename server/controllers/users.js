@@ -9,7 +9,6 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/events', function (req, res, next) {
-  console.log(req.session.user, "========>");
   User.findById(req.session.user._id).select('events').populate('events.eventId').exec(function(err, events){
     console.log(events);
     var userEvents = events.events.map(function (event) {
@@ -23,5 +22,25 @@ router.get('/events', function (req, res, next) {
     next();
   });
 },responseHandler);
+
+router.get('/getMyProfile', function (req, res, next) {
+  User.findById(req.session.user._id).exec(function (err, user) {
+    if(!err) {
+      var responseObj = {
+        name : user.providerData.displayName,
+        email: user.email,
+        points: user.totalPoints,
+        gender: user.providerData.gender,
+        image: user.imageUrl
+      }
+    }
+    res.locals.responseObj = {
+      err: err,
+      data: responseObj,
+      msg: "users profile"
+    }
+    next();
+  })
+}, responseHandler)
 
 module.exports = router;

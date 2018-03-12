@@ -1,20 +1,17 @@
 <div class="row">
   <div class="col-sm-3 profileLeft offset-md-1">
-    <img title="profile image" class="img-circle img-responsive" [src]=[user.imageUrl]>
-    <p><strong>{{user.providerData.displayName}}</strong></p>
-    <a href="https://www.facebook.com"><i class="fa fa-facebook" aria-hidden="true" style="color:#4267b2;font-size:24px"></i></a>
+    <img title="profile image" class="img-circle img-responsive" [src]="profile.image + '0'">
+    <p><strong>{{profile.name}}</strong></p>
+    <!--<a href="https://www.facebook.com"><i class="fa fa-facebook" aria-hidden="true" style="color:#4267b2;font-size:24px"></i></a>
     <a href="https://www.instagram.com"><i class="fa fa-instagram" aria-hidden="true" style="color:#9b6954;font-size:24px"></i></a>
     <a href="https://www.twitter.com"><i class="fa fa-twitter" aria-hidden="true" style="color:#1da1f2;font-size:24px"></i></a>
-    <a href="#"><i class="fa fa-google-plus" aria-hidden="true" style="color:#d34836;font-size:24px"></i></a>
+    <a href="#"><i class="fa fa-google-plus" aria-hidden="true" style="color:#d34836;font-size:24px"></i></a>-->
   </div>
   <div class="col">
     <div class="col-sm-10 profileRight">
-        <p><strong>Email : </strong> {{user.email}}</p>
-        <p><strong>Coin : </strong> </p>
-        <p><strong>Bio : </strong> </p>
-        <p><strong>Gender : </strong> </p>
-        <p><strong>Contact No : </strong> </p>
-        <p><strong>Team : </strong> </p>
+        <p><strong>Email : </strong> {{profile.email}}</p>
+        <p><strong>Points : </strong> {{profile.points}}</p>
+        <p><strong>Gender : </strong> {{profile.gender}}</p>
     </div>
   </div>
 </div>

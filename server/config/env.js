@@ -21,7 +21,8 @@ var envConfig = {
       clientSecret: '44ui31IRScrmBYu13xmWYS8f',
       callbackUrl: '/auth/google/callback'
     },
-    mongoURI: 'mongodb://accolite:accolite@ds231987.mlab.com:31987/atf_accolite',
+    mongoURI: 'mongodb://accolite:accolite@ds121534.mlab.com:21534/atf_local',
+    // mongoURI: 'mongodb://accolite:accolite@ds231987.mlab.com:31987/atf_accolite',
     sessionSecret: 'BJNRvSLbio',
     glotToken: 'Token 9b90f202-6a45-451d-bc8f-7a72707242c0'
   },

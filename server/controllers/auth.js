@@ -29,7 +29,6 @@ passport.use(new GoogleStrategy({
           if(!person.isActive) {
 
           }
-
           request.session.user = person;
           return done(err, person);
         } else {
