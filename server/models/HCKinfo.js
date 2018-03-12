@@ -15,7 +15,6 @@ var HCKinfoSchema = new mongoose.Schema({
     isGitRepoCreated : {type: Boolean, default: false},
     gitRepo : String,
     gitRepoId : String,
-    teamName : String
 });
 
 module.exports = mongoose.model('HCKinfo', HCKinfoSchema);;
