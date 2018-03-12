@@ -62,7 +62,7 @@ router.post('/run', function (req, res, next) {
       var q = 'compilerQueue';
       var code = req.body.code.replace(/(\n\t|\n|\t)/gm, " ");
       var language = req.body.language;
-      var lang = langObj[language];
+      var lang = langObj.obj[language];
       var testCases;
       var query = CompilerResource.findById(req.body.resourceId).select('testCases');
       async.series([
@@ -174,7 +174,7 @@ router.get('/getResource/:id', function (req, res, next) {
       });
     },
     language: function(callback){
-      callback(null,langObj);
+      callback(null,langObj.arr);
     }
   }, function (err, results) {
     res.locals.responseObj = {

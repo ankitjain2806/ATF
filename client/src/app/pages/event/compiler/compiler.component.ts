@@ -43,7 +43,7 @@ export class CompilerComponent implements OnInit {
       if (this.draft) {
         this.text = this.draft.code;
       }
-      // this.languages = res.resource.data.language;
+      this.languages = res.resource.data.language;
     });
   }
 
