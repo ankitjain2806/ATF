@@ -26,20 +26,12 @@ service.getUserStage = function(req, res, cb) {
             cb(null);
             return;
         }
-        /*
-        const _events = data.events;
-        const _state = _events.filter(function (item) {
-            return item.slug.toString() === event;
-        });
-        */
         cb(data);
     });
 };
 
 service.getUserStageQuestion = function (req, res, cb) {
     service.getUserStage(req, res, function (currentStage) {
-        // get current stage [index] from stages
-        //TODo check for the current stage of particular user_id 
         if(currentStage) {
             const query = THResourceModel.findOne({'stage': currentStage.stage});
             query.exec(function (err, data) {
@@ -66,7 +58,6 @@ service.neatlyUpdateUserStage = function (userId, event, res, updateObj, cb, res
 };
 
 service.updateUserStage = function (req, res, currentstage, cb) {
-    console.log('-------------updating........');
     //update user state
     const userId = req.body.user;
     const event = req.body.event;
@@ -76,10 +67,10 @@ service.updateUserStage = function (req, res, currentstage, cb) {
     }
 
     /**update user current stage*/
-    const stagesQuery = EventModel.findOne({'slug': event}).select({'stages': 1});
+    const stagesQuery = EventModel.findOne({'slug': 'treasurehunt'}).select({'stages': 1});
     stagesQuery.exec(function (err, rDoc) {
         var resJson = {};
-        const numberOfStages = rDoc.stages|| 0;
+        const numberOfStages = rDoc.stages  || 0;
         const updateQueryObj = {};
         if(numberOfStages === currentstage.stage) {
             /**update state to completed */

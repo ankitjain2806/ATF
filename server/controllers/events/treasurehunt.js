@@ -98,7 +98,6 @@ router.post('/question/check', function (req, res, next) {
     eventService.getUserStageQuestion(req, res, function (question) {
       _q = question.toObject();
       const isCorrectAnswer = req.body.answer === _q.answer;
-      //console.log('correct ans', isCorrectAnswer);
       var checkRes = (isCorrectAnswer) ? {data: true, completed: false} : {data: false, completed: false};
 
       // update the state of the user

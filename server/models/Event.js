@@ -5,6 +5,7 @@ var EventSchema = new Schema({
   name: String,
   slug: String,
   description: String,
+  stages: Number,
   lastUpdated: {type: Date, default: Date.now},
 });
 var Event = mongoose.model('Event', EventSchema);
