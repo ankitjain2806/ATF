@@ -40,7 +40,7 @@ echo "Stopping transaction microservice"
 forever stop transaction.js
 echo "Stopping transaction microservice done!!!"
 echo "Starting transaction microservice"
-forever start -o $LOG_PATH/compiler_out.log -e $LOG_PATH/transaction_err.log transaction.js
+forever start -o $LOG_PATH/transaction_out.log -e $LOG_PATH/transaction_err.log transaction.js
 echo "Starting transaction microservice done!!!"
 
 
