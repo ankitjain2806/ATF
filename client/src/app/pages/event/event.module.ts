@@ -5,6 +5,7 @@ import {TreasurehuntComponent} from './treasurehunt/treasurehunt.component';
 import {IngameComponent} from './treasurehunt/ingame/ingame.component';
 import {OverviewComponent} from './treasurehunt/overview/overview.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import {AceEditorModule} from 'ng2-ace-editor';
 
@@ -36,6 +37,8 @@ import {HackathonRegistrationResolver} from './hackathon/hackathon-registration/
 
 @NgModule({
   imports: [
+    NgbModule,
+    NgbModule.forRoot(),
     CommonModule,
     EventRoutingModule,
     FormsModule,

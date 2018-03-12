@@ -7,7 +7,8 @@ var async = require('async');
 var eventService = require('../service/events.service');
 var HCKinfoModel = require('../models/HCKinfo');
 var CSinfoModel = require('../models/CSinfo');
-var _ =  require('lodash');
+var _ = require('lodash');
+var responseHandler = require('../util/responseHandler').Response;
 
 router.get('/getEventDetails/:slug', function (req, res, next) {
   var loggedInUser = req.session.user;
@@ -54,12 +55,68 @@ router.get('/all', function (req, res, next) {
 
 router.post('/team-register', function (req, res, next) {
   var eventId = null;
-  var teamData = {
-    teamName: req.body.teamName,
-    members: []
-  };
-
   async.series([
+        function (callback) {
+          EventModel.findOne({slug: req.body.slug}, function (err, event) {
+            if (!err) {
+              eventId = event._id;
+            }
+
+            callback(err, event)
+          });
+        },
+        function (callback) {
+          if (eventId) {
+            User.findById(req.session.user._id).exec(function (err, user) {
+              if (err) {
+                res.locals.responseObj = {
+                  err: err,
+                  data: null,
+                  msg: null
+                }
+              }
+              if (!user.events) {
+                user.events = [];
+              }
+
+              var userEvents = _.find(user.events, function (o) {
+                return o.eventId == eventId;
+              });
+              if (user.events.length == 0 || !userEvents) {
+                user.events.push({eventId: eventId, isBlocked: false});
+                user.save(function (err, data) {
+                  res.locals.responseObj = {
+                    err: err,
+                    data: data,
+                    msg: "user registered"
+                  }
+                  callback()
+                })
+              } else {
+                res.locals.responseObj = {
+                  err: null,
+                  data: null,
+                  msg: "user already registered"
+                }
+                callback()
+              }
+            });
+          } else {
+            res.locals.responseObj = {
+              err: null,
+              data: null,
+              msg: "something went wrong"
+            }
+            callback()
+          }
+        }
+      ],
+      function (err, results) {
+        next()
+      });
+
+
+  /*async.series([
         function (callback) {
           var users = req.body.members;
           async.times(users.length, function (n, next) {
@@ -97,7 +154,7 @@ router.post('/team-register', function (req, res, next) {
             callback(null, members);
           });
         },
-        /*function (callback) {
+        /!*function (callback) {
           EventModel.findOne({slug: req.body.slug}, function (err, event) {
             eventId = event._id;
             event.teams.push(teamData);
@@ -148,7 +205,7 @@ router.post('/team-register', function (req, res, next) {
               callback(err, event)
             });
           });
-        },*/
+        },*!/
         function (callback) {
           async.times(teamData.members.length, function (n, next) {
             User.findOne({_id: teamData.members[n]}, function (err, user) {
@@ -175,8 +232,8 @@ router.post('/team-register', function (req, res, next) {
           });
         },
       ]
-  );
-});
+  );*/
+}, responseHandler);
 
 router.post('/end', function (req, res) {
 

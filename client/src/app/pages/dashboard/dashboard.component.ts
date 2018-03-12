@@ -53,7 +53,7 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.registerEvent(obj).subscribe(() => {
       this.showAlert = true;
       this.dashboardService.getUserEvents().subscribe((events) =>{
-        this.userEvent = events;
+        this.userEvent = events.data;
       })
       // this.router.navigate([api]);
     })

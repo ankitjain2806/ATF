@@ -1,4 +1,7 @@
 <div class="container-fluid">
+  <ngb-alert [type]="'success'" [dismissible]="false" *ngIf="draftNotification">
+    <strong>Congratulations!</strong> Draft is Saved
+  </ngb-alert>
   <h1>{{resource.name}}</h1>
   <div>
     <div class="row">
@@ -21,8 +24,9 @@
           </div>
       </div>
       <div class="form-group">
+        {{languages}}
         <select class="form-control col-4" formControlName="language">
-          <option *ngFor="let language of languages" [value]="language.slug">{{language.language}}</option>
+          <option *ngFor="let language of languages" [value]="language.ext">{{language.name}}</option>
         </select>
         <div class="col-4">
 

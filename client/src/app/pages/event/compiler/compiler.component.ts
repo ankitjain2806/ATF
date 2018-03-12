@@ -23,7 +23,7 @@ export class CompilerComponent implements OnInit {
   output = [];
   text: string = "";
   options: any = {maxLines: 1000, printMargin: false};
-
+  draftNotification: boolean;
   languages = [
     {language: 'PHP', slug: 'php'},
     {language: 'JAVA', slug: 'java'},
@@ -43,6 +43,7 @@ export class CompilerComponent implements OnInit {
       if (this.draft) {
         this.text = this.draft.code;
       }
+      // this.languages = res.resource.data.language;
     });
   }
 
@@ -72,7 +73,10 @@ export class CompilerComponent implements OnInit {
 
   saveDraft() {
     this.compilerService.saveDraft(this.compilerForm.value, this.resource._id).subscribe((res) => {
-      //@todo: show last draft
+      this.draftNotification = true;
+      setTimeout(() => {
+        this.draftNotification = false;
+      }, 5000)
     })
   }
 }
