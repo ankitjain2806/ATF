@@ -1,3 +1,4 @@
+<!--
   <div class="col-md-4 offset-md-3">
     <h3 class="page-header">Team Details for Hackathon</h3>
     <div *ngIf="">
@@ -56,3 +57,67 @@
   </div>
   <a class="btn btn-primary text-white" [routerLink]="['/dashboard']">Back</a>
 
+-->
+
+<div class="col-md-6 offset-md-3">
+  <h1>Welcome to Hackathon</h1>
+  <h3>Enter the team details</h3>
+  <form [formGroup]="resourceForm" (ngSubmit)="completeRegistration(resourceForm.value)">
+    <div class="form-group row">
+      <label class="col-md-3 col-sm-6 col-4">Team Name :<span style="color: red">*</span></label>
+      <div class="col-md-8 col-sm-6 col-8">
+        <input type="text" placeholder="Enter Team Name" formControlName="teamName" class="form-control" required>
+        <div *ngIf="!resourceForm['controls'].teamName.valid && resourceForm['controls'].teamName.touched" class="alert alert-danger">please enter team name.</div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-3 col-sm-6 col-4">Your Git Id :<span style="color: red">*</span></label>
+      <div class="col-md-8 col-sm-6 col-8">
+        <input type="text" placeholder="Enter Your Git Id" formControlName="userGitId" class="form-control" required>
+        <div *ngIf="!resourceForm['controls'].userGitId.valid && resourceForm['controls'].userGitId.touched" class="alert alert-danger">please enter your git id.</div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-3 col-sm-6 col-4">Idea/Description :<span style="color: red">*</span></label>
+      <div class="col-md-8 col-sm-6 col-8">
+        <textarea type="text" placeholder="Enter your Idea" formControlName="idea" class="form-control" required></textarea>
+        <div *ngIf="!resourceForm['controls'].idea.valid && resourceForm['controls'].idea.touched" class="alert alert-danger">please enter your idea.</div>
+      </div>
+    </div>
+    <div formArrayName="members">
+      <div *ngFor="let itemrow of resourceForm['controls'].members['controls']; let i=index" [formGroupName]="i">
+        <div class="form-group row">
+          <label class="col-md-3 col-sm-6 col-4">Member's Email Id :<span style="color: red">*</span></label>
+          <div class="col-md-8 col-sm-6 col-8">
+            <input type="email" placeholder="Enter Email Id" formControlName="email" class="form-control" required>
+            <div *ngIf="!itemrow.controls.email.valid && itemrow.controls.email.touched" class="alert alert-danger">please enter team member's email.</div>
+          </div><br/><br/>
+          <label class="col-md-3 col-sm-6 col-4">Member's Git Id :<span style="color: red">*</span></label>
+          <div class="col-md-8 col-sm-6 col-8">
+            <input type="text" placeholder="Enter Git Id" formControlName="gitId" class="form-control" required>
+            <div *ngIf="!itemrow.controls.gitId.valid && itemrow.controls.gitId.touched" class="alert alert-danger">please enter  team member's gitId.</div>
+          </div>
+          <button class="btn btn-danger btn-sm" (click)="deleteRow(i,'members')" *ngIf="resourceForm.controls.members.controls.length > 1"><i class="fa fa-minus-circle"></i></button>
+        </div>
+      </div>
+      <button class="btn btn-info btn-sm" (click)="addNewRow('members')" *ngIf="resourceForm.controls.members.controls.length < 3"><i class="fa fa-plus-circle"></i>&nbsp;</button>&nbsp;
+    </div>
+    <div formArrayName="resources">
+      <div *ngFor="let itemrow of resourceForm['controls'].resources['controls']; let i=index" [formGroupName]="i">
+        <div class="form-group row">
+          <label class="col-md-3 col-sm-6 col-4">Resource :<span style="color: red">*</span></label>
+          <div class="col-md-8 col-sm-6 col-8">
+            <input type="text" placeholder="Enter Resource" formControlName="resource" class="form-control" required>
+            <div *ngIf="!itemrow.controls.resource.valid && itemrow.controls.resource.touched" class="alert alert-danger">please enter  resource.</div>
+          </div>
+          <i class="fa fa-plus-circle" (click)="addNewRow('resources')" *ngIf="resourceForm.controls.resources.controls.length < 3" style="color:blueviolet"></i>&nbsp;&nbsp;
+          <i class="fa fa-minus-circle" (click)="deleteRow(i,'resources')" *ngIf="resourceForm.controls.resources.controls.length > 1" style="color: red"></i>
+        </div>
+      </div>
+    </div>
+    <div class="offset-md-5">
+      <a class="btn btn-primary text-white" [routerLink]="['/dashboard']">Back</a>
+      <button class="btn btn-primary" type="submit" [disabled]="!resourceForm.valid">Register</button>
+    </div>
+  </form>
+</div>

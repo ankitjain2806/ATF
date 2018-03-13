@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
+import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {EventService} from "../../event.service";
 import {ActivatedRoute} from "@angular/router";
 
@@ -31,19 +31,19 @@ export class HackathonRegistrationComponent implements OnInit {
   initForm(){
     this.resourceForm = this._fb.group({
       members:this._fb.array([this.initGitIds()]),
-      idea:'',
+      idea:['',Validators.required],
       resources: this._fb.array([this.initResources()]),
       isApproved:false,
-      teamName : '',
+      teamName : ['',Validators.required],
       slug : 'hackathon',
-      userGitId : ''
+      userGitId : ['',Validators.required]
     });
   }
 
   initGitIds() {
     return this._fb.group({
-      email : [''],
-      gitId:['']
+      email : ['',Validators.email],
+      gitId:['',Validators.required]
     });
   }
 
@@ -70,8 +70,8 @@ export class HackathonRegistrationComponent implements OnInit {
 
   completeRegistration(resourceForm: any){
     console.log(resourceForm);
-    this.eventService.completeHackathonRegistration(resourceForm).subscribe(data=>{
+    /*this.eventService.completeHackathonRegistration(resourceForm).subscribe(data=>{
       console.log(data);
-    })
+    })*/
   }
 }

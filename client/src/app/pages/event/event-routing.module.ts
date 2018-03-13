@@ -26,6 +26,7 @@ import {HackathonRegistrationComponent} from "./hackathon/hackathon-registration
 import {CounterStrikeRegistrationComponent} from "./counter-strike/counter-strike-registration/counter-strike-registration.component";
 import {CounterStrikeHomeComponent} from "./counter-strike/counter-strike-home/counter-strike-home.component";
 import {HackathonRegistrationResolver} from './hackathon/hackathon-registration/hackathon-registration-resolver.service'
+import {AuthGuardService} from "../../shared/util/auth-guard.service";
 @NgModule({
   imports: [
     RouterModule.forChild([
@@ -94,18 +95,22 @@ import {HackathonRegistrationResolver} from './hackathon/hackathon-registration/
       },
       {
         path: 'event/hackathon/complete-registration',
+        canActivate: [AuthGuardService],
         component: HackathonComponet
       },
       {
         path: 'event/hackathon/teamInfo/:teamId',
+        canActivate: [AuthGuardService],
         component: HackathonTeamInfoComponet
       },
       {
         path: 'event/counterstrike/registration',
+        canActivate: [AuthGuardService],
         component: CounterStrikeRegistrationComponent
       },
       {
         path: 'event/counterstrike/home',
+        canActivate: [AuthGuardService],
         component: CounterStrikeHomeComponent
       }
     ])
