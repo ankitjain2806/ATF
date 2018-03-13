@@ -53,67 +53,42 @@ router.get('/all', function (req, res, next) {
   });
 });
 
-router.post('/team-register', function (req, res, next) {
+router.post('/event-register', function (req, res, next) {
   var eventId = null;
   async.series([
         function (callback) {
-          EventModel.findOne({slug: req.body.slug}, function (err, event) {
-            if (!err) {
-              eventId = event._id;
+          User.findById(req.session.user._id).exec(function (err, user) {
+            if (err) {
+              res.locals.responseObj = {
+                err: err,
+                data: null,
+                msg: null
+              }
+              next();
             }
 
-            callback(err, event)
+            if(req.body.eventSlug === 'compiler' && !user.compiler.status && !user.compiler.isBlocked) {
+              user.compiler = {
+                status : true
+              }
+            }
+
+            if(req.body.eventSlug === 'treasurehunt' && !user.treasureHunt.status && !user.treasureHunt.isBlocked) {
+              user.treasureHunt = {
+                status : true
+              }
+            }
+            user.save(function (err, user) {
+              res.locals.responseObj = {
+                err: err,
+                data: user,
+                msg: null
+              }
+              next();
+            })
           });
-        },
-        function (callback) {
-          if (eventId) {
-            User.findById(req.session.user._id).exec(function (err, user) {
-              if (err) {
-                res.locals.responseObj = {
-                  err: err,
-                  data: null,
-                  msg: null
-                }
-              }
-              if (!user.events) {
-                user.events = [];
-              }
-
-              var userEvents = _.find(user.events, function (o) {
-                return o.eventId == eventId;
-              });
-              if (user.events.length == 0 || !userEvents) {
-                user.events.push({eventId: eventId, isBlocked: false});
-                user.save(function (err, data) {
-                  res.locals.responseObj = {
-                    err: err,
-                    data: data,
-                    msg: "user registered"
-                  }
-                  callback()
-                })
-              } else {
-                res.locals.responseObj = {
-                  err: null,
-                  data: null,
-                  msg: "user already registered"
-                }
-                callback()
-              }
-            });
-          } else {
-            res.locals.responseObj = {
-              err: null,
-              data: null,
-              msg: "something went wrong"
-            }
-            callback()
-          }
         }
-      ],
-      function (err, results) {
-        next()
-      });
+      ]);
 
 
   /*async.series([

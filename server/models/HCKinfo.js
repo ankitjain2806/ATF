@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var HCKinfoSchema = new mongoose.Schema({
+var HackathonTeamSchema = new mongoose.Schema({
     teamName : String,
     members: [{
       userId : {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
@@ -17,4 +17,4 @@ var HCKinfoSchema = new mongoose.Schema({
     gitRepoId : String,
 });
 
-module.exports = mongoose.model('HCKinfo', HCKinfoSchema);;
+module.exports = mongoose.model('HCKInfo', HackathonTeamSchema);;

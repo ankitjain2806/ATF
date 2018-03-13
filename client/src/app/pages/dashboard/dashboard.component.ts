@@ -23,39 +23,15 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    /* this.dashboardService.getAllEvents().subscribe(data => {
-       console.log(data);
-       this.events = data;
-     });*/
+
   }
 
   eventRegistration(eventSlug: string) {
-    let api;
-    let obj: EventRegistration = {
-      teamName: '',
-      members: [],
-      slug: null
-    }
-    switch (eventSlug) {
-      case 'treasurehunt':
-        obj.slug = 'treasurehunt'
-        api = '/treasurehunt/game';
-        break;
-      case 'compiler':
-        obj.slug = 'compiler'
-        api = '/compiler/intro';
-        break;
-      case 'hackathon':
-        obj.slug = 'hackathon'
-        api = '/hackathon/registration';
-        break;
-    }
-    this.dashboardService.registerEvent(obj).subscribe(() => {
+    this.dashboardService.registerEvent({'eventSlug' : eventSlug}).subscribe(() => {
       this.showAlert = true;
       this.dashboardService.getUserEvents().subscribe((events) =>{
         this.userEvent = events.data;
       })
-      // this.router.navigate([api]);
     })
   }
 
@@ -66,9 +42,6 @@ export class DashboardComponent implements OnInit {
         break;
       case 'treasurehunt':
         this.router.navigate(['/treasurehunt/game']);
-        break;
-      case 'hackathon':
-        this.router.navigate(['/hackathon/registration']);
         break;
     }
   }

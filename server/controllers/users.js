@@ -9,14 +9,10 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/events', function (req, res, next) {
-  User.findById(req.session.user._id).select('events').populate('events.eventId').exec(function(err, events){
-    console.log(events);
-    var userEvents = events.events.map(function (event) {
-      return event.eventId.slug;
-    })
+  User.findById(req.session.user._id).select('compiler treasureHunt hackathon').exec(function(err, events){
     res.locals.responseObj = {
       err: err,
-      data: userEvents,
+      data: events,
       msg: "users events"
     }
     next();

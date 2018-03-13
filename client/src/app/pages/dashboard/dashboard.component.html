@@ -11,20 +11,20 @@
       <div class="event-block-body">
         This is going to be Compiler details
       </div>
-      <div class="event-block-footer">
-        <a class="btn btn-info text-white" (click)="eventRegistration('compiler')" *ngIf="userEvent.indexOf('compiler') < 0">Register</a>
-        <a class="btn btn-info text-white" (click)="eventContinue('compiler')" *ngIf="userEvent.indexOf('compiler') >= 0">Continue</a>
+      <div class="event-block-footer" *ngIf="!userEvent.compiler.isBlocked">
+        <a class="btn btn-info text-white" (click)="eventRegistration('compiler')" *ngIf="!userEvent.compiler.status">Register</a>
+        <a class="btn btn-info text-white" (click)="eventContinue('compiler')" *ngIf="userEvent.compiler.status">Continue</a>
         <a class="btn btn-primary text-white pull-right" [routerLink]="['/compiler']">View More..</a>
       </div>
     </div>
-    <div class="col-4 event-block">
+    <div class="col-4 event-block" >
       <div class="event-block-head">Treasure Hunt</div>
       <div class="event-block-body">
         This is going to be Treasure Hunt details
       </div>
-      <div class="event-block-footer">
-        <a class="btn btn-info text-white" (click)="eventRegistration('treasurehunt')" *ngIf="userEvent.indexOf('treasurehunt') < 0">Register</a>
-        <a class="btn btn-info text-white" (click)="eventContinue('treasurehunt')" *ngIf="userEvent.indexOf('treasurehunt') >= 0">Continue</a>
+      <div class="event-block-footer" *ngIf="!userEvent.treasureHunt.isBlocked">
+        <a class="btn btn-info text-white" (click)="eventRegistration('treasurehunt')"  *ngIf="!userEvent.treasureHunt.status">Register</a>
+        <a class="btn btn-info text-white" (click)="eventContinue('treasurehunt')" *ngIf="userEvent.treasureHunt.status">Continue</a>
         <a class="btn btn-primary text-white pull-right" [routerLink]="['/treasurehunt']">View More..</a>
       </div>
     </div>
@@ -34,8 +34,8 @@
         This is going to be Hackathon details
       </div>
       <div class="event-block-footer">
-        <a class="btn btn-info text-white" (click)="eventRegistration('hackathon')" *ngIf="userEvent.indexOf('hackathon') < 0">Register</a>
-        <a class="btn btn-info text-white" (click)="eventContinue('hackathon')" *ngIf="userEvent.indexOf('hackathon') >= 0">Continue</a>
+        <a class="btn btn-info text-white" [routerLink]="['/hackathon/registration']" *ngIf="userEvent.hackathon.length == 0">Register</a>
+        <a class="btn btn-info text-white" [routerLink]="['/hackathon/my-team']" *ngIf="userEvent.hackathon.length > 0">Continue</a>
         <a class="btn btn-primary text-white pull-right" [routerLink]="['/hackathon']">View More..</a>
       </div>
     </div>

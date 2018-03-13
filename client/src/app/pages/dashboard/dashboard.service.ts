@@ -23,7 +23,7 @@ export class DashboardService {
     return this.http.get('/api/users/events', {});
   }
 
-  registerEvent(form: EventRegistration): Observable<any> {
-    return this.http.post(this.local_base + 'team-register', form);
+  registerEvent(eventSlug): Observable<any> {
+    return this.http.post(this.local_base + 'event-register', eventSlug);
   }
 }
