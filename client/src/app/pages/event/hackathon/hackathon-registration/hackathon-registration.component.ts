@@ -70,8 +70,8 @@ export class HackathonRegistrationComponent implements OnInit {
 
   completeRegistration(resourceForm: any){
     console.log(resourceForm);
-    /*this.eventService.completeHackathonRegistration(resourceForm).subscribe(data=>{
+    this.eventService.completeHackathonRegistration(resourceForm).subscribe(data=>{
       console.log(data);
-    })*/
+    })
   }
 }
