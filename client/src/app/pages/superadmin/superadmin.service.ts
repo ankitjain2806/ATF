@@ -51,4 +51,9 @@ export class SuperAdminService {
   acceptRejectTeam(teamId:string, isApproved:boolean){
     return this.http.put("/api/superadmin/teams/HCK/approve",{teamId, isApproved});
   }
+
+  getTeamInfoById(teamId: string):Observable<any>{
+    return this.http.get("/api/superadmin/teams/HCK/showdetails/"+teamId,{});
+  }
+
 }

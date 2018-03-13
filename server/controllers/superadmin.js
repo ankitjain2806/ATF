@@ -125,7 +125,7 @@ router.get('/teams/getHCKteams', function (req, res, next) {
 
 //api to display details of the selected team
 router.get('/teams/HCK/showdetails/:teamId', function (req, res, next) {
-  HCKInfoModel.findOne({"teamId": req.params.teamId}, function (err, doc) {
+  HCKInfoModel.findOne({"_id": req.params.teamId}, function (err, doc) {
     if (err) {
       console.log(err);
     }
@@ -148,12 +148,13 @@ router.put('/teams/HCK/approve', function (req, res, next) {
     if (!err) {
       team.isCheckedByAdmin = true;
       team.isApproved = team.isApproved;
-      team.save(function (err, data) {
+      team.save(function (err, doc) {
+        console.log("Error--------------",err);
         if (!err) {
           if (req.body.isApproved == true && doc.isGitRepoCreated == false) {
             //Create git repos here and update it in hckinfos collection
             const gitUrl = "https://api.github.com/user/repos?access_token=";
-            const access_token = "9a4d9408161d531513424c4cf78e9810577a130e";
+            const access_token = "ef7985cd3fba4b42cd2ab869ba897b72572a7ff3";
             const gitData = {
               "name": doc.teamName,
               "description": "This is your first repository",
@@ -174,7 +175,7 @@ router.put('/teams/HCK/approve', function (req, res, next) {
             };
 
             request(options, function (error, response, body) {
-              console.log("Document..................", doc);
+              console.log("Document..................", body);
               if (!error && response.statusCode == 201) {
                 doc.isGitRepoCreated = true;
                 doc.gitRepoId = body.id;
