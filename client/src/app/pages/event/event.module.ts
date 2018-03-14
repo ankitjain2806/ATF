@@ -34,6 +34,8 @@ import {HackathonRegistrationComponent} from "./hackathon/hackathon-registration
 import {CounterStrikeRegistrationComponent} from "./counter-strike/counter-strike-registration/counter-strike-registration.component";
 import {CounterStrikeHomeComponent} from "./counter-strike/counter-strike-home/counter-strike-home.component";
 import {HackathonRegistrationResolver} from './hackathon/hackathon-registration/hackathon-registration-resolver.service'
+import {HackathonTeamResolver} from "./hackathon/hackathon-team/hackathon-team.resolver.service";
+import {HackathonTeamComponent} from "./hackathon/hackathon-team/hackathon-team.component";
 
 @NgModule({
   imports: [
@@ -63,7 +65,7 @@ import {HackathonRegistrationResolver} from './hackathon/hackathon-registration/
     HackathonRegistrationComponent,
     CounterStrikeRegistrationComponent,
     CounterStrikeHomeComponent,
-
+    HackathonTeamComponent
   ],
   exports: [
     // EventComponent
@@ -76,7 +78,8 @@ import {HackathonRegistrationResolver} from './hackathon/hackathon-registration/
     CompilerIntroResolverService,
     CompilerResolverService,
     CompilerService,
-    HackathonRegistrationResolver
+    HackathonRegistrationResolver,
+    HackathonTeamResolver
   ]
 })
 export class EventModule {

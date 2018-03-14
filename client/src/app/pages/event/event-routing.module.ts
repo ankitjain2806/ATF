@@ -23,36 +23,44 @@ import {HackathonHomeComponent} from "./hackathon/hackathon-home/hackathon-home.
 import {HackathonComponet} from "./hackathon/hackathon.componet";
 import {HackathonTeamInfoComponet} from "./hackathon/hackathon-team-detail/hackathon-team-info.component";
 import {HackathonRegistrationComponent} from "./hackathon/hackathon-registration/hackathon-registration.component";
+import {HackathonTeamComponent} from "./hackathon/hackathon-team/hackathon-team.component";
 import {CounterStrikeRegistrationComponent} from "./counter-strike/counter-strike-registration/counter-strike-registration.component";
 import {CounterStrikeHomeComponent} from "./counter-strike/counter-strike-home/counter-strike-home.component";
 import {HackathonRegistrationResolver} from './hackathon/hackathon-registration/hackathon-registration-resolver.service'
+import {HackathonTeamResolver} from "./hackathon/hackathon-team/hackathon-team.resolver.service";
 import {AuthGuardService} from "../../shared/util/auth-guard.service";
+
 @NgModule({
   imports: [
     RouterModule.forChild([
       {
         path: 'event',
         component: EventComponent,
+        canActivate: [AuthGuardService],
         data: {title: "Event"}
       },
       {
         path: 'compiler',
         component: CompilerHomeComponent,
+        canActivate: [AuthGuardService],
         data: {title: "Compiler"}
       },
       {
         path: 'treasurehunt',
         component: TreasurehuntHomeComponent,
+        canActivate: [AuthGuardService],
         data: {title: "Treasure Hunt"}
       },
       {
         path: 'hackathon',
         component: HackathonHomeComponent,
+        canActivate: [AuthGuardService],
         data: {title: "Hackathon"}
       },
       {
         path: 'compiler/intro',
         component: CompilerIntroComponent,
+        canActivate: [AuthGuardService],
         resolve: {
           resources: CompilerIntroResolverService
         }
@@ -60,35 +68,43 @@ import {AuthGuardService} from "../../shared/util/auth-guard.service";
       {
         path: 'hackathon/registration',
         component: HackathonRegistrationComponent,
+        canActivate: [AuthGuardService],
         data: {title: "Hackathon Registration"},
         resolve: {
           team: HackathonRegistrationResolver
         }
       },
       {
+        path: 'hackathon/my-team',
+        component: HackathonTeamComponent,
+        canActivate: [AuthGuardService],
+        data: {title: "Hackathon Team"},
+        resolve: {
+          teams: HackathonTeamResolver
+        }
+      },
+      {
         path: 'treasurehunt/game',
         data: {title: "Treasure Hunt!", path: 'treasurehunt/game'},
+        canActivate: [AuthGuardService],
         component: IngameComponent
       },
       {
         path: 'event/registration/:slug',
         component: RegistrationComponent,
+        canActivate: [AuthGuardService],
         data: {title: "Event Registration"},
       },
       {
         path: 'event/finished/:eventName',
         component: EventEndComponent,
+        canActivate: [AuthGuardService],
         data: {title: "Event Completed!", path: 'event/treasurehunt/finished'},
-        // canActivate: [FinishedGuardService]
       },
-      /*{
-        path: 'event/treasurehunt/game',
-        data: {title: "Treasure Hunt!", path: 'event/treasurehunt/game'},
-        component: IngameComponent
-      },*/
       {
         path: 'compiler/solve/:resourceId',
         component: CompilerComponent,
+        canActivate: [AuthGuardService],
         resolve: {
           resource: CompilerResolverService
         }

@@ -16,6 +16,5 @@ export class HackathonTeamInfoComponet implements OnInit {
       console.log(data);
       this.teamInfo = data;
     });
-
   }
 }

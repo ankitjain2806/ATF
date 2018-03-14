@@ -1,0 +1,36 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>Hackathon Team Detail</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <table class="table table-bordered">
+        <thead>
+        <tr>
+          <th>View</th>
+          <th>Team Name</th>
+          <th>Status</th>
+          <th>Approval Status</th>
+          <th>Checked By Admin</th>
+        </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let team of teams; let i = index;">
+            <td><button class="btn btn-info" (click)="teamInfoIndex(i)"><i class="fa fa-eye"></i> </button> </td>
+            <td>{{team.teamId.teamName}}</td>
+            <td>{{(team.teamId.isActive ? 'Yes': 'No')}}</td>
+            <td>{{(team.teamId.isApproved ? 'Yes': 'No')}}</td>
+            <td>{{(team.teamId.isCheckedByAdmin ? 'Yes': 'No')}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-6" *ngIf="teamDetail !== null">
+      <div class="col-12"><label class="font-weight-bold">Team Name : </label>{{teamDetail.teamName}}</div>
+      <div class="col-12"><label class="font-weight-bold">Is Active : </label>{{teamDetail.isActive}}</div>
+      <div class="col-12"><label class="font-weight-bold">Is Approved : </label>{{teamDetail.isApproved}}</div>
+    </div>
+  </div>
+</div>

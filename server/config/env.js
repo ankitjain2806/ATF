@@ -11,7 +11,8 @@ var envConfig = {
     // mongoURI: 'mongodb://localhost:27017/ATF3',
     mongoURI: 'mongodb://accolite:accolite@ds121534.mlab.com:21534/atf_local',
     sessionSecret: 'myKey',
-    glotToken: 'Token 9b90f202-6a45-451d-bc8f-7a72707242c0'
+    glotToken: 'Token 9b90f202-6a45-451d-bc8f-7a72707242c0',
+    gitUri: "https://api.github.com/user/repos?access_token='ef7985cd3fba4b42cd2ab869ba897b72572a7ff3'"
   },
   development: {
     siteUrl: 'http://atf.accolitelabs.com',
@@ -24,7 +25,8 @@ var envConfig = {
     mongoURI: 'mongodb://accolite:accolite@ds121534.mlab.com:21534/atf_local',
     // mongoURI: 'mongodb://accolite:accolite@ds231987.mlab.com:31987/atf_accolite',
     sessionSecret: 'BJNRvSLbio',
-    glotToken: 'Token 9b90f202-6a45-451d-bc8f-7a72707242c0'
+    glotToken: 'Token 9b90f202-6a45-451d-bc8f-7a72707242c0',
+    gitUri: "https://api.github.com/user/repos?access_token='ef7985cd3fba4b42cd2ab869ba897b72572a7ff3'"
   },
   production: {}
 };

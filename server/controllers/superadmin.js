@@ -5,6 +5,7 @@ var User = require('../models/User');
 var HCKInfoModel = require('../models/HCKinfo');
 var request = require('request');
 var responseHandler = require('../util/responseHandler').Response;
+var envConfig = require('../config/env');
 
 router.post('/events/addNewEvent', function (req, res, next) {
 
@@ -153,8 +154,8 @@ router.put('/teams/HCK/approve', function (req, res, next) {
         if (!err) {
           if (req.body.isApproved == true && doc.isGitRepoCreated == false) {
             //Create git repos here and update it in hckinfos collection
-            const gitUrl = "https://api.github.com/user/repos?access_token=";
-            const access_token = "ef7985cd3fba4b42cd2ab869ba897b72572a7ff3";
+            // const gitUrl = "https://api.github.com/user/repos?access_token=";
+            // const access_token = "ef7985cd3fba4b42cd2ab869ba897b72572a7ff3";
             const gitData = {
               "name": doc.teamName,
               "description": "This is your first repository",
@@ -164,8 +165,9 @@ router.put('/teams/HCK/approve', function (req, res, next) {
               "has_projects": true,
               "has_wiki": true
             };
+            console.log(envConfig)
             var options = {
-              uri: gitUrl + access_token,
+              uri: envConfig.gitUri,
               method: 'POST',
               headers: {
                 'User-Agent': 'request',
@@ -175,7 +177,7 @@ router.put('/teams/HCK/approve', function (req, res, next) {
             };
 
             request(options, function (error, response, body) {
-              console.log("Document..................", body);
+              console.log("Document..................", error, body);
               if (!error && response.statusCode == 201) {
                 doc.isGitRepoCreated = true;
                 doc.gitRepoId = body.id;
@@ -198,7 +200,7 @@ router.put('/teams/HCK/approve', function (req, res, next) {
                       };
                       console.log("Option -------- ", option);
                       request(option, function (error, response, body) {
-
+                        console.log(body)
                       });
                     }
                   }

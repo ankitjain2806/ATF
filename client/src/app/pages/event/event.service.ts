@@ -74,4 +74,7 @@ export class EventService {
   getHackathonRegistration() {
     return this.http.get("/api/HCK/getRegistration", {});
   }
+  getMyHackathonTeams() {
+    return this.http.get("/api/HCK/getMyTeams", {});
+  }
 }

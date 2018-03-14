@@ -69,13 +69,17 @@ router.post('/event-register', function (req, res, next) {
 
             if(req.body.eventSlug === 'compiler' && !user.compiler.status && !user.compiler.isBlocked) {
               user.compiler = {
-                status : true
+                status : true,
+                isBlocked: false,
+                registeredOn: new Date()
               }
             }
 
             if(req.body.eventSlug === 'treasurehunt' && !user.treasureHunt.status && !user.treasureHunt.isBlocked) {
               user.treasureHunt = {
-                status : true
+                status : true,
+                isBlocked: false,
+                registeredOn: new Date()
               }
             }
             user.save(function (err, user) {
