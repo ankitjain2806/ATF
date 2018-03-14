@@ -28,13 +28,11 @@ import {CompilerService} from "./compiler/compiler.service";
 import {CompilerHomeComponent} from "./compiler/compiler-home/compiler-home.component";
 import {TreasurehuntHomeComponent} from "./treasurehunt/treasurehunt-home/treasurehunt-home.component";
 import {HackathonHomeComponent} from "./hackathon/hackathon-home/hackathon-home.component";
-import {HackathonTeamInfoComponet} from "./hackathon/hackathon-team-detail/hackathon-team-info.component";
 import {HackathonComponet} from "./hackathon/hackathon.componet";
 import {HackathonRegistrationComponent} from "./hackathon/hackathon-registration/hackathon-registration.component";
 import {CounterStrikeRegistrationComponent} from "./counter-strike/counter-strike-registration/counter-strike-registration.component";
 import {CounterStrikeHomeComponent} from "./counter-strike/counter-strike-home/counter-strike-home.component";
 import {HackathonRegistrationResolver} from './hackathon/hackathon-registration/hackathon-registration-resolver.service'
-import {HackathonTeamResolver} from "./hackathon/hackathon-team/hackathon-team.resolver.service";
 import {HackathonTeamComponent} from "./hackathon/hackathon-team/hackathon-team.component";
 
 @NgModule({
@@ -61,7 +59,6 @@ import {HackathonTeamComponent} from "./hackathon/hackathon-team/hackathon-team.
     TreasurehuntHomeComponent,
     HackathonHomeComponent,
     HackathonComponet,
-    HackathonTeamInfoComponet,
     HackathonRegistrationComponent,
     CounterStrikeRegistrationComponent,
     CounterStrikeHomeComponent,
@@ -78,8 +75,7 @@ import {HackathonTeamComponent} from "./hackathon/hackathon-team/hackathon-team.
     CompilerIntroResolverService,
     CompilerResolverService,
     CompilerService,
-    HackathonRegistrationResolver,
-    HackathonTeamResolver
+    HackathonRegistrationResolver
   ]
 })
 export class EventModule {

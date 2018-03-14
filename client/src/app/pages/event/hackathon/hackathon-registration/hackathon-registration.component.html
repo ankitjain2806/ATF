@@ -100,7 +100,7 @@
           <button class="btn btn-danger btn-sm" (click)="deleteRow(i,'members')" *ngIf="resourceForm.controls.members.controls.length > 1"><i class="fa fa-minus-circle"></i></button>
         </div>
       </div>
-      <button class="btn btn-info btn-sm" (click)="addNewRow('members')" *ngIf="resourceForm.controls.members.controls.length < 3"><i class="fa fa-plus-circle"></i>&nbsp;</button>&nbsp;
+      <button class="btn btn-info btn-sm" (click)="addNewRow('members')"><i class="fa fa-plus-circle"></i>&nbsp;</button>&nbsp;
     </div>
     <div formArrayName="resources">
       <div *ngFor="let itemrow of resourceForm['controls'].resources['controls']; let i=index" [formGroupName]="i">

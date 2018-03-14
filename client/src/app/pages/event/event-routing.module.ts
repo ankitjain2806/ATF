@@ -21,7 +21,6 @@ import {CompilerHomeComponent} from "./compiler/compiler-home/compiler-home.comp
 import {TreasurehuntHomeComponent} from "./treasurehunt/treasurehunt-home/treasurehunt-home.component";
 import {HackathonHomeComponent} from "./hackathon/hackathon-home/hackathon-home.component";
 import {HackathonComponet} from "./hackathon/hackathon.componet";
-import {HackathonTeamInfoComponet} from "./hackathon/hackathon-team-detail/hackathon-team-info.component";
 import {HackathonRegistrationComponent} from "./hackathon/hackathon-registration/hackathon-registration.component";
 import {HackathonTeamComponent} from "./hackathon/hackathon-team/hackathon-team.component";
 import {CounterStrikeRegistrationComponent} from "./counter-strike/counter-strike-registration/counter-strike-registration.component";
@@ -113,11 +112,6 @@ import {AuthGuardService} from "../../shared/util/auth-guard.service";
         path: 'event/hackathon/complete-registration',
         canActivate: [AuthGuardService],
         component: HackathonComponet
-      },
-      {
-        path: 'event/hackathon/teamInfo/:teamId',
-        canActivate: [AuthGuardService],
-        component: HackathonTeamInfoComponet
       },
       {
         path: 'event/counterstrike/registration',

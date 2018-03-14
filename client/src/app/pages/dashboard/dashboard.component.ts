@@ -11,7 +11,7 @@ import {EventRegistration} from "../../models/event-registration";
 })
 export class DashboardComponent implements OnInit {
 
-  userEvent = [];
+  userEvent;
   showAlert: boolean = false;
 
   constructor(private dashboardService: DashboardService,
