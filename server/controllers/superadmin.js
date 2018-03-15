@@ -155,7 +155,7 @@ router.put('/teams/HCK/approve', function (req, res, next) {
           if (req.body.isApproved == true && doc.isGitRepoCreated == false) {
             //Create git repos here and update it in hckinfos collection
             const gitUrl = "https://api.github.com/user/repos?access_token=";
-            const access_token = "61cc6ebe9ee642255961504429b5d0d176786d32";
+            const access_token = "089815a77e422c01864c5bd03681495bbf824ec7";
             const gitData = {
               "name": doc.teamName,
               "description": "This is your first repository",
@@ -188,7 +188,7 @@ router.put('/teams/HCK/approve', function (req, res, next) {
                   else {
                     for (var i = 0; i < doc.members.length; i++) {
                       var option = {
-                        uri: "https://api.github.com/repos/divyanshu-18/" + doc.teamName + "/collaborators/" + doc.members[i].gitId + "?access_token=" + access_token,
+                        uri: "https://api.github.com/repos/divyanshu-18/" + doc.teamName.replace(/\s+/g, '-') + "/collaborators/" + doc.members[i].gitId + "?access_token=" + access_token,
                         method: 'PUT',
                         headers: {
                           'User-Agent': 'request',

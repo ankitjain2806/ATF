@@ -23,7 +23,7 @@
 <div class="container-fluid">
   <h1>Hackathon Teams</h1>
   <div class="row">
-    <div class="col-md-8 text-center">
+    <div class="col-md-6 text-center">
       <table class="table table-bordered">
         <thead>
           <tr>
@@ -41,9 +41,9 @@
         <tbody>
           <tr *ngFor="let team of teams">
             <td>
-              <a class="btn btn-link collapsed" href="/superadmin/hackathon/teamInfo/{{team._id}}">
+              <button class="btn btn-link" (click)="getTeamDetails(team._id)">
                 {{team.teamName}}
-              </a>
+              </button>
             </td>
             <td>
               {{team.isApproved ? 'Approved' : 'Not Approved' }}
@@ -55,6 +55,14 @@
           </tr>
         </tbody>
       </table>
+    </div>
+    <div class="col-md-6" *ngIf="teamDetail !== null">
+      <div class="col-12"><label class="font-weight-bold">Team Name : </label>{{teamDetail.teamName}}</div>
+      <div class="col-12"><label class="font-weight-bold">Idea : </label>{{teamDetail.idea}}</div>
+      <div class="col-12"><label class="font-weight-bold">Is Active : </label>{{teamDetail.isActive}}</div>
+      <div class="col-12"><label class="font-weight-bold">Is Approved : </label>{{teamDetail.isApproved}}</div>
+      <div class="col-12"><label class="font-weight-bold">Is GitRepoCreated : </label>{{teamDetail.isGitRepoCreated ? 'Yes' : 'No'}}</div>
+      <div class="col-12" *ngIf="teamDetail.isGitRepoCreated"><label class="font-weight-bold">GitRepo : </label><button class="btn btn-link">{{teamDetail.gitRepo}}</button></div>
     </div>
   </div>
 </div>
