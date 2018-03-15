@@ -77,4 +77,8 @@ export class EventService {
   getMyHackathonTeams() {
     return this.http.get("/api/HCK/getMyTeams", {});
   }
+
+  checkTeamName(teamName : string){
+    return this.http.get("/api/HCK/checkTeamName/"+teamName,{teamName})
+  }
 }

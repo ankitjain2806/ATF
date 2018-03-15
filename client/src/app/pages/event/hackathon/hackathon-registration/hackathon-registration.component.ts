@@ -13,7 +13,7 @@ export class HackathonRegistrationComponent implements OnInit {
 
   public resourceForm: FormGroup;
   events : any = null;
-
+  isTeamNameAvailable = true;
   constructor(
     private _fb: FormBuilder,
     private eventService: EventService,
@@ -73,5 +73,11 @@ export class HackathonRegistrationComponent implements OnInit {
     this.eventService.completeHackathonRegistration(resourceForm).subscribe(data=>{
       console.log(data);
     })
+  }
+
+  checkTeamName(){
+    this.eventService.checkTeamName(this.resourceForm.value.teamName).subscribe(data=>{
+        this.isTeamNameAvailable = data.isAvailable;
+    });
   }
 }
