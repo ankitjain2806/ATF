@@ -3,13 +3,15 @@ import {clone} from 'lodash';
 import {SuperAdminService} from "../../superadmin.service";
 
 @Component({
-  templateUrl: 'hackathon.component.html'
+  templateUrl: 'hackathon.component.html',
+  styleUrls : ['hackathon.component.scss']
 })
 
 export class HackathonComponent implements OnInit {
 
   teams:any =null;
   teamDetail  = null;
+  selectedRow = null;
   constructor(private superAdminService: SuperAdminService) {
   }
 
@@ -25,10 +27,11 @@ export class HackathonComponent implements OnInit {
     });
   }
 
-  getTeamDetails(teamId:string){
+  getTeamDetails(teamId:string, index:number){
     this.superAdminService.getTeamInfoById(teamId).subscribe(data=>{
       console.log(data);
       this.teamDetail = data;
+      this.selectedRow = index;
     });
   }
 }
