@@ -10,7 +10,7 @@ import {TreasurehuntService} from "../treasurehunt.service";
   styleUrls: ['./ingame.component.scss']
 })
 export class IngameComponent implements OnInit {
-
+  enteredAnswer = "";
   slug: string;
   question = {};
   answer = {
@@ -29,6 +29,7 @@ export class IngameComponent implements OnInit {
     this.userSession = this.session.getSession();
     this.question = {};
     this.options ="";
+
   }
 
   ngOnInit() {
