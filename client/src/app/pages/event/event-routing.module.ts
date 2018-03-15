@@ -1,13 +1,11 @@
 import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
-import {EventComponent} from "./events/event.component";
+import {AuthGuardService} from "../../shared/util/auth-guard.service";
+
 import {RegistrationComponent} from "./registration/registration.component";
 import {TreasurehuntComponent} from "./treasurehunt/treasurehunt.component";
 import {OverviewComponent} from "./treasurehunt/overview/overview.component";
 import {IngameComponent} from "./treasurehunt/ingame/ingame.component";
-import {EventDetailComponent} from "./events/event-details/event-detail.component";
-
-// import {EventDetailsResolverService} from "./events/event-details/event-details-resolver.service";
 import {EventEndComponent} from "./event-end/event-end.component";
 import {EventEndDetailsResolverService} from "./event-end/event-end-resolver.service";
 import {FinishedGuardService} from "./event-end/finished-guard.service";
@@ -27,17 +25,13 @@ import {CounterStrikeRegistrationComponent} from "./counter-strike/counter-strik
 import {CounterStrikeHomeComponent} from "./counter-strike/counter-strike-home/counter-strike-home.component";
 import {HackathonRegistrationResolver} from './hackathon/hackathon-registration/hackathon-registration-resolver.service'
 import {HackathonTeamResolver} from "./hackathon/hackathon-team/hackathon-team.resolver.service";
-import {AuthGuardService} from "../../shared/util/auth-guard.service";
+
+import {TechTalkHomeComponent} from "./tech-talk/tech-talk-home/tech-talk-home.component";
+
 
 @NgModule({
   imports: [
     RouterModule.forChild([
-      {
-        path: 'event',
-        component: EventComponent,
-        canActivate: [AuthGuardService],
-        data: {title: "Event"}
-      },
       {
         path: 'compiler',
         component: CompilerHomeComponent,
@@ -55,6 +49,12 @@ import {AuthGuardService} from "../../shared/util/auth-guard.service";
         component: HackathonHomeComponent,
         canActivate: [AuthGuardService],
         data: {title: "Hackathon"}
+      },
+      {
+        path: 'techtalks',
+        component: TechTalkHomeComponent,
+        canActivate: [AuthGuardService],
+        data: {title: "Tech Talks"}
       },
       {
         path: 'compiler/intro',

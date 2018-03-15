@@ -9,15 +9,12 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import {AceEditorModule} from 'ng2-ace-editor';
 
-import {EventComponent} from "./events/event.component";
 import {RegistrationComponent} from "./registration/registration.component";
 import {CompilerComponent} from "./compiler/compiler.component";
 import {CompilerIntroComponent} from "./compiler/compiler-intro/compiler-intro.component";
 
 import {EventService} from "./event.service";
-import {EventDetailComponent} from "./events/event-details/event-detail.component";
 import {TreasurehuntService} from "./treasurehunt/treasurehunt.service";
-import {EventDetailsResolverService} from "./events/event-details/event-details-resolver.service";
 import {EventEndComponent} from './event-end/event-end.component';
 import {EventEndDetailsResolverService} from "./event-end/event-end-resolver.service";
 import {FinishedGuardService} from "./event-end/finished-guard.service";
@@ -34,6 +31,8 @@ import {CounterStrikeRegistrationComponent} from "./counter-strike/counter-strik
 import {CounterStrikeHomeComponent} from "./counter-strike/counter-strike-home/counter-strike-home.component";
 import {HackathonRegistrationResolver} from './hackathon/hackathon-registration/hackathon-registration-resolver.service'
 import {HackathonTeamComponent} from "./hackathon/hackathon-team/hackathon-team.component";
+import {HackathonTeamResolver} from "./hackathon/hackathon-team/hackathon-team.resolver.service";
+import {TechTalkHomeComponent} from "./tech-talk/tech-talk-home/tech-talk-home.component";
 
 @NgModule({
   imports: [
@@ -49,9 +48,7 @@ import {HackathonTeamComponent} from "./hackathon/hackathon-team/hackathon-team.
     TreasurehuntComponent,
     IngameComponent,
     OverviewComponent,
-    EventComponent,
     RegistrationComponent,
-    EventDetailComponent,
     CompilerComponent,
     CompilerIntroComponent,
     EventEndComponent,
@@ -62,20 +59,18 @@ import {HackathonTeamComponent} from "./hackathon/hackathon-team/hackathon-team.
     HackathonRegistrationComponent,
     CounterStrikeRegistrationComponent,
     CounterStrikeHomeComponent,
-    HackathonTeamComponent
-  ],
-  exports: [
-    // EventComponent
+    HackathonTeamComponent,
+    TechTalkHomeComponent
   ],
   providers: [
     EventService,
     TreasurehuntService,
-    EventDetailsResolverService,
     FinishedGuardService,
     CompilerIntroResolverService,
     CompilerResolverService,
     CompilerService,
-    HackathonRegistrationResolver
+    HackathonRegistrationResolver,
+    HackathonTeamResolver
   ]
 })
 export class EventModule {

@@ -1,4 +1,4 @@
-import {BrowserModule} from '@angular/platform-browser';
+import {BrowserModule, Title} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {HttpClientModule} from '@angular/common/http';
@@ -51,7 +51,8 @@ import {AuthGuardService} from "./shared/util/auth-guard.service";
     AppService,
     UserSessionService,
     SocketService,
-    AuthGuardService
+    AuthGuardService,
+    Title
   ],
   bootstrap: [AppComponent]
 })
