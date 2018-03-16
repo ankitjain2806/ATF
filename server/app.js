@@ -87,12 +87,13 @@ var isAdmin = function (req, res, next) {
   }
 };
 
+
 app.use('/api/users', isLoggedIn, usersController);
 app.use('/api/events', isLoggedIn, eventsController);
 app.use('/api/compiler', isLoggedIn, compilerController);
 app.use('/api/treasurehunt', isLoggedIn, treasureHuntController);
 app.use('/api/HCK', isLoggedIn, HCKController);
-app.use('/api/superadmin/techtalks', isAdmin, superAdminController);
+app.use('/api/superadmin/techtalks', TechTalksAdminController);
 app.use('/api/superadmin', isAdmin, superAdminController);
 app.use('/auth', AuthController);
 
