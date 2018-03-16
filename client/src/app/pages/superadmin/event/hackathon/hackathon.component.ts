@@ -4,7 +4,6 @@ import {SuperAdminService} from "../../superadmin.service";
 
 @Component({
   templateUrl: 'hackathon.component.html',
-  styleUrls : ['hackathon.component.scss']
 })
 
 export class HackathonComponent implements OnInit {
