@@ -33,6 +33,7 @@ import {HackathonRegistrationResolver} from './hackathon/hackathon-registration/
 import {HackathonTeamComponent} from "./hackathon/hackathon-team/hackathon-team.component";
 import {HackathonTeamResolver} from "./hackathon/hackathon-team/hackathon-team.resolver.service";
 import {TechTalkHomeComponent} from "./tech-talk/tech-talk-home/tech-talk-home.component";
+import {TechTalkComponent} from "./tech-talk/tech-talk.component";
 
 @NgModule({
   imports: [
@@ -60,7 +61,8 @@ import {TechTalkHomeComponent} from "./tech-talk/tech-talk-home/tech-talk-home.c
     CounterStrikeRegistrationComponent,
     CounterStrikeHomeComponent,
     HackathonTeamComponent,
-    TechTalkHomeComponent
+    TechTalkHomeComponent,
+    TechTalkComponent
   ],
   providers: [
     EventService,
