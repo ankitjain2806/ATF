@@ -19,6 +19,8 @@ var superAdminController = require('./controllers/superadmin');
 var AuthController = require('./controllers/auth');
 var HCKController = require('./controllers/events/HCK');
 
+var TechTalksController = require('./controllers/events/techtalks');
+var TechTalksAdminController = require('./controllers/admin/techtalks');
 
 var app = express();
 
@@ -90,6 +92,7 @@ app.use('/api/events', isLoggedIn, eventsController);
 app.use('/api/compiler', isLoggedIn, compilerController);
 app.use('/api/treasurehunt', isLoggedIn, treasureHuntController);
 app.use('/api/HCK', isLoggedIn, HCKController);
+app.use('/api/superadmin/techtalks', isAdmin, superAdminController);
 app.use('/api/superadmin', isAdmin, superAdminController);
 app.use('/auth', AuthController);
 
