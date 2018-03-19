@@ -27,7 +27,8 @@ import {HackathonRegistrationResolver} from './hackathon/hackathon-registration/
 import {HackathonTeamResolver} from "./hackathon/hackathon-team/hackathon-team.resolver.service";
 
 import {TechTalkHomeComponent} from "./tech-talk/tech-talk-home/tech-talk-home.component";
-
+import {TechTalkTopicsComponent} from "./tech-talk/tech-talk-topics/tech-talk-topics.component";
+import {TechTalkTopicsResolverService} from "./tech-talk/tech-talk-topics/tech-talk-topics-resolver.service";
 
 @NgModule({
   imports: [
@@ -87,6 +88,15 @@ import {TechTalkHomeComponent} from "./tech-talk/tech-talk-home/tech-talk-home.c
         data: {title: "Treasure Hunt!", path: 'treasurehunt/game'},
         canActivate: [AuthGuardService],
         component: IngameComponent
+      },
+      {
+        path: 'techtalks/topics',
+        data: {title: "Tech Talks Topics"},
+        canActivate: [AuthGuardService],
+        component: TechTalkTopicsComponent,
+        resolve: {
+          topics: TechTalkTopicsResolverService
+        }
       },
       {
         path: 'event/registration/:slug',

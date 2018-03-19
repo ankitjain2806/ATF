@@ -34,7 +34,9 @@ import {HackathonTeamComponent} from "./hackathon/hackathon-team/hackathon-team.
 import {HackathonTeamResolver} from "./hackathon/hackathon-team/hackathon-team.resolver.service";
 import {TechTalkHomeComponent} from "./tech-talk/tech-talk-home/tech-talk-home.component";
 import {TechTalkComponent} from "./tech-talk/tech-talk.component";
-
+import {TechTalkTopicsComponent} from "./tech-talk/tech-talk-topics/tech-talk-topics.component";
+import {TechTalkTopicsResolverService} from "./tech-talk/tech-talk-topics/tech-talk-topics-resolver.service";
+import {TechTalkService} from './tech-talk/tech-talk.service';
 @NgModule({
   imports: [
     NgbModule,
@@ -62,7 +64,8 @@ import {TechTalkComponent} from "./tech-talk/tech-talk.component";
     CounterStrikeHomeComponent,
     HackathonTeamComponent,
     TechTalkHomeComponent,
-    TechTalkComponent
+    TechTalkComponent,
+    TechTalkTopicsComponent
   ],
   providers: [
     EventService,
@@ -72,7 +75,9 @@ import {TechTalkComponent} from "./tech-talk/tech-talk.component";
     CompilerResolverService,
     CompilerService,
     HackathonRegistrationResolver,
-    HackathonTeamResolver
+    HackathonTeamResolver,
+    TechTalkTopicsResolverService,
+    TechTalkService
   ]
 })
 export class EventModule {

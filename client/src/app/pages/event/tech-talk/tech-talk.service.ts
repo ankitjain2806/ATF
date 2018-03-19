@@ -9,9 +9,13 @@ import {CompilerForm} from "../../../models/compiler-form";
 @Injectable()
 export class TechTalkService {
 
-  private local_base = '/api/compiler';
+  private local_base = '/api/techtalks';
 
   constructor(private http: HttpService) {
 
+  }
+
+  getAllTopics() {
+    return this.http.get(this.local_base+'/getAllTopics', {})
   }
 }
