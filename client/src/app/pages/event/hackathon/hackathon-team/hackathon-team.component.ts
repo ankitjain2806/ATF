@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {EventService} from "../../event.service";
+import {LoaderService} from "../../../../shared/util/loader.service";
 
 @Component({
   selector: 'hck-team',
@@ -9,9 +10,15 @@ import {EventService} from "../../event.service";
 export class HackathonTeamComponent implements OnInit {
   teams = null;
   teamDetail = null;
-  constructor(private route: ActivatedRoute, private eventService: EventService) {
+  constructor(private route: ActivatedRoute,
+              private eventService: EventService,
+              private loader : LoaderService) {
+    this.loader.showLoader();
     this.route.data.subscribe((res) => {
       this.teams = res.teams.data.hackathon;
+      this.loader.hideLoader();
+    }, error => {
+      this.loader.hideLoader();
     });
   }
   ngOnInit() {
