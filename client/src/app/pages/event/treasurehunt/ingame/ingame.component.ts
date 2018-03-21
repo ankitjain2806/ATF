@@ -11,6 +11,11 @@ import {LoaderService} from "../../../../shared/util/loader.service";
   styleUrls: ['./ingame.component.scss']
 })
 export class IngameComponent implements OnInit {
+  seconds: number = 0;
+  minutes: number = 0;
+  hours: number = 0;
+  isCorrect : boolean ;
+  isInCorrect: boolean ;
   enteredAnswer = "";
   slug: string;
   question = {};
@@ -44,7 +49,12 @@ export class IngameComponent implements OnInit {
      */
     this.slug = 'treasurehunt';
     this.getCurrentQuestion();
+    setInterval(() => {
+      this.seconds++;
+      this.hours = Math.floor(this.seconds/3600);
+      this.minutes = Math.floor((this.seconds- (3600*this.hours))/60);
 
+    }, 1000);
   }
 
   checkAnswerAndChangeState(userAnswer) {
@@ -69,12 +79,16 @@ export class IngameComponent implements OnInit {
   private performIfUserCorrect() {
     alert('correct answer!!!');
     this.showNext = true;
-    this.options ="";
+   // this.options ="";
+    this.isCorrect = true;
+    this.isInCorrect = false;
   }
 
   private performIfUserWrong() {
     alert('Wrong answer!!! try again');
-    this.options = "";
+    //this.options = "";
+    this.isCorrect = false;
+    this.isInCorrect = true;
   }
 
   private toggleAnswersSelected(selected) {
@@ -87,6 +101,9 @@ export class IngameComponent implements OnInit {
   }
 
   private getCurrentQuestion() {
+    this.isInCorrect = false;
+    this.isCorrect = false;
+    this.options="";
     this.loader.showLoader();
     this.treasurehuntService.getUserStage(this.userSession.id, this.slug).subscribe(stage => {
       this.stage = stage['data'];

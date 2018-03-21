@@ -1,3 +1,4 @@
+<!--
 <h1><strong>Question no: {{question['stage']}}</strong></h1>
 
 <div [innerHtml]="question['body']"></div>
@@ -28,4 +29,57 @@
   <input *ngIf="showNext" type="button" class="btn btn-primary m-l-3" value="next" (click)="getCurrentQuestion()">
   <br>
   <div><a [routerLink]="['/dashboard']" class="btn btn-info">Back to Dashboard</a> </div>
+</div>
+-->
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 row1-bordered">
+      <div class="row">
+        <div class="col-md-4">
+          <p class="pull-left">{{ hours  }} hours : {{minutes}} minutes : {{seconds%60 }}seconds</p>
+        </div>
+        <div class="col-md-4 offset-md-1">
+          <h2>Treasure Hunt</h2>
+        </div>
+        <div class=" col-md-3">
+          <p class="pull-right"> Points : 0</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <h6><strong>Question {{question['stage']}} of ...</strong></h6>
+    </div>
+    <div class="col-md-12">
+      <div class="row offset-md-1">
+        {{question['stage']}}.) <div [innerHtml]="question['body']"></div>
+      </div>
+      <div class="row" *ngIf="!question['isMCQ']">
+        <div class="col-md-10 offset-md-1">
+          <textarea type="text" [(ngModel)]="options" class="w-100"></textarea>
+        </div>
+        <div class="col-md-1">
+          <i *ngIf="isCorrect" class="fa fa-check-square-o correct-answer"  data-toggle="tooltip" title="Correct Answer!!"></i>
+          <i *ngIf="isInCorrect" class="fa fa-close incorrect-answer" data-toggle="tooltip" title="Wrong Answer!!"></i>
+        </div>
+      </div>
+      <div class="row" *ngIf="question['isMCQ']">
+        <div *ngFor="let opt of question['options']; let i=index;" class="col-md-5 offset-md-1">
+          <label class="container1">{{opt}}
+            <input type="radio"
+                   [(ngModel)] = "options"
+                   name="options"
+                   value="{{opt}}"
+                   (click)="toggleAnswersSelected(opt)">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="offset-md-5 offset-sm-2 h-50">
+      <a [routerLink]="['/dashboard']" class="btn btn-info">Back to Dashboard</a>
+      <input [disabled] = "!options || showNext" type="button" class="btn btn-primary m-l-2" value="verify" (click)="checkAnswerAndChangeState(options)">
+      <input *ngIf="showNext" type="button" class="btn btn-primary m-l-3" value="next" (click)="getCurrentQuestion()">
+    </div>
+  </div>
 </div>
