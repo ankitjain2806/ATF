@@ -1,13 +1,11 @@
 import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
-import {EventComponent} from "./events/event.component";
+import {AuthGuardService} from "../../shared/util/auth-guard.service";
+
 import {RegistrationComponent} from "./registration/registration.component";
 import {TreasurehuntComponent} from "./treasurehunt/treasurehunt.component";
 import {OverviewComponent} from "./treasurehunt/overview/overview.component";
 import {IngameComponent} from "./treasurehunt/ingame/ingame.component";
-import {EventDetailComponent} from "./events/event-details/event-detail.component";
-
-// import {EventDetailsResolverService} from "./events/event-details/event-details-resolver.service";
 import {EventEndComponent} from "./event-end/event-end.component";
 import {EventEndDetailsResolverService} from "./event-end/event-end-resolver.service";
 import {FinishedGuardService} from "./event-end/finished-guard.service";
@@ -21,24 +19,20 @@ import {CompilerHomeComponent} from "./compiler/compiler-home/compiler-home.comp
 import {TreasurehuntHomeComponent} from "./treasurehunt/treasurehunt-home/treasurehunt-home.component";
 import {HackathonHomeComponent} from "./hackathon/hackathon-home/hackathon-home.component";
 import {HackathonComponet} from "./hackathon/hackathon.componet";
-import {HackathonTeamInfoComponet} from "./hackathon/hackathon-team-detail/hackathon-team-info.component";
 import {HackathonRegistrationComponent} from "./hackathon/hackathon-registration/hackathon-registration.component";
 import {HackathonTeamComponent} from "./hackathon/hackathon-team/hackathon-team.component";
 import {CounterStrikeRegistrationComponent} from "./counter-strike/counter-strike-registration/counter-strike-registration.component";
 import {CounterStrikeHomeComponent} from "./counter-strike/counter-strike-home/counter-strike-home.component";
 import {HackathonRegistrationResolver} from './hackathon/hackathon-registration/hackathon-registration-resolver.service'
 import {HackathonTeamResolver} from "./hackathon/hackathon-team/hackathon-team.resolver.service";
-import {AuthGuardService} from "../../shared/util/auth-guard.service";
+
+import {TechTalkHomeComponent} from "./tech-talk/tech-talk-home/tech-talk-home.component";
+import {TechTalkTopicsComponent} from "./tech-talk/tech-talk-topics/tech-talk-topics.component";
+import {TechTalkTopicsResolverService} from "./tech-talk/tech-talk-topics/tech-talk-topics-resolver.service";
 
 @NgModule({
   imports: [
     RouterModule.forChild([
-      {
-        path: 'event',
-        component: EventComponent,
-        canActivate: [AuthGuardService],
-        data: {title: "Event"}
-      },
       {
         path: 'compiler',
         component: CompilerHomeComponent,
@@ -56,6 +50,12 @@ import {AuthGuardService} from "../../shared/util/auth-guard.service";
         component: HackathonHomeComponent,
         canActivate: [AuthGuardService],
         data: {title: "Hackathon"}
+      },
+      {
+        path: 'techtalks',
+        component: TechTalkHomeComponent,
+        canActivate: [AuthGuardService],
+        data: {title: "Tech Talks"}
       },
       {
         path: 'compiler/intro',
@@ -90,6 +90,15 @@ import {AuthGuardService} from "../../shared/util/auth-guard.service";
         component: IngameComponent
       },
       {
+        path: 'techtalks/topics',
+        data: {title: "Tech Talks Topics"},
+        canActivate: [AuthGuardService],
+        component: TechTalkTopicsComponent,
+        resolve: {
+          topics: TechTalkTopicsResolverService
+        }
+      },
+      {
         path: 'event/registration/:slug',
         component: RegistrationComponent,
         canActivate: [AuthGuardService],
@@ -113,11 +122,6 @@ import {AuthGuardService} from "../../shared/util/auth-guard.service";
         path: 'event/hackathon/complete-registration',
         canActivate: [AuthGuardService],
         component: HackathonComponet
-      },
-      {
-        path: 'event/hackathon/teamInfo/:teamId',
-        canActivate: [AuthGuardService],
-        component: HackathonTeamInfoComponet
       },
       {
         path: 'event/counterstrike/registration',

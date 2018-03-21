@@ -140,4 +140,25 @@ router.get('/getMyTeams', function (req, res, next) {
   })
 }, responseHandler)
 
+router.get('/checkTeamName/:teamName', function (req, res, next) {
+    HCKinfo.findOne({'teamName': req.params.teamName}, function (err, data) {
+      if(!err){
+        console.log("Data--------",data, req.body.teamName);
+        if(data == null || data == 'null'){
+            res.locals.responseObj = {
+                err : err,
+                isAvailable  : true
+            }
+        }
+        else{
+            res.locals.responseObj = {
+                err : err,
+                isAvailable  : false
+            }
+        }
+      }
+      next();
+    })
+}, responseHandler)
+
 module.exports = router;

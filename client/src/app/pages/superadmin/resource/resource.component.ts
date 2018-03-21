@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder } from '@angular/forms';
 import {SuperAdminService} from "../superadmin.service";
+import {LoaderService} from "../../../shared/util/loader.service";
 
 @Component({
   selector: 'my-resource',
@@ -42,7 +43,9 @@ export class ResourceComponent implements OnInit {
   public resourceForm: FormGroup;
   events : any = null;
 
-  constructor(private _fb: FormBuilder, private superAdminService: SuperAdminService) { }
+  constructor(private _fb: FormBuilder,
+              private superAdminService: SuperAdminService,
+              private loader: LoaderService) { }
 
   ngOnInit() {
       this.initForm();
@@ -75,10 +78,14 @@ export class ResourceComponent implements OnInit {
   }
 
   addResource(resourceForm: any){
+    this.loader.showLoader();
      this.superAdminService.addResource(resourceForm).subscribe(data =>{
       console.log("Added");
       console.log(data);
       this.initForm();
-     })
+      this.loader.hideLoader();
+     },error2 => {
+       this.loader.hideLoader();
+     });
   }
 }

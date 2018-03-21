@@ -3,6 +3,8 @@ import {FormGroup, FormControl, FormBuilder, Validators, FormArray} from '@angul
 import {EventRegistration, Member} from "../../../models/event-registration";
 import {EventService} from "../event.service";
 import {Router, ActivatedRoute} from '@angular/router';
+import {LoaderService} from "../../../shared/util/loader.service";
+
 
 @Component({
   selector: 'app-registration',
@@ -15,7 +17,8 @@ export class RegistrationComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private eventService: EventService,
               private router: Router,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private loader: LoaderService) {
     this.route.params.subscribe(params => {
       this.eventSlug = params['slug']
     });
@@ -52,11 +55,15 @@ export class RegistrationComponent implements OnInit {
   }
 
   onSubmit() {
+    this.loader.showLoader();
     this.eventService.registerEvent(this.registrationForm.value).subscribe((res) => {
       console.log(res.data, res, res.data == 'success')
       if(res.data == 'success') {
         this.router.navigate(['/event', this.eventSlug, 'game']);
       }
+      this.loader.hideLoader();
+    }, error2 => {
+      this.loader.hideLoader();
     })
   }
 

@@ -3,6 +3,7 @@ import {HttpService} from "../../../../shared/util/http.service";
 import {UserSessionService} from "../../../../shared/util/user-session.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {TreasurehuntService} from "../treasurehunt.service";
+import {LoaderService} from "../../../../shared/util/loader.service";
 
 @Component({
   selector: 'app-ingame',
@@ -10,7 +11,7 @@ import {TreasurehuntService} from "../treasurehunt.service";
   styleUrls: ['./ingame.component.scss']
 })
 export class IngameComponent implements OnInit {
-  enteredAnswer = "";
+
   slug: string;
   question = {};
   answer = {
@@ -25,11 +26,11 @@ export class IngameComponent implements OnInit {
   constructor(private session: UserSessionService,
               private activatedRouter: ActivatedRoute,
               private router: Router,
-              private treasurehuntService: TreasurehuntService) {
+              private treasurehuntService: TreasurehuntService,
+              private loader: LoaderService) {
     this.userSession = this.session.getSession();
     this.question = {};
     this.options ="";
-
   }
 
   ngOnInit() {
@@ -47,6 +48,7 @@ export class IngameComponent implements OnInit {
   }
 
   checkAnswerAndChangeState(userAnswer) {
+    this.loader.showLoader();
     this.treasurehuntService.checkIsCorrectAnswer({
       user: this.userSession.id,
       event: this.slug,
@@ -58,6 +60,9 @@ export class IngameComponent implements OnInit {
         /**check if the answer is correct */
         response['data'] ? this.performIfUserCorrect() : this.performIfUserWrong();
       }
+      this.loader.hideLoader();
+    },error2 => {
+      this.loader.hideLoader();
     });
   }
 
@@ -82,6 +87,7 @@ export class IngameComponent implements OnInit {
   }
 
   private getCurrentQuestion() {
+    this.loader.showLoader();
     this.treasurehuntService.getUserStage(this.userSession.id, this.slug).subscribe(stage => {
       this.stage = stage['data'];
       /** check state if completed or in progress*/
@@ -91,14 +97,21 @@ export class IngameComponent implements OnInit {
       } else {
         this.requestAndRenderQuestion();
       }
+      this.loader.hideLoader();
+    }, error2 => {
+      this.loader.hideLoader();
     });
   }
 
   private requestAndRenderQuestion() {
+    this.loader.showLoader();
     this.treasurehuntService.getUserStageQuestion(this.userSession.id, this.slug).subscribe((response) => {
       /** showing new question for state*/
       this.showNext = false;
       this.question = response['data'];
+      this.loader.hideLoader();
+    },error2 => {
+      this.loader.hideLoader();
     });
   }
 }
