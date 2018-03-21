@@ -33,6 +33,8 @@ export class HeaderComponent implements OnInit {
             userId : res.user.id
           });
         }
+      }, error2 => {
+        this.loader.hideLoader();
       });
   }
 
