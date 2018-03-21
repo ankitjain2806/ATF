@@ -11,7 +11,7 @@ import {LoaderService} from "../../../../shared/util/loader.service";
   styleUrls: ['./ingame.component.scss']
 })
 export class IngameComponent implements OnInit {
-
+  enteredAnswer = "";
   slug: string;
   question = {};
   answer = {
