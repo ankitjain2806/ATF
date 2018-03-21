@@ -27,10 +27,54 @@
         </tbody>
       </table>
     </div>
-    <div class="col-md-6" *ngIf="teamDetail !== null">
+    <div class="col-md-6 text-center" *ngIf="teamDetail !== null">
+      <table class="table table-bordered">
+        <thead>
+        <tr>
+          <th>
+            Task
+          </th>
+          <th>
+            Status
+          </th>
+          <th>
+            Remark
+          </th>
+          <th>
+            Active
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>Git</td>
+          <td>{{teamDetail.isGitRepoCreated ? 'Completed' : 'Pending'}}</td>
+          <td>
+            <button class="btn btn-link" *ngIf="teamDetail.isGitRepoCreated">{{teamDetail.gitRepo}}</button>
+            <div *ngIf="!teamDetail.isGitRepoCreated">Pending</div>
+          </td>
+          <td>
+            {{teamDetail.isActive ? 'Yes' : 'No'}}
+          </td>
+        </tr>
+        <tr>
+          <td>AWS</td>
+          <td>Pending</td>
+          <td>
+            Pending
+          </td>
+          <td>
+            No
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!--<div class="col-md-6" *ngIf="teamDetail !== null">
       <div class="col-12"><label class="font-weight-bold">Team Name : </label>{{teamDetail.teamName}}</div>
       <div class="col-12"><label class="font-weight-bold">Is Active : </label>{{teamDetail.isActive}}</div>
       <div class="col-12"><label class="font-weight-bold">Is Approved : </label>{{teamDetail.isApproved}}</div>
-    </div>
+    </div>-->
   </div>
 </div>

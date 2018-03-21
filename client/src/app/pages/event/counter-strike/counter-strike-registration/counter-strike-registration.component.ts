@@ -2,6 +2,7 @@ import {Component, OnInit} from "@angular/core";
 import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
 import {EventService} from "../../event.service";
 import {Router} from "@angular/router";
+import {LoaderService} from "../../../../shared/util/loader.service";
 
 @Component({
   selector : "<counter-strike-registration>",
@@ -13,7 +14,8 @@ export class CounterStrikeRegistrationComponent implements OnInit{
   registrationForm : FormGroup;
 
   constructor(private _fb: FormBuilder, private eventService:EventService,
-              private router: Router){
+              private router: Router,
+              private loader: LoaderService){
   }
 
   ngOnInit(){
@@ -35,8 +37,12 @@ export class CounterStrikeRegistrationComponent implements OnInit{
   }
 
   onSubmit(){
+    this.loader.showLoader();
     this.eventService.completeHackathonRegistration(this.registrationForm.value).subscribe(data=>{
       this.gotoHome();
+      this.loader.hideLoader();
+    }, error2 => {
+      this.loader.hideLoader();
     });
   }
 

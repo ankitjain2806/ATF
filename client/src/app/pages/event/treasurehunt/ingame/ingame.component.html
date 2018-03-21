@@ -1,12 +1,6 @@
 <h1><strong>Question no: {{question['stage']}}</strong></h1>
 
-<!--<h2>{{question['question']}}</h2>-->
 <div [innerHtml]="question['body']"></div>
-<!--
-<div *ngIf="!question['isMCQ']">
-  <input type="text" [(ngModel)]="answer['text']">
-</div>-->
-
 <div *ngIf="question['isMCQ']">
     <div *ngFor="let opt of question['options'];  let i=index; ">
         <label>{{i + ').'}}</label>
@@ -17,20 +11,8 @@
               (click)="toggleAnswersSelected(opt)" />
               <label>{{opt}}</label>
     </div>
-
-  <input [disabled] = "!options" type="button" class="btn btn-primary m-l-2" value="submit" (click)="checkAnswerAndChangeState(options)">
-  <input *ngIf="showNext" type="button" class="btn btn-primary m-l-3" value="next" (click)="getCurrentQuestion()">
-
 </div>
 
-<div *ngIf = "!question['isMCQ']">
-  <br>
-  <input type = "text" placeholder="Enter answer here" [(ngModel)] = "enteredAnswer" required/>
-  <br>
-  <br>
-  <button class="btn btn-primary m-l-2"  (click)="checkAnswerAndChangeState(enteredAnswer)"> submit </button>
-  <input *ngIf="showNext" type="button" class="btn btn-primary m-l-3" value="next" (click)="getCurrentQuestion()">
-</div>
-
-
-
+<input [disabled] = "!options" type="button" class="btn btn-primary m-l-2" value="submit" (click)="checkAnswerAndChangeState(options)">
+<input *ngIf="showNext" type="button" class="btn btn-primary m-l-3" value="next" (click)="getCurrentQuestion()">
+<a [routerLink]="['/dashboard']" class="btn btn-info">Back to Dashboard</a>

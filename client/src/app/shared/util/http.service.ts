@@ -4,8 +4,7 @@ import {Observable} from "rxjs/Observable";
 import 'rxjs/add/operator/map';
 const httpOptions = {
   headers: new HttpHeaders({
-    'Content-Type':  'application/json',
-    'Authorization': 'my-auth-token'
+    'Content-Type':  'application/json'
   })
 };
 @Injectable()
