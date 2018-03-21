@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {SuperAdminService} from "../superadmin.service";
 import {clone} from 'lodash';
 import {IEvent} from "../../../models/event";
-import {LoaderService} from "../../../shared/util/loader.service";
 
 @Component({
   moduleId: module.id,
@@ -18,8 +17,7 @@ export class EventAdminComponent implements OnInit {
   newEvent: any = {};
   editedEvent: any = {};
 
-  constructor(private superAdminService: SuperAdminService,
-              private loader: LoaderService) {
+  constructor(private superAdminService: SuperAdminService) {
   }
 
   ngOnInit() {
@@ -27,13 +25,9 @@ export class EventAdminComponent implements OnInit {
   }
 
   getEvents() {
-    this.loader.showLoader();
     this.superAdminService.getAllEvents().subscribe(data => {
       console.log(data);
       this.events = data;
-      this.loader.hideLoader();
-    }, error => {
-      this.loader.hideLoader();
     });
   }
 
@@ -60,35 +54,23 @@ export class EventAdminComponent implements OnInit {
       // add a new event
 
       this.selectedEvent = Object.assign({}, event);
-      this.loader.showLoader();
       this.superAdminService.addEvent(this.selectedEvent).subscribe(() => {
         this.getEvents();
-        this.loader.hideLoader();
-      }, error2 => {
-        this.loader.hideLoader();
       });
     }
     this.eventForm = false;
   }
 
   removeEvent(event: any) {
-    this.loader.showLoader();
     this.selectedEvent = Object.assign({}, event);
     this.superAdminService.deleteEvent(event).subscribe(() => {
       this.getEvents();
-      this.loader.hideLoader();
-    },error2 => {
-      this.loader.hideLoader();
     });
   }
 
   updateEvent() {
-    this.loader.showLoader();
     this.superAdminService.updateEvent(this.editedEvent).subscribe(() => {
       this.getEvents();
-      this.loader.hideLoader();
-    },error2 => {
-      this.loader.hideLoader();
     });
     this.editEventForm = false;
     this.editedEvent = {};

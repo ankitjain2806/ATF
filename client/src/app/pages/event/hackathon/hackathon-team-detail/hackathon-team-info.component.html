@@ -1,0 +1,9 @@
+<div *ngIf="teamInfo">
+  <p>Team Name - {{teamInfo.teamName}}</p>
+  <p>Idea - {{teamInfo.idea}}</p>
+  <p>Git Repo - <a href="{{teamInfo.gitRepo}}">{{teamInfo.gitRepo}}</a></p>
+  <div *ngFor="let member of teamInfo.members">
+    <p> Member Email - {{member.email}}</p>
+    <p> Git Id - {{member.gitId}}</p>
+  </div>
+</div>

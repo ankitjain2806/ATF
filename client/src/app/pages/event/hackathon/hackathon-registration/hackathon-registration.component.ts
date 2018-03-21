@@ -2,7 +2,6 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {EventService} from "../../event.service";
 import {ActivatedRoute} from "@angular/router";
-import {LoaderService} from "../../../../shared/util/loader.service";
 
 @Component({
   selector: 'app-hackathon-registration',
@@ -14,12 +13,11 @@ export class HackathonRegistrationComponent implements OnInit {
 
   public resourceForm: FormGroup;
   events : any = null;
-  isTeamNameAvailable = true;
+
   constructor(
     private _fb: FormBuilder,
     private eventService: EventService,
-    private route: ActivatedRoute,
-    private loader: LoaderService
+    private route: ActivatedRoute
   ) {
     this.route.data.subscribe((res) => {
       console.log(res)
@@ -75,15 +73,5 @@ export class HackathonRegistrationComponent implements OnInit {
     this.eventService.completeHackathonRegistration(resourceForm).subscribe(data=>{
       console.log(data);
     })
-  }
-
-  checkTeamName(){
-    this.loader.showLoader();
-    this.eventService.checkTeamName(this.resourceForm.value.teamName).subscribe(data=>{
-        this.isTeamNameAvailable = data.isAvailable;
-        this.loader.hideLoader();
-    }, error2 => {
-      this.loader.hideLoader();
-    });
   }
 }

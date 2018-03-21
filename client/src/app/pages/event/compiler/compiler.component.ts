@@ -6,7 +6,6 @@ import {SocketService} from "../../../shared/util/socket.service";
 import {ActivatedRoute} from "@angular/router";
 import {AceEditorComponent} from "ng2-ace-editor"
 import {Resource} from "../../../models/Resource";
-import {LoaderService} from "../../../shared/util/loader.service";
 import 'brace/theme/dracula';
 import 'brace/mode/java.js';
 import 'brace/index';
@@ -37,7 +36,6 @@ export class CompilerComponent implements OnInit {
               private eventService: EventService,
               private compilerService: CompilerService,
               private route: ActivatedRoute,
-              private loader: LoaderService,
               private socketService: SocketService) {
     this.route.data.subscribe((res) => {
       this.resource = res.resource.data.resource;
@@ -63,11 +61,9 @@ export class CompilerComponent implements OnInit {
     /**/
 
     // this.socketService.sendMessage('testing')
-    this.loader.showLoader();
     this.compilerService.runCompilerCode(this.compilerForm.value, this.resource._id).subscribe((res) => {
       // this.output = 'Brace yourself!! code is being compiled';
       this.output = [];
-      this.loader.hideLoader();
     })
   }
 

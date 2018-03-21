@@ -1,6 +1,4 @@
-import {Component} from '@angular/core';
-import {Title} from '@angular/platform-browser';
-import {ActivatedRoute, Router} from "@angular/router";
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -8,8 +6,6 @@ import {ActivatedRoute, Router} from "@angular/router";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  test: string = 'asdasdasd';
   title = 'app';
-  constructor(private titleService: Title,
-              private route: ActivatedRoute) {
-  }
 }

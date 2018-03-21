@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {SuperAdminService} from "../../superadmin.service";
+import {EventService} from "../../event.service";
 
 @Component({
   selector: 'hck-team-info',
@@ -8,7 +8,7 @@ import {SuperAdminService} from "../../superadmin.service";
 })
 export class HackathonTeamInfoComponet implements OnInit {
   teamInfo :any;
-  constructor(private route: ActivatedRoute, private eventService: SuperAdminService) {
+  constructor(private route: ActivatedRoute, private eventService: EventService) {
 
   }
   ngOnInit() {
@@ -16,6 +16,5 @@ export class HackathonTeamInfoComponet implements OnInit {
       console.log(data);
       this.teamInfo = data;
     });
-
   }
 }

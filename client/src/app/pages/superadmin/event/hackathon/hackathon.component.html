@@ -23,7 +23,7 @@
 <div class="container-fluid">
   <h1>Hackathon Teams</h1>
   <div class="row">
-    <div class="col-md-6 text-center">
+    <div class="col-md-8 text-center">
       <table class="table table-bordered">
         <thead>
           <tr>
@@ -39,11 +39,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let team of teams; let i = index" [class.active]="i == selectedRow">
+          <tr *ngFor="let team of teams">
             <td>
-              <button class="btn btn-link" (click)="getTeamDetails(team._id, i)">
+              <a class="btn btn-link collapsed" href="/superadmin/hackathon/teamInfo/{{team._id}}">
                 {{team.teamName}}
-              </button>
+              </a>
             </td>
             <td>
               {{team.isApproved ? 'Approved' : 'Not Approved' }}
@@ -53,49 +53,6 @@
               <button class="btn btn-danger" (click)="acceptRejectTeam(team._id, false)"><i class="fa fa-ban"></i> Reject</button>
             </td>
           </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="col-md-6 text-center" *ngIf="teamDetail !== null">
-      <table class="table table-bordered">
-        <thead>
-        <tr>
-          <th>
-            Task
-          </th>
-          <th>
-            Status
-          </th>
-          <th>
-            Remark
-          </th>
-          <th>
-            Active
-          </th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <td>Git</td>
-          <td>{{teamDetail.isGitRepoCreated ? 'Completed' : 'Pending'}}</td>
-          <td>
-            <button class="btn btn-link" *ngIf="teamDetail.isGitRepoCreated">{{teamDetail.gitRepo}}</button>
-            <div *ngIf="!teamDetail.isGitRepoCreated">Pending</div>
-          </td>
-          <td>
-            {{teamDetail.isActive ? 'Yes' : 'No'}}
-          </td>
-        </tr>
-        <tr>
-          <td>AWS</td>
-          <td>Pending</td>
-          <td>
-            Pending
-          </td>
-          <td>
-            No
-          </td>
-        </tr>
         </tbody>
       </table>
     </div>
