@@ -11,8 +11,21 @@
               (click)="toggleAnswersSelected(opt)" />
               <label>{{opt}}</label>
     </div>
-</div>
+
 
 <input [disabled] = "!options" type="button" class="btn btn-primary m-l-2" value="submit" (click)="checkAnswerAndChangeState(options)">
 <input *ngIf="showNext" type="button" class="btn btn-primary m-l-3" value="next" (click)="getCurrentQuestion()">
-<a [routerLink]="['/dashboard']" class="btn btn-info">Back to Dashboard</a>
+  <br>
+<div><a [routerLink]="['/dashboard']" class="btn btn-info">Back to Dashboard</a> </div>
+
+</div>
+<div *ngIf = "!question['isMCQ']">
+  <br>
+  <input type = "text" placeholder="Enter answer here" [(ngModel)] = "enteredAnswer" required/>
+  <br>
+  <br>
+  <button class="btn btn-primary m-l-2"  (click)="checkAnswerAndChangeState(enteredAnswer)"> submit </button>
+  <input *ngIf="showNext" type="button" class="btn btn-primary m-l-3" value="next" (click)="getCurrentQuestion()">
+  <br>
+  <div><a [routerLink]="['/dashboard']" class="btn btn-info">Back to Dashboard</a> </div>
+</div>
