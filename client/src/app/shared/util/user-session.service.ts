@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
+import {HttpService} from "./http.service";
 
 @Injectable()
 export class UserSessionService {
   userSession;
-  constructor() { }
+  constructor(public http: HttpService) { }
 
 /*  setSession(userSession) {
     this.userSession = userSession;
@@ -12,5 +13,9 @@ export class UserSessionService {
   getSession() {
     return JSON.parse(localStorage.getItem('userSession'));
     // return this.userSession;
+  }
+
+  checkSession() {
+    return this.http.get('/auth/checkSession', {});
   }
 }

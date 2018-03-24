@@ -91,4 +91,8 @@ router.get('/logout', function (req, res, next) {
   });
 });
 
+router.get('/checkSession', function (req, res, next) {
+  res.locals.responseObj = { session:  (req.session && req.session.user)? true: false} ;
+  next();
+}, responseHandler)
 module.exports = router;
