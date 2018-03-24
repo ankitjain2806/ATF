@@ -82,6 +82,13 @@ router.post('/event-register', function (req, res, next) {
                 registeredOn: new Date()
               }
             }
+            if(req.body.eventSlug === 'hellCell' && !user.hellCell.status && !user.hellCell.isBlocked) {
+                  user.hellCell = {
+                      status : true,
+                      isBlocked: false,
+                      registeredOn: new Date()
+                  }
+            }
             user.save(function (err, user) {
               res.locals.responseObj = {
                 err: err,

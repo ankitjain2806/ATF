@@ -20,6 +20,11 @@ var UserSchema = new mongoose.Schema({
     isBlocked:{type: Boolean, default: false},
     registeredOn: {type: Date},
   },
+  hellCell: {
+        status: {type: Boolean, default: false},
+        isBlocked:{type: Boolean, default: false},
+        registeredOn: {type: Date},
+   },
   treasureHunt: {
     status: {type: Boolean, default: false},
     isBlocked:{type: Boolean, default: false},
