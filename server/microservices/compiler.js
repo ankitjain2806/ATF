@@ -30,24 +30,34 @@ amqp.connect('amqp://localhost:5672', function (err, conn) {
         stdout: null
       };
 
-      var callGlot = function (codeObj) {
+      var callGlot = function (codeObj, cb) {
         request(codeObj, function (err, res, body) {
+        	console.log(err, body);
 					var resultObj;
           if(!err) {
-						var resultQueue = 'resultQueue';
-						resultObj = {
-							error: body.stderr,
-							response: res.body,
-							status: res.statusCode,
-							testCasePass: (body.stdout == codeObj.stdout) ? true : false,
-							index : codeObj.index+1,
-							userId: userId
-						};
-						console.log(resultObj);
-						updatePoints(resultObj);
+							// var resultQueue = 'resultQueue';
+							resultObj = {
+								error: body.stderr,
+								response: res.body,
+								status: res.statusCode,
+								testCasePass: (body.stdout === codeObj.stdout),
+								index : codeObj.index+1,
+								userId: userId,
+								resourceId: userInput.resourceId
+							};
+							console.log(resultObj);
+							// updatePoints(resultObj);
+							cb(resultObj);
+						/* } else {
+							cb(resultObj.testCasePass, JSON.stringify(resultObj));
+						}*/
+						
 						// ch.assertQueue(resultQueue, {durable: false});
-						ch.sendToQueue(resultQueue, new Buffer(JSON.stringify(resultObj)));
-          }
+						// ch.sendToQueue(resultQueue, new Buffer(JSON.stringify(resultObj)));
+          } else {
+          	//@todo :  handle error
+						console.log("this is errorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr")
+					}
         })
       }
 
@@ -60,8 +70,17 @@ amqp.connect('amqp://localhost:5672', function (err, conn) {
         next(null, tempObj);
       }, function (err, data) {
         async.map(data, function (x, callback) {
-          callback(null, callGlot(x))
-        }, function (err, result) {
+        	callGlot(x, function (resultObj) {
+						ch.sendToQueue('resultQueue', new Buffer(JSON.stringify(resultObj)));
+						callback(null, resultObj)
+					});
+         /* callback(null, callGlot(x, function (tcPass, resultObj) {
+						console.log(tcPass);
+						
+					}))*/
+        }, function (err, resultObjs) {
+        	console.log(err, resultObjs, '----------------------------')
+					updatePoints(resultObjs);
           // @todo need to remove
         })
       });
@@ -75,18 +94,29 @@ var updatePoints = function(resultObj){
 		conn.createChannel(function (err, ch) {
 			var q = 'transactionQueue';
 			var tempObj = {
-				user: resultObj.userId,
+				user: resultObj[0].userId,
 				fromUser: null,
-				eventId:  'compiler',
+				eventId: 'compiler',
 				description: ' this is desc',
-				points: -5
+				points: 0,
+				resourceId:resultObj[0].resourceId
 			};
-			if(resultObj.testCasePass) {
-				tempObj.points = 10;
+			// if (resultObj.testCasePass) {
+			// 	tempObj.points = 10;
+			// }
+			console.log('stderr-----------',resultObj[0].response.stderr );
+			if (resultObj[0].response.stderr && resultObj[0].response.stderr.length > 0) {
+				tempObj.points = -1;
+			} else {
+				resultObj.forEach(function (item) {
+			if(item.testCasePass){
+				tempObj.points+=10;
 			}
-			console.log('inside updatePoints Queue');
+			})
+		}
+			console.log('inside updatePoints Queue',tempObj);
 			ch.assertQueue(q, {durable: false});
-			ch.sendToQueue(q, new Buffer(JSON.stringify(tempObj)),{persistent: true});
+			ch.sendToQueue(q, new Buffer(JSON.stringify(tempObj)));
 		});
 	});
 }

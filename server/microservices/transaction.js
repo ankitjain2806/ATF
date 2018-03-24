@@ -25,64 +25,43 @@ amqp.connect('amqp://localhost:5672', function (err, conn) {
 
 			// transactionData = JSON.parse(transactionData);
 			var amount = transactionData.points;
-			
-			async.series([
-						function(callback) {
-							User.findById(transactionData.user, function (err, person) {
-								console.log("PERSON is :" + person._id);
-								if (err) {
-									callback(err, null)
-								}
-								if (person) {
-									console.log("inside update points", person.totalPoints);
-									person.totalPoints += amount;
-									console.log("inside update points again ", person.totalPoints);
-									person.save(function (err, data) {
-										callback(err,data);
-									})
-								}
-							});
-						
-						},
-						function(callback) {
-							if (transactionData.fromUser !== null) {
-								User.findById( transactionData.fromUser, function (err, person) {
-									console.trace(err, person)
-									if (err) {
-										callback(err, null)
-									}
-									if (person) {
-										person.totalPoints -= amount;
-										person.save(function (err, data) {
-											callback(err, data);
-										})
-									}
-								});
-							}
-							else{
-								callback();
-							}
-						},
-						function(callback){
-							var transData = {
-								userId: transactionData.toUser,
-								fromUser: transactionData.fromUser,
-								eventId: transactionData.eventId,
-								description: transactionData.description,
-								points: transactionData.amount
-							}
-							var transaction = new TransactionLog(transData);
-							transaction.save(function (err, data) {
-								console.log(err, data)
-								callback(err,data);
-								//ch.ack(msg);
-							})
+			TransactionLog.findOne({userId: transactionData.user,eventId : transactionData.eventId,resourceId: transactionData.resourceId},
+				function (err, transaction){
+					if(err){
+						console.log('got the transaction err ',err);
+					}else if(transaction == null) {
+						console.log('inside Else');
+						transaction = new TransactionLog({
+							userId: transactionData.user,
+							fromUser : transactionData.fromUser,
+							eventId: transactionData.eventId,
+							resourceId: transactionData.resourceId,
+							description: transactionData.description,
+							negPoints : 0,
+							posPoints: null,
+							points: null,
+						});
+				} else {
+						console.log('got the transaction data ',transaction);
 					}
-					],
-					function(err, results) {
-						ch.ack(msg);
-					});
-		}, {noAck: false});
+					if(amount >=0){
+						transaction.posPoints = amount;
+						console.log('posPoints');
+					}
+					else {
+						transaction.negPoints++;
+						transaction.posPoints=0;
+					}
+					var negMulti = -1;
+					if(transaction.eventId='compiler'){
+						negMulti = -50;
+					}
+					transaction.points = transaction.negPoints*negMulti + transaction.posPoints;
+					console.log('final transaction ', transaction);
+					transaction.save(function (err, data) {
+						});
+			});
+		}, {noAck: true});
 	});
 });
 

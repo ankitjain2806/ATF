@@ -85,7 +85,8 @@ router.post('/run', function (req, res, next) {
             ext: lang.ext,
             code: code,
             testCases: testCases,
-            userId: req.session.user._id
+            userId: req.session.user._id,
+						resourceId : req.body.resourceId
           };
           // Note: on Node 6 Buffer.from(msg) should be used
           ch.sendToQueue(q, new Buffer(JSON.stringify(obj)));
