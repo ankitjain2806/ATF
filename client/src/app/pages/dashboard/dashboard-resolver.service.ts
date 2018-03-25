@@ -14,7 +14,7 @@ export class DashboardResolverService implements Resolve<string[]>{
   constructor(private service: DashboardService) {
   }
 
-  resolve(route: ActivatedRouteSnapshot): Observable <string[]> {
+  resolve(route: ActivatedRouteSnapshot) {
     return this.service.getUserEvents();
   }
 }

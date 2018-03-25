@@ -95,4 +95,24 @@ router.get('/checkSession', function (req, res, next) {
   res.locals.responseObj = { session:  (req.session && req.session.user)? true: false} ;
   next();
 }, responseHandler)
+
+router.get('/myEvents', function (req, res, next) {
+  if(req.session && req.session.user) {
+    User.findById(req.session.user._id).select('compiler treasureHunt hackathon').exec(function(err, events){
+      res.locals.responseObj = {
+        err: err,
+        data: events,
+        msg: "users events"
+      }
+      next();
+    });
+  } else {
+    res.locals.responseObj = {
+      err: null,
+      data: null,
+      msg: "users events"
+    }
+    next()
+  }
+}, responseHandler)
 module.exports = router;

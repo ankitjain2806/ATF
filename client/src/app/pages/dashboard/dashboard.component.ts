@@ -12,7 +12,7 @@ import {LoaderService} from "../../shared/util/loader.service";
 })
 export class DashboardComponent implements OnInit {
 
-  userEvent;
+  userEvent = null;
   showAlert: boolean = false;
 
   constructor(private dashboardService: DashboardService,
@@ -23,7 +23,7 @@ export class DashboardComponent implements OnInit {
     this.route.data.subscribe((res) => {
       this.userEvent = res.events.data;
       this.loaderService.hideLoader();
-    },error2 => {
+    },error => {
       this.loaderService.hideLoader();
     });
   }

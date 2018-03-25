@@ -95,7 +95,7 @@ app.use('/api/HCK', isLoggedIn, HCKController);
 app.use('/api/techtalks', isLoggedIn, TechTalksController);
 
 /*-----------------------------------------------------------------*/
-app.use('/api/superadmin/techtalks', isAdmin, TechTalksAdminController);
+app.use('/api/superadmin/techtalks', TechTalksAdminController);
 app.use('/api/superadmin', isAdmin, superAdminController);
 /*-----------------------------------------------------------------*/
 

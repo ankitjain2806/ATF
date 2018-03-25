@@ -11,9 +11,11 @@
       <div class="event-block-body">
         Maecenas in dignissim turpis. Suspendisse hendrerit tristique tempor. Aenean non euismod nibh. Etiam imperdiet, quam sed pellentesque commodo, magna dui porta justo, quis luctus nisi diam quis magna. Maecenas imperdiet erat at neque porttitor, in bibendum dui rutrum. Suspendisse suscipit nisi a diam imperdiet, sed condimentum purus sagittis. Cras dolor sem, consectetur id pellentesque eget, lobortis ac magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Morbi ipsum tellus, blandit quis justo quis, iaculis blandit neque. Vivamus laoreet sapien ut metus finibus rutrum. Praesent tempor leo dui, ut sollicitudin orci finibus ut. Nulla facilisi. Donec facilisis lobortis ex, sed commodo leo finibus eget.
       </div>
-      <div class="event-block-footer" *ngIf="!userEvent.compiler.isBlocked">
-        <a class="btn btn-info text-white" (click)="eventRegistration('compiler')" *ngIf="!userEvent.compiler.status">Register</a>
-        <a class="btn btn-info text-white" (click)="eventContinue('compiler')" *ngIf="userEvent.compiler.status">Continue</a>
+      <div class="event-block-footer">
+        <span *ngIf="userEvent && !userEvent.compiler.isBlocked">
+          <a class="btn btn-info text-white" (click)="eventRegistration('compiler')" *ngIf="!userEvent.compiler.status">Register</a>
+          <a class="btn btn-info text-white" (click)="eventContinue('compiler')" *ngIf="userEvent.compiler.status">Continue</a>
+        </span>
         <a class="btn btn-primary text-white" [routerLink]="['/compiler']">View More..</a>
       </div>
     </div>
@@ -26,9 +28,11 @@
       <div class="event-block-body">
         Aenean massa eros, sagittis sed pharetra ut, maximus at diam. Nullam dignissim, nulla et mattis blandit, lorem ligula accumsan dolor, quis placerat tellus ligula in libero. Aenean leo orci, viverra sed sollicitudin eu, condimentum sit amet urna. Quisque id tristique enim. Vivamus bibendum venenatis vulputate. Nullam sit amet lorem sed leo dictum hendrerit. Integer nec nibh sagittis, vestibulum enim vitae, dignissim metus. Cras ut erat ligula. Praesent sit amet nisi malesuada, malesuada leo et, semper lectus. Curabitur ac ex gravida, viverra leo sit amet, pharetra dui. Quisque in magna bibendum, congue augue eu, dignissim massa. Maecenas convallis, justo ac pharetra lacinia, libero ex ullamcorper nunc, vitae laoreet lectus quam eleifend diam. Praesent vestibulum ante feugiat vestibulum consequat. Nunc eleifend odio sed hendrerit posuere.
       </div>
-      <div class="event-block-footer " *ngIf="!userEvent.treasureHunt.isBlocked">
-        <a class="btn btn-info text-white" (click)="eventRegistration('treasurehunt')"  *ngIf="!userEvent.treasureHunt.status">Register</a>
-        <a class="btn btn-info text-white" (click)="eventContinue('treasurehunt')" *ngIf="userEvent.treasureHunt.status">Continue</a>
+      <div class="event-block-footer " >
+        <span *ngIf="userEvent && !userEvent.treasureHunt.isBlocked">
+          <a class="btn btn-info text-white" (click)="eventRegistration('treasurehunt')"  *ngIf="!userEvent.treasureHunt.status">Register</a>
+          <a class="btn btn-info text-white" (click)="eventContinue('treasurehunt')" *ngIf="userEvent.treasureHunt.status">Continue</a>
+        </span>
         <a class="btn btn-primary text-white " [routerLink]="['/treasurehunt']">View More..</a>
       </div>
     </div>
@@ -41,8 +45,11 @@
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate nec ligula ut condimentum. Nunc sapien lectus, gravida in varius in, vulputate ut felis. Vestibulum sed venenatis augue. Donec ut enim eu purus sagittis maximus. Vestibulum semper, libero quis tristique sollicitudin, est libero ornare sem, id molestie enim arcu eget nibh. Nunc ut nisl arcu. Nunc pellentesque consectetur risus id fermentum. Pellentesque eget felis imperdiet leo dapibus congue. Curabitur vitae lorem tellus. Curabitur varius id ante tincidunt varius. Phasellus et risus erat. Fusce quis ante quis ligula luctus posuere non sit amet nulla. Curabitur nec est arcu. Proin vulputate metus in mi mollis tincidunt. Cras sed luctus ipsum. Morbi tincidunt interdum mauris, in elementum metus imperdiet in.
       </div>
       <div class="event-block-footer">
-        <a class="btn btn-info text-white" [routerLink]="['/hackathon/registration']" *ngIf="userEvent.hackathon.length == 0">Register</a>
-        <a class="btn btn-info text-white" [routerLink]="['/hackathon/my-team']" *ngIf="userEvent.hackathon.length > 0">Continue</a>
+        <span *ngIf="userEvent && !userEvent.hackathon.status">
+          <a class="btn btn-info text-white" [routerLink]="['/hackathon/registration']" *ngIf="userEvent.hackathon.length == 0">Register</a>
+          <a class="btn btn-info text-white" [routerLink]="['/hackathon/my-team']" *ngIf="userEvent.hackathon.length > 0">Continue</a>
+        </span>
+
         <a class="btn btn-primary text-white" [routerLink]="['/hackathon']">View More..</a>
       </div>
     </div>

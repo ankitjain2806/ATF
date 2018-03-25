@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {HomeService} from './home.service';
 import {LoaderService} from "../../shared/util/loader.service";
+import {Router, ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-home',
@@ -8,9 +9,18 @@ import {LoaderService} from "../../shared/util/loader.service";
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  userEvent;
 
   constructor(private homeService: HomeService,
+              private route: ActivatedRoute,
+              private router: Router,
               private loader: LoaderService) {
+    this.route.data.subscribe((res) => {
+      this.userEvent = res.events.data;
+      this.loader.hideLoader();
+    },error => {
+      this.loader.hideLoader();
+    });
   }
 
   ngOnInit() {

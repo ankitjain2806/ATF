@@ -20,7 +20,7 @@ export class DashboardService {
   }
 
   getUserEvents(): Observable<any> {
-    return this.http.get('/api/users/events', {});
+    return this.http.get('/auth/myEvents', {});
   }
 
   registerEvent(eventSlug): Observable<any> {

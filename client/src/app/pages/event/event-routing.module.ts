@@ -36,25 +36,21 @@ import {TechTalkTopicsResolverService} from "./tech-talk/tech-talk-topics/tech-t
       {
         path: 'compiler',
         component: CompilerHomeComponent,
-        canActivate: [AuthGuardService],
         data: {title: "Compiler"}
       },
       {
         path: 'treasurehunt',
         component: TreasurehuntHomeComponent,
-        canActivate: [AuthGuardService],
         data: {title: "Treasure Hunt"}
       },
       {
         path: 'hackathon',
         component: HackathonHomeComponent,
-        canActivate: [AuthGuardService],
         data: {title: "Hackathon"}
       },
       {
         path: 'techtalks',
         component: TechTalkHomeComponent,
-        canActivate: [AuthGuardService],
         data: {title: "Tech Talks"}
       },
       {

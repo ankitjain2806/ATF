@@ -5,7 +5,7 @@ import {DashboardComponent} from "./pages/dashboard/dashboard.component";
 
 const routes: Routes = [
   // Oops
-  {path: '', component: HomeComponent},
+  // {path: '', component: HomeComponent},
   {path: '**', redirectTo: 'oops'}, // show the 404 page for any routes that don't exist
 ];
 
