@@ -3,6 +3,8 @@ import {NgModule} from '@angular/core';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {ToastModule} from 'ng2-toastr/ng2-toastr';
+import {BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
@@ -25,6 +27,7 @@ import {UserSessionService} from "./shared/util/user-session.service";
 import {SocketService} from "./shared/util/socket.service";
 import {AuthGuardService} from "./shared/util/auth-guard.service";
 import {LoaderService} from "./shared/util/loader.service";
+import {ToasterService} from "./shared/util/toaster.service";
 
 @NgModule({
   declarations: [
@@ -39,7 +42,6 @@ import {LoaderService} from "./shared/util/loader.service";
     BrowserModule,
     ReactiveFormsModule,
     FormsModule,
-    NgbModule.forRoot(),
     HomeModule,
     UserModule,
     HeaderModule,
@@ -47,7 +49,8 @@ import {LoaderService} from "./shared/util/loader.service";
     DashboardModule,
     SuperAdminModule,
     HttpClientModule,
-    BrowserModule,
+    ToastModule.forRoot(),
+    BrowserAnimationsModule,
     AppRoutingModule,
   ],
   providers: [
@@ -57,7 +60,8 @@ import {LoaderService} from "./shared/util/loader.service";
     SocketService,
     AuthGuardService,
     Title,
-    LoaderService
+    LoaderService,
+    ToasterService
   ],
   bootstrap: [AppComponent]
 })

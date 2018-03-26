@@ -1,6 +1,7 @@
-import {Component} from '@angular/core';
+import {Component, ViewContainerRef} from '@angular/core';
 import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Router} from "@angular/router";
+import {ToastsManager} from 'ng2-toastr/ng2-toastr';
 
 @Component({
   selector: 'app-root',
@@ -10,6 +11,10 @@ import {ActivatedRoute, Router} from "@angular/router";
 export class AppComponent {
   title = 'app';
   constructor(private titleService: Title,
+              public toast: ToastsManager,
+              vcr: ViewContainerRef,
               private route: ActivatedRoute) {
+    this.toast.setRootViewContainerRef(vcr);
+
   }
 }
