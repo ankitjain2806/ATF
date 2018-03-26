@@ -14,6 +14,7 @@ router.post('/addTopic', function (req, res, next) {
         'topic': req.body.topic,
         'slug': req.body.slug,
         'description': req.body.description,
+        'seats': req.body.seats,
       });
       topic.save(function (err, data) {
         res.locals.responseObj = {

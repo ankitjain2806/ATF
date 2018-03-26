@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {DashboardService} from "../../../dashboard/dashboard.service";
 import {LoaderService} from "../../../../shared/util/loader.service";
+import {TechTalkService} from "../tech-talk.service";
 
 @Component({
   selector: 'app-tech-talk-topics',
@@ -15,14 +16,36 @@ export class TechTalkTopicsComponent {
   constructor(private dashboardService: DashboardService,
               private route: ActivatedRoute,
               private router: Router,
+              private techTalkservice: TechTalkService,
               private loaderService: LoaderService) {
     this.loaderService.showLoader();
     this.route.data.subscribe((res) => {
       this.allTopics = res.topics.data.allTopics;
-      this.myTopics = res.topics.data.myTopics;
+      this.myTopics = res.topics.data.myTopics.techTalks.map((x) => {
+        return x.topicId
+      });
+
+      console.log(this.myTopics)
       this.loaderService.hideLoader();
     },error => {
       this.loaderService.hideLoader();
+    });
+  }
+
+  subscribeTopic(topicId, subscribeTopic) {
+    let obj = {
+      topicId: topicId,
+      subscribeTopic: subscribeTopic
+    };
+    //this.loaderService.showLoader();
+    this.techTalkservice.subscribeTopic(obj).subscribe( (data: any) => {
+      this.myTopics = data.data.map((x) => {
+        return x.topicId
+      });
+      console.log(this.myTopics)
+      //this.loaderService.hideLoader();
+    },error => {
+      //this.loaderService.hideLoader();
     });
   }
 }

@@ -34,6 +34,11 @@ var UserSchema = new mongoose.Schema({
     teamId: {type: mongoose.Schema.Types.ObjectId, ref: 'HCKInfo'},
     isBlocked:{type: Boolean, default: false},
     registeredOn: {type: Date},
+  }],
+  techTalks: [{
+    topicId: {type: mongoose.Schema.Types.ObjectId, ref: 'TechTalk'},
+    isBlocked:{type: Boolean, default: false},
+    registeredOn: {type: Date},
   }]
 });
 
