@@ -41,6 +41,8 @@ amqp.connect('amqp://localhost:5672', function (err, conn) {
 							posPoints: null,
 							points: null,
 						});
+
+						console.log("event id here is" + transaction.eventId);
 				} else {
 						console.log('got the transaction data ',transaction);
 					}
@@ -53,7 +55,7 @@ amqp.connect('amqp://localhost:5672', function (err, conn) {
 						transaction.posPoints=0;
 					}
 					var negMulti = -1;
-					if(transaction.eventId='compiler'){
+					if(transaction.eventId=='compiler'){
 						negMulti = -50;
 					}
 					transaction.points = transaction.negPoints*negMulti + transaction.posPoints;

@@ -7,6 +7,7 @@ var eventService = require('../../service/events.service');
 var responseHandler = require('../../util/responseHandler').Response;
 //var userEventState = require('../../models/UserEventState');
 var THUserStage = require('../../models/THUserStage');
+var updatePoints = require('../../microservices/teasurehuntpoints');
 
 /*
 router.post('/addResource', function (req, res, next) {
@@ -99,6 +100,16 @@ router.post('/question/check', function (req, res, next) {
       _q = question.toObject();
       const isCorrectAnswer = req.body.answer === _q.answer;
       var checkRes = (isCorrectAnswer) ? {data: true, completed: false} : {data: false, completed: false};
+
+      //Update points for user
+      var resultObj =
+          {
+            userId: req.body.user ,
+            points: 0
+          }
+
+          resultObj.points = (isCorrectAnswer) ? 10 : -5 ;
+      updatePoints(resultObj);
 
       // update the state of the user
       if (isCorrectAnswer) {
