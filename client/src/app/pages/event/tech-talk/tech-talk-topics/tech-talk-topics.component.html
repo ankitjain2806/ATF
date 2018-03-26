@@ -7,6 +7,7 @@
   </div>
   <div class="row">
     <div class="col-6">
+      {{myTopics.length}}
       <table class="table table-bordered">
         <thead>
           <tr>
@@ -25,7 +26,12 @@
           <tr *ngFor="let topic of allTopics;">
             <td>{{topic.topic}}</td>
             <td>{{topic.description}}</td>
-            <td></td>
+            <td>
+              <a class="btn btn-sm btn-success text-white"
+                title="subscribe" (click)="subscribeTopic(topic._id, true)" *ngIf="myTopics.indexOf(topic._id) < 0">Subscribe</a>
+              <a class="btn btn-sm btn-danger text-white"
+                title="subscribe" (click)="subscribeTopic(topic._id, false)" *ngIf="myTopics.indexOf(topic._id) >= 0">Unsubscribe</a>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -36,3 +42,17 @@
   </div>
   <a class="btn btn-primary text-white" [routerLink]="['/dashboard']">Back</a>
 </div>
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Modal title</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>One fine body&hellip;</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+  </div>
+</ng-template>

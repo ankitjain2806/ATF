@@ -21,6 +21,8 @@ var HCKController = require('./controllers/events/HCK');
 var TechTalksController = require('./controllers/events/techtalks');
 var TechTalksAdminController = require('./controllers/admin/techtalks');
 
+var isLoggedIn = require('./util/middlewares').isLoggedIn;
+var isAdmin = require('./util/middlewares').isAdmin;
 var app = express();
 
 var server = require('http').Server(app);
@@ -68,7 +70,7 @@ app.use(cors());
  * @param res
  * @param next
  */
-var isLoggedIn = function (req, res, next) {
+/*var isLoggedIn = function (req, res, next) {
   if (req.session && typeof req.session.user !== 'undefined') {
     next();
   } else {
@@ -84,7 +86,7 @@ var isAdmin = function (req, res, next) {
     res.sendStatus(401);
     res.end();
   }
-};
+};*/
 
 
 app.use('/api/users', isLoggedIn, usersController);
@@ -92,10 +94,10 @@ app.use('/api/events', isLoggedIn, eventsController);
 app.use('/api/compiler', isLoggedIn, compilerController);
 app.use('/api/treasurehunt', isLoggedIn, treasureHuntController);
 app.use('/api/HCK', isLoggedIn, HCKController);
-app.use('/api/techtalks', isLoggedIn, TechTalksController);
+app.use('/api/techtalks', TechTalksController);
 
 /*-----------------------------------------------------------------*/
-app.use('/api/superadmin/techtalks', TechTalksAdminController);
+app.use('/api/superadmin/techtalks', isAdmin, TechTalksAdminController);
 app.use('/api/superadmin', isAdmin, superAdminController);
 /*-----------------------------------------------------------------*/
 

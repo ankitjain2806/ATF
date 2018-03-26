@@ -7,6 +7,7 @@ var TechTalkSchema = new Schema({
   description: String,
   otherDetails : {type: Schema.Types.Mixed, default: {}},
   isActive: {type: Boolean, default: true},
+  seats: Number,
   users: [{
     userId : {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
     isBlocked: {type: Boolean, default: false}

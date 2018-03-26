@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "start": "nodemon ./bin/www",
+    "compiler": "nodemon ./microservices/compiler.js",
+    "transaction": "nodemon ./microservices/transaction.js"
   },
   "dependencies": {
     "amqplib": "^0.5.2",
