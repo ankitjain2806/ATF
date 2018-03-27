@@ -6,17 +6,14 @@ import {LoaderService} from "./loader.service";
 
 @Injectable()
 export class AuthGuardService implements CanActivate, CanActivateChild {
-  constructor(public session: UserSessionService, public loader: LoaderService) {
+  constructor(public session: UserSessionService) {
 
   }
 
   canActivate() : Observable<boolean> {
-    this.loader.showLoader();
     return this.session.checkSession().map((data)=> {
-      this.loader.hideLoader();
       return data.session;
     });
-    //return this.session.getSession() !== null;
   }
 
   canActivateChild() {

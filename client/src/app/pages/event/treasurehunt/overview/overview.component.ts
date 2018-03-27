@@ -27,18 +27,11 @@ export class OverviewComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.loaderService.showLoader();
     this.paramsSub = this.activatedRouter.params.subscribe(params => {
       this.eventId = params['id'];
-      this.loaderService.hideLoader();
-      this.loaderService.showLoader();
       this.treasurehuntService.getEventInformation().subscribe((data) => {
         this.info = data.data;
-        this.loaderService.hideLoader();
-      },error2 => {
-        this.loaderService.hideLoader();
       });
-      this.loaderService.showLoader();
       this.treasurehuntService.getUserStage(this.userSession._id, this.eventId).subscribe((response) => {
         if (response['error']) {
           // user is not present; redirect to home
@@ -46,18 +39,12 @@ export class OverviewComponent implements OnInit, OnDestroy {
           this.isNew = response['data'].length === 0;
           console.log('user is registerd as new ? ', this.isNew);
         }
-        this.loaderService.hideLoader();
-      },error2 => {
-        this.loaderService.hideLoader();
       });
-    },error2 => {
-      this.loaderService.hideLoader();
     });
   }
 
   registerForEvent() {
     // Temp implementation
-    this.loaderService.showLoader();
     this.treasurehuntService.setUserState(this.userSession._id,
       {'stage': 0, 'multiplier': 1},
       this.eventId)
@@ -68,9 +55,6 @@ export class OverviewComponent implements OnInit, OnDestroy {
         } else if (response['data']) {
           this.router.navigate(['/treasurehunt', this.eventId, 'game']);
         }
-        this.loaderService.hideLoader();
-      },error2 => {
-        this.loaderService.hideLoader();
       });
   }
 

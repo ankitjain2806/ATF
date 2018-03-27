@@ -13,6 +13,6 @@ export class UserService {
   }
   getMyProfile(): Observable<any> {
     const url = '/api/users/getMyProfile';
-    return this.http.get(url, {});
+    return this.http.get(url);
   }
 }

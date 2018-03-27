@@ -6,7 +6,7 @@ import {EventService} from "../../event.service";
   selector: 'hck-team-info',
   templateUrl : 'hackathon-team-info.component.html'
 })
-export class HackathonTeamInfoComponet implements OnInit {
+export class HackathonTeamInfoComponent implements OnInit {
   teamInfo :any;
   constructor(private route: ActivatedRoute, private eventService: EventService) {
 

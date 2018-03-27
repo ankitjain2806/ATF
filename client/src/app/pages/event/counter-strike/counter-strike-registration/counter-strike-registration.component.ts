@@ -14,8 +14,7 @@ export class CounterStrikeRegistrationComponent implements OnInit{
   registrationForm : FormGroup;
 
   constructor(private _fb: FormBuilder, private eventService:EventService,
-              private router: Router,
-              private loader: LoaderService){
+              private router: Router){
   }
 
   ngOnInit(){
@@ -37,12 +36,8 @@ export class CounterStrikeRegistrationComponent implements OnInit{
   }
 
   onSubmit(){
-    this.loader.showLoader();
     this.eventService.completeHackathonRegistration(this.registrationForm.value).subscribe(data=>{
       this.gotoHome();
-      this.loader.hideLoader();
-    }, error2 => {
-      this.loader.hideLoader();
     });
   }
 

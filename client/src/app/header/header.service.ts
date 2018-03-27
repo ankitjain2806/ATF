@@ -12,6 +12,6 @@ export class HeaderService {
   ) { }
 
   getUserSession() {
-    return this.httpService.get('/auth/getCurrentSession', {});
+    return this.httpService.get('/auth/getCurrentSession');
   }
 }

@@ -16,10 +16,8 @@ export class EventEndComponent implements OnInit {
   constructor(private service: EventService,
               private route: ActivatedRoute,
               private loaderService: LoaderService) {
-      this.loaderService.showLoader();
       this.route.params.subscribe(routeParams => {
       this.eventName = routeParams.eventName + "Event";
-      this.loaderService.hideLoader();
       },error => {
         this.loaderService.hideLoader();
       })
@@ -27,12 +25,8 @@ export class EventEndComponent implements OnInit {
 
   ngOnInit() {
     const slug = this.route.params['slug'];
-    this.loaderService.showLoader();
     this.service.getEventEndDetail(slug).subscribe((response) => {
       this.data = response;
-      this.loaderService.hideLoader();
-    },error2 => {
-      this.loaderService.hideLoader();
     });
   }
 

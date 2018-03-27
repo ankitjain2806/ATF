@@ -16,7 +16,7 @@ export class TechTalkService {
   }
 
   getAllTopics() {
-    return this.http.get(this.local_base + '/getAllTopics', {})
+    return this.http.get(this.local_base + '/getAllTopics')
   }
 
   subscribeTopic(data) {

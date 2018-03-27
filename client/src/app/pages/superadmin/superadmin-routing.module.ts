@@ -5,7 +5,7 @@ import {UserAdminComponent} from "./user/user.component";
 import {AdminComponent} from "./admin/admin.component";
 import {ResourceComponent} from "./resource/resource.component";
 import {HackathonComponent} from "./event/hackathon/hackathon.component";
-import {HackathonTeamInfoComponet} from "./event/hackathon-team-detail/hackathon-team-info.component"
+import {HackathonTeamInfoComponent} from "./event/hackathon-team-detail/hackathon-team-info.component"
 import {AuthGuardService} from "../../shared/util/auth-guard.service";
 
 @NgModule({
@@ -36,7 +36,7 @@ import {AuthGuardService} from "../../shared/util/auth-guard.service";
       {
         path: 'superadmin/hackathon/teamInfo/:teamId',
         canActivate: [AuthGuardService],
-        component: HackathonTeamInfoComponet
+        component: HackathonTeamInfoComponent
       }
     ])
   ],

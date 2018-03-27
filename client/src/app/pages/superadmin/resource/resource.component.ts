@@ -44,8 +44,7 @@ export class ResourceComponent implements OnInit {
   events : any = null;
 
   constructor(private _fb: FormBuilder,
-              private superAdminService: SuperAdminService,
-              private loader: LoaderService) { }
+              private superAdminService: SuperAdminService) { }
 
   ngOnInit() {
       this.initForm();
@@ -78,14 +77,8 @@ export class ResourceComponent implements OnInit {
   }
 
   addResource(resourceForm: any){
-    this.loader.showLoader();
      this.superAdminService.addResource(resourceForm).subscribe(data =>{
-      console.log("Added");
-      console.log(data);
       this.initForm();
-      this.loader.hideLoader();
-     },error2 => {
-       this.loader.hideLoader();
      });
   }
 }

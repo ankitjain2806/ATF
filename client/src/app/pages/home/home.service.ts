@@ -14,6 +14,6 @@ export class HomeService {
   }
 
   googleLoginApi(): Observable<any> {
-    return this.http.get('/api/users/auth/google', {});
+    return this.http.get('/api/users/auth/google');
   }
 }

@@ -16,11 +16,11 @@ export class DashboardService {
   }
 
   getAllEvents(): Observable<any> {
-    return this.http.get('/api/events/all', {});
+    return this.http.get('/api/events/all');
   }
 
   getUserEvents(): Observable<any> {
-    return this.http.get('/auth/myEvents', {});
+    return this.http.get('/auth/myEvents');
   }
 
   registerEvent(eventSlug): Observable<any> {

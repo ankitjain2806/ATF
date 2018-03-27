@@ -23,12 +23,12 @@ export class EventService {
   }
 
   getAllEvents(): Observable<any> {
-    return this.http.get(this.local_base + 'all', {});
+    return this.http.get(this.local_base + 'all');
   }
 
   getEventDetail(slug: string): Observable<any> {
     const url = this.local_base + 'getEventDetails/' + slug
-    return this.http.get(url, {});
+    return this.http.get(url);
   }
 
   runCompilerCode(form: CompilerForm, resourceId: string, Resource: string) {
@@ -52,33 +52,33 @@ export class EventService {
 
   getResources(slug: string): Observable<any> {
     const url = this.local_base + 'resources/'+slug;
-    return this.http.get(url, {});
+    return this.http.get(url);
   }
 
   getResourceById(resourceId: string): Observable<any> {
     const url = this.local_base + 'getResource/'+resourceId;
-    return this.http.get(url, {});
+    return this.http.get(url);
   }
 
   getTeamInfoById(teamId: string):Observable<any>{
-    return this.http.get("/api/superadmin/teams/HCK/showdetails/"+teamId,{});
+    return this.http.get("/api/superadmin/teams/HCK/showdetails/"+teamId);
   }
 
   getHCKteamInfo() : Observable <any> {
-    return this.http.get("/api/HCK/getTeamDetail",{});
+    return this.http.get("/api/HCK/getTeamDetail");
   }
   completeHackathonRegistration(resources: HackathonRegistration){
     console.log(resources);
     return this.http.post("/api/HCK/saveRegistration", resources);
   }
   getHackathonRegistration() {
-    return this.http.get("/api/HCK/getRegistration", {});
+    return this.http.get("/api/HCK/getRegistration");
   }
   getMyHackathonTeams() {
-    return this.http.get("/api/HCK/getMyTeams", {});
+    return this.http.get("/api/HCK/getMyTeams");
   }
 
   checkTeamName(teamName : string){
-    return this.http.get("/api/HCK/checkTeamName/"+teamName,{teamName})
+    return this.http.get("/api/HCK/checkTeamName/"+teamName)
   }
 }

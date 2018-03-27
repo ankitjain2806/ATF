@@ -37,6 +37,7 @@ import {TechTalkComponent} from "./tech-talk/tech-talk.component";
 import {TechTalkTopicsComponent} from "./tech-talk/tech-talk-topics/tech-talk-topics.component";
 import {TechTalkTopicsResolverService} from "./tech-talk/tech-talk-topics/tech-talk-topics-resolver.service";
 import {TechTalkService} from './tech-talk/tech-talk.service';
+import {HackathonTeamInfoComponent} from "./hackathon/hackathon-team-detail/hackathon-team-info.component";
 @NgModule({
   imports: [
     NgbModule,
@@ -65,7 +66,8 @@ import {TechTalkService} from './tech-talk/tech-talk.service';
     HackathonTeamComponent,
     TechTalkHomeComponent,
     TechTalkComponent,
-    TechTalkTopicsComponent
+    TechTalkTopicsComponent,
+    HackathonTeamInfoComponent
   ],
   providers: [
     EventService,

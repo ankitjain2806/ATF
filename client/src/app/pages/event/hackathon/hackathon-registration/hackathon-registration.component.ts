@@ -18,8 +18,7 @@ export class HackathonRegistrationComponent implements OnInit {
   constructor(
     private _fb: FormBuilder,
     private eventService: EventService,
-    private route: ActivatedRoute,
-    private loader: LoaderService
+    private route: ActivatedRoute
   ) {
     this.route.data.subscribe((res) => {
       console.log(res)
@@ -78,12 +77,8 @@ export class HackathonRegistrationComponent implements OnInit {
   }
 
   checkTeamName(){
-    this.loader.showLoader();
     this.eventService.checkTeamName(this.resourceForm.value.teamName).subscribe(data=>{
         this.isTeamNameAvailable = data.isAvailable;
-        this.loader.hideLoader();
-    }, error2 => {
-      this.loader.hideLoader();
     });
   }
 }

@@ -23,12 +23,12 @@ export class CompilerService {
 
   getResources(): Observable<any> {
     const url = this.local_base + '/resources';
-    return this.http.get(url, {});
+    return this.http.get(url);
   }
 
   getResourceById(resourceId: string): Observable<any> {
     const url = this.local_base + '/getResource/'+resourceId;
-    return this.http.get(url, {});
+    return this.http.get(url);
   }
 
   saveDraft(form: CompilerForm, resourceId: string) {

@@ -13,7 +13,7 @@ export class SuperAdminService {
   }
 
     getAllEvents(): Observable<any> {
-    return this.http.get('/api/events/all', {});
+    return this.http.get('/api/events/all');
   }
 
   addEvent(event: IEvent): Observable<any> {
@@ -29,11 +29,11 @@ export class SuperAdminService {
   }
 
   getAllUsers():Observable<any>{
-    return this.http.get("/api/superadmin/users",{});
+    return this.http.get("/api/superadmin/users");
   }
 
   getEventByUserId(slug:string):Observable<any>{
-    return this.http.get("/api/superadmin/users/getEvents/"+slug, {});
+    return this.http.get("/api/superadmin/users/getEvents/"+slug);
   }
 
   blockEvent(userId:string, eventId:string){
@@ -45,7 +45,7 @@ export class SuperAdminService {
   }
 
   getHackathonRegisterdUser(){
-    return this.http.get("/api/superadmin/teams/getHCKteams",{})
+    return this.http.get("/api/superadmin/teams/getHCKteams")
   }
 
   acceptRejectTeam(teamId:string, isApproved:boolean){
@@ -53,7 +53,7 @@ export class SuperAdminService {
   }
 
   getTeamInfoById(teamId: string):Observable<any>{
-    return this.http.get("/api/superadmin/teams/HCK/showdetails/"+teamId,{});
+    return this.http.get("/api/superadmin/teams/HCK/showdetails/"+teamId);
   }
 
 }

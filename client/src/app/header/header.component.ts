@@ -15,17 +15,13 @@ export class HeaderComponent implements OnInit {
 
   constructor(private router: Router,
               private session: UserSessionService,
-              private socketService: SocketService,
-              private loader: LoaderService,
-              private headerService: HeaderService) {
+              private socketService: SocketService, private headerService: HeaderService) {
 
   }
 
   ngOnInit() {
-    this.loader.showLoader();
     this.headerService.getUserSession()
       .subscribe(res => {
-        this.loader.hideLoader();
         if (res.user != null) {
           localStorage.setItem('userSession', JSON.stringify(res.user));
           this.userSession = res.user;
@@ -33,8 +29,6 @@ export class HeaderComponent implements OnInit {
             userId : res.user.id
           });
         }
-      }, error2 => {
-        this.loader.hideLoader();
       });
   }
 

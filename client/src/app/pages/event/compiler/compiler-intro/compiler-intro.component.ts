@@ -13,12 +13,8 @@ import {LoaderService} from "../../../../shared/util/loader.service";
 export class CompilerIntroComponent implements OnInit {
   resources;
   constructor(private route: ActivatedRoute, private loaderService: LoaderService) {
-    this.loaderService.showLoader();
     this.route.data.subscribe((res) => {
       this.resources = res.resources.data;
-      this.loaderService.hideLoader();
-    },error2 => {
-      this.loaderService.hideLoader();
     });
   }
 

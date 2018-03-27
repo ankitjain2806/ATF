@@ -11,14 +11,9 @@ export class HackathonTeamComponent implements OnInit {
   teams = null;
   teamDetail = null;
   constructor(private route: ActivatedRoute,
-              private eventService: EventService,
-              private loader : LoaderService) {
-    this.loader.showLoader();
+              private eventService: EventService) {
     this.route.data.subscribe((res) => {
       this.teams = res.teams.data.hackathon;
-      this.loader.hideLoader();
-    }, error => {
-      this.loader.hideLoader();
     });
   }
   ngOnInit() {

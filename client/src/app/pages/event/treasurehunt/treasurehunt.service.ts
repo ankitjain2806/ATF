@@ -9,7 +9,7 @@ export class TreasurehuntService {
   constructor(private httpService: HttpService) { }
 
   getEventInformation() {
-    return this.httpService.get(this.local_base + '/details', {});
+    return this.httpService.get(this.local_base + '/details');
   }
 
   getUserStage(userId, event) {
