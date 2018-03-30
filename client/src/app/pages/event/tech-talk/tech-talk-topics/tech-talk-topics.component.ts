@@ -37,7 +37,7 @@ export class TechTalkTopicsComponent {
       this.myTopics = data.data.map((x) => {
         return x.topicId
       });
-      let toastMessage = (this.subscribeTopic) ? 'You have subscribed this topic' : 'You ave unsubscribed this topic';
+      let toastMessage = (subscribeTopic) ? 'You have subscribed this topic' : 'You ave unsubscribed this topic';
       this.toast.showSuccess('Success', toastMessage);
     });
   }

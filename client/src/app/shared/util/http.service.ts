@@ -24,7 +24,7 @@ export class HttpService {
       this.loader.hideLoader();
       this.errorHandler(err);
     }).catch((err) => {
-        console.log(err)
+        this.loader.hideLoader();
         return Observable.of(null);
     });
   }
@@ -39,6 +39,7 @@ export class HttpService {
       this.errorHandler(err);
     }).catch((err) => {
       console.log(err)
+      this.loader.hideLoader();
       return Observable.of(null);
     });;
   }
@@ -53,6 +54,7 @@ export class HttpService {
       this.errorHandler(err);
     }).catch((err) => {
       console.log(err)
+      this.loader.hideLoader();
       return Observable.of(null);
     });
   }
@@ -66,6 +68,7 @@ export class HttpService {
       this.errorHandler(err);
     }).catch((err) => {
       console.log(err)
+      this.loader.hideLoader();
       return Observable.of(null);
     });
   }

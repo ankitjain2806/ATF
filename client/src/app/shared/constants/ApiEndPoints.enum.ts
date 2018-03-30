@@ -1,0 +1,3 @@
+enum ApiEndPoints {
+  'ROOT' = '/'
+}

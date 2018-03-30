@@ -118,7 +118,7 @@
       <button class="btn btn-sm btn-info" (click)="addNewRow('resources')" *ngIf="resourceForm['controls'].resources['controls'].length < 3" type="button"><i class="fa fa-plus-circle"></i></button>
     </div>
     <div class="offset-md-5">
-      <a class="btn btn-primary text-white" [routerLink]="['/dashboard']">Back</a>
+      <a class="btn btn-primary text-white" [routerLink]="['/']">Back</a>
       <button class="btn btn-primary" type="submit" [disabled]="!resourceForm.valid || !isTeamNameAvailable">Register</button>
     </div>
   </form>
