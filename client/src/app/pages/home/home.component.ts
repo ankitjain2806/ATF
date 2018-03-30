@@ -26,10 +26,6 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
   }
 
-  callGoogleLogin() {
-    this.homeService.googleLoginApi().subscribe((data) => {});
-  }
-
   eventRegistration(eventSlug: string) {
     this.dashboardService.registerEvent({'eventSlug' : eventSlug}).subscribe(() => {
       this.toast.showSuccess('Congratulations', 'You are registered in event. Please click Continue.')

@@ -16,6 +16,6 @@ export class UserSessionService {
   }
 
   checkSession() {
-    return this.http.get('/auth/checkSession');
+    return this.http.get('/api/auth/checkSession');
   }
 }

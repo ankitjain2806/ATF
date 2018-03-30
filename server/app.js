@@ -90,7 +90,7 @@ var isAdmin = function (req, res, next) {
 
 
 app.use('/api/users', isLoggedIn, usersController);
-app.use('/api/events', isLoggedIn, eventsController);
+app.use('/api/events', eventsController);
 app.use('/api/compiler', isLoggedIn, compilerController);
 app.use('/api/treasurehunt', isLoggedIn, treasureHuntController);
 app.use('/api/HCK', isLoggedIn, HCKController);
@@ -101,7 +101,7 @@ app.use('/api/superadmin/techtalks', isAdmin, TechTalksAdminController);
 app.use('/api/superadmin', isAdmin, superAdminController);
 /*-----------------------------------------------------------------*/
 
-app.use('/auth', AuthController);
+app.use('/api/auth', AuthController);
 
 // /api/users/getAll
 // Catch all other routes and return the index file

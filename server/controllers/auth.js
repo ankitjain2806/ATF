@@ -68,7 +68,6 @@ router.get('/google/callback', passport.authenticate('google', {
   failureRedirect: '/'
 }));
 
-
 router.get('/getCurrentSession', function (req, res, next) {
   var sessionObj = {user: null};
   if (req.session && req.session.user) {
@@ -83,7 +82,6 @@ router.get('/getCurrentSession', function (req, res, next) {
   res.locals.responseObj = sessionObj;
   next();
 }, responseHandler);
-
 
 router.get('/logout', function (req, res, next) {
   req.session.destroy(function (err) {
@@ -115,4 +113,5 @@ router.get('/myEvents', function (req, res, next) {
     next()
   }
 }, responseHandler)
+
 module.exports = router;

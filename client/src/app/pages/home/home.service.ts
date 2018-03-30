@@ -12,8 +12,4 @@ export class HomeService {
   constructor(private http: HttpService) {
 
   }
-
-  googleLoginApi(): Observable<any> {
-    return this.http.get('/api/users/auth/google');
-  }
 }
