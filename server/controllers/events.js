@@ -9,8 +9,29 @@ var HCKinfoModel = require('../models/HCKinfo');
 var CSinfoModel = require('../models/CSinfo');
 var _ = require('lodash');
 var responseHandler = require('../util/responseHandler').Response;
+var isLoggedIn = require('../util/middlewares').isLoggedIn;
 
-router.get('/getEventDetails/:slug', function (req, res, next) {
+router.get('/myEvents', function (req, res, next) {
+  if(req.session && req.session.user) {
+    User.findById(req.session.user._id).select('compiler treasureHunt hackathon').exec(function(err, events){
+      res.locals.responseObj = {
+        err: err,
+        data: events,
+        msg: "users events"
+      }
+      next();
+    });
+  } else {
+    res.locals.responseObj = {
+      err: null,
+      data: null,
+      msg: "users events"
+    }
+    next()
+  }
+}, responseHandler)
+
+router.get('/getEventDetails/:slug', isLoggedIn, function (req, res, next) {
   var loggedInUser = req.session.user;
   async.waterfall([
     function (callback) {
@@ -45,7 +66,7 @@ router.get('/getEventDetails/:slug', function (req, res, next) {
 
 });
 
-router.get('/all', function (req, res, next) {
+router.get('/all', isLoggedIn, function (req, res, next) {
   var query = EventModel.find().select('name description slug');
   query.exec(function (err, data) {
     res.json(data);
@@ -53,7 +74,7 @@ router.get('/all', function (req, res, next) {
   });
 });
 
-router.post('/event-register', function (req, res, next) {
+router.post('/event-register', isLoggedIn, function (req, res, next) {
   var eventId = null;
   async.series([
         function (callback) {
@@ -221,7 +242,7 @@ router.post('/event-register', function (req, res, next) {
   );*/
 }, responseHandler);
 
-router.post('/end', function (req, res) {
+router.post('/end', isLoggedIn, function (req, res) {
 
   /**
    * event points, stage wise points, other events
@@ -249,7 +270,7 @@ router.post('/end', function (req, res) {
   });
 });
 
-router.post('/isended', function (req, res) {
+router.post('/isended', isLoggedIn, function (req, res) {
   const event = req.body.slug;
   const user = req.body.user;
   console.log(event, user);
