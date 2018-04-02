@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot} from "@angular/router";
 import {Observable} from "rxjs/Observable";
 import {EventService} from "../event.service";
-import {UserSessionService} from "../../../shared/util/user-session.service";
+import {UserSessionService} from "app/shared/util/user-session.service";
 
 @Injectable()
 export class FinishedGuardService implements CanActivate {

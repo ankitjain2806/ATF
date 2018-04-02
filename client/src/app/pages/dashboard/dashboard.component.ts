@@ -3,7 +3,6 @@ import {Router, ActivatedRoute} from "@angular/router";
 
 import {DashboardService} from "./dashboard.service";
 import {EventRegistration} from "../../models/event-registration";
-import {LoaderService} from "../../shared/util/loader.service";
 
 @Component({
   selector: 'app-dashboard',

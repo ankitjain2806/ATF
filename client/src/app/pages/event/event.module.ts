@@ -38,6 +38,9 @@ import {TechTalkTopicsComponent} from "./tech-talk/tech-talk-topics/tech-talk-to
 import {TechTalkTopicsResolverService} from "./tech-talk/tech-talk-topics/tech-talk-topics-resolver.service";
 import {TechTalkService} from './tech-talk/tech-talk.service';
 import {HackathonTeamInfoComponent} from "./hackathon/hackathon-team-detail/hackathon-team-info.component";
+import {HellInTheCellComponent} from "./hell-in-the-cell/hell-in-the-cell.component";
+import {HellInTheCellHomeComponent} from "./hell-in-the-cell/hell-in-the-cell-home/hell-in-the-cell-home.component";
+import {HellInTheCellService} from "./hell-in-the-cell/hell-in-the-cell.service";
 @NgModule({
   imports: [
     NgbModule,
@@ -67,7 +70,9 @@ import {HackathonTeamInfoComponent} from "./hackathon/hackathon-team-detail/hack
     TechTalkHomeComponent,
     TechTalkComponent,
     TechTalkTopicsComponent,
-    HackathonTeamInfoComponent
+    HackathonTeamInfoComponent,
+    HellInTheCellComponent,
+    HellInTheCellHomeComponent
   ],
   providers: [
     EventService,
@@ -79,7 +84,8 @@ import {HackathonTeamInfoComponent} from "./hackathon/hackathon-team-detail/hack
     HackathonRegistrationResolver,
     HackathonTeamResolver,
     TechTalkTopicsResolverService,
-    TechTalkService
+    TechTalkService,
+    HellInTheCellService
   ]
 })
 export class EventModule {

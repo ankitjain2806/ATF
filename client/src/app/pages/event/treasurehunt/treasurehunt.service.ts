@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpService} from "../../../shared/util/http.service";
+import {HttpService} from "app/shared/util/http.service";
 
 @Injectable()
 export class TreasurehuntService {

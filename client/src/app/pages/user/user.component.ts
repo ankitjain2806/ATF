@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {UserSessionService} from "../../shared/util/user-session.service";
+import {UserSessionService} from "app/shared/util/user-session.service";
 
 @Component({
   selector: 'app-user',

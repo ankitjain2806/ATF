@@ -2,11 +2,10 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormGroup, FormControl, FormBuilder, Validators, FormArray} from '@angular/forms';
 import {EventService} from "../event.service";
 import {CompilerService} from "./compiler.service";
-import {SocketService} from "../../../shared/util/socket.service";
+import {SocketService} from "app/shared/util/socket.service";
 import {ActivatedRoute} from "@angular/router";
 import {AceEditorComponent} from "ng2-ace-editor"
 import {Resource} from "../../../models/Resource";
-import {LoaderService} from "../../../shared/util/loader.service";
 import 'brace/theme/dracula';
 import 'brace/mode/java.js';
 import 'brace/index';

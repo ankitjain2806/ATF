@@ -6,7 +6,7 @@ import {AdminComponent} from "./admin/admin.component";
 import {ResourceComponent} from "./resource/resource.component";
 import {HackathonComponent} from "./event/hackathon/hackathon.component";
 import {HackathonTeamInfoComponent} from "./event/hackathon-team-detail/hackathon-team-info.component"
-import {AuthGuardService} from "../../shared/util/auth-guard.service";
+import {AuthGuardService} from "app/shared/util/auth-guard.service";
 
 @NgModule({
   imports: [

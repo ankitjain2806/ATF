@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {EventService} from "../event.service";
-import {LoaderService} from "../../../shared/util/loader.service";
 
 @Component({
   selector: 'app-event-end',
@@ -14,13 +13,10 @@ export class EventEndComponent implements OnInit {
   eventName : string = "Event";
 
   constructor(private service: EventService,
-              private route: ActivatedRoute,
-              private loaderService: LoaderService) {
+              private route: ActivatedRoute) {
       this.route.params.subscribe(routeParams => {
       this.eventName = routeParams.eventName + "Event";
-      },error => {
-        this.loaderService.hideLoader();
-      })
+      });
   }
 
   ngOnInit() {

@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {HeaderService} from './header.service'
-import {UserSessionService} from "../shared/util/user-session.service";
-import {SocketService} from "../shared/util/socket.service";
-import {LoaderService} from "../shared/util/loader.service";
+import {UserSessionService} from "app/shared/util/user-session.service";
+import {SocketService} from "app/shared/util/socket.service";
 
 @Component({
   selector: 'app-header',

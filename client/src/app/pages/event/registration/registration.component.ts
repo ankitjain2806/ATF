@@ -3,8 +3,6 @@ import {FormGroup, FormControl, FormBuilder, Validators, FormArray} from '@angul
 import {EventRegistration, Member} from "../../../models/event-registration";
 import {EventService} from "../event.service";
 import {Router, ActivatedRoute} from '@angular/router';
-import {LoaderService} from "../../../shared/util/loader.service";
-
 
 @Component({
   selector: 'app-registration',

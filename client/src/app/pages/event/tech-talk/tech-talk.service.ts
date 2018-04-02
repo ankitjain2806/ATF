@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from "rxjs/Observable";
 import 'rxjs/add/operator/map';
 
-import {HttpService} from '../../../shared/util/http.service';
+import {HttpService} from 'app/shared/util/http.service';
 import {CompilerForm} from "../../../models/compiler-form";
 
 @Injectable()

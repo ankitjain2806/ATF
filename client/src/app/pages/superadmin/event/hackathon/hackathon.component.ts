@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {clone} from 'lodash';
 import {SuperAdminService} from "../../superadmin.service";
-import {LoaderService} from "../../../../shared/util/loader.service";
 
 @Component({
   templateUrl: 'hackathon.component.html',

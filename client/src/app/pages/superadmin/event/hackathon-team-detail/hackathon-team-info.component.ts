@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {SuperAdminService} from "../../superadmin.service";
-import {LoaderService} from "../../../../shared/util/loader.service";
 
 @Component({
   selector: 'hck-team-info',

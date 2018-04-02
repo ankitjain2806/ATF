@@ -6,13 +6,10 @@ import 'rxjs/add/operator/map';
 import {HttpService} from 'app/shared/util/http.service';
 
 @Injectable()
-export class UserService {
+export class HellInTheCellService {
+
 
   constructor(private http: HttpService) {
 
-  }
-  getMyProfile(): Observable<any> {
-    const url = '/api/users/getMyProfile';
-    return this.http.get(url);
   }
 }

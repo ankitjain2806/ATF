@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {Observable} from "rxjs/Observable";
 import 'rxjs/add/operator/map';
 
-import {HttpService} from '../shared/util/http.service';
+import {HttpService} from 'app/shared/util/http.service';
 
 @Injectable()
 export class HeaderService {

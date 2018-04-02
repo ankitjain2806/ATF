@@ -1,9 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {HttpService} from "../../../../shared/util/http.service";
+import {HttpService} from "app/shared/util/http.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {UserSessionService} from "../../../../shared/util/user-session.service";
+import {UserSessionService} from "app/shared/util/user-session.service";
 import {TreasurehuntService} from "../treasurehunt.service";
-import {LoaderService} from "../../../../shared/util/loader.service";
 
 @Component({
   selector: 'app-overview',
@@ -21,8 +20,8 @@ export class OverviewComponent implements OnInit, OnDestroy {
   constructor(private session: UserSessionService,
               private router: Router,
               private activatedRouter: ActivatedRoute,
-              private treasurehuntService: TreasurehuntService,
-              private loaderService: LoaderService) {
+              private treasurehuntService: TreasurehuntService
+  ) {
     this.userSession = this.session.getSession();
   }
 

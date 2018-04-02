@@ -1,0 +1,47 @@
+<div class="container-fluid">
+  <ngb-alert [type]="'success'" [dismissible]="false" *ngIf="draftNotification">
+    <strong>Congratulations!</strong> Draft is Saved
+  </ngb-alert>
+  <h1>{{resource.name}}</h1>
+  <div>
+    <div class="row">
+      <div class="col-12">
+        <label>Problem.&nbsp;</label>{{resource.body}}
+      </div>
+    </div>
+    <form [formGroup]="compilerForm" novalidate (ngSubmit)="onSubmit()">
+      <div class="form-group">
+          <div ace-editor
+               [(text)]="text"
+               [mode]="'java'"
+               [theme]="'dracula'"
+               [options]="options"
+               [readOnly]="false"
+               [autoUpdateContent]="true"
+               [durationBeforeCallback]="1000"
+               (textChanged)="onChange($event)"
+               class="editor-style col-12 form-control">
+          </div>
+      </div>
+      <div class="form-group">
+        <select class="form-control col-4" formControlName="language">
+          <option *ngFor="let language of languages" [value]="language.ext">{{language.name}}</option>
+        </select>
+        <div class="col-4">
+
+        </div>
+        <span *ngIf="draft != null">Last saved on : {{draft.lastUpdated}}</span>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary">Submit Code</button>
+        <button type="button" class="btn btn-info" (click)="saveDraft()">Save Draft</button>
+      </div>
+    </form>
+  </div>
+  <div class="red">
+    output :
+    <div *ngFor="let result of output;">
+      TestCase #{{result.testCaseNumber}} : <span class="">{{result.testCasePass ? 'Pass': 'Fail'}}</span>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
-import {AuthGuardService} from "../../shared/util/auth-guard.service";
+import {AuthGuardService} from "app/shared/util/auth-guard.service";
 
 import {RegistrationComponent} from "./registration/registration.component";
 import {TreasurehuntComponent} from "./treasurehunt/treasurehunt.component";
@@ -29,6 +29,7 @@ import {HackathonTeamResolver} from "./hackathon/hackathon-team/hackathon-team.r
 import {TechTalkHomeComponent} from "./tech-talk/tech-talk-home/tech-talk-home.component";
 import {TechTalkTopicsComponent} from "./tech-talk/tech-talk-topics/tech-talk-topics.component";
 import {TechTalkTopicsResolverService} from "./tech-talk/tech-talk-topics/tech-talk-topics-resolver.service";
+import {HellInTheCellHomeComponent} from "./hell-in-the-cell/hell-in-the-cell-home/hell-in-the-cell-home.component";
 
 @NgModule({
   imports: [
@@ -52,6 +53,11 @@ import {TechTalkTopicsResolverService} from "./tech-talk/tech-talk-topics/tech-t
         path: 'techtalks',
         component: TechTalkHomeComponent,
         data: {title: "Tech Talks"}
+      },
+      {
+        path: 'hellcell',
+        component: HellInTheCellHomeComponent,
+        data: {title: "Hell in the Cell"}
       },
       {
         path: 'compiler/intro',

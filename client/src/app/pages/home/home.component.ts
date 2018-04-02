@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {HomeService} from './home.service';
-import {LoaderService} from "../../shared/util/loader.service";
 import {Router, ActivatedRoute} from "@angular/router";
 import {DashboardService} from "../dashboard/dashboard.service";
-import {ToasterService} from "../../shared/util/toaster.service";
+import {ToasterService} from "app/shared/util/toaster.service";
 
 @Component({
   selector: 'app-home',

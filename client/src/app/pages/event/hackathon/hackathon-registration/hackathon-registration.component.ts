@@ -2,7 +2,6 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {EventService} from "../../event.service";
 import {ActivatedRoute} from "@angular/router";
-import {LoaderService} from "../../../../shared/util/loader.service";
 
 @Component({
   selector: 'app-hackathon-registration',

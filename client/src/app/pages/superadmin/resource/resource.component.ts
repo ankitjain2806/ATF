@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder } from '@angular/forms';
 import {SuperAdminService} from "../superadmin.service";
-import {LoaderService} from "../../../shared/util/loader.service";
 
 @Component({
   selector: 'my-resource',

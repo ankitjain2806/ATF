@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {DashboardComponent} from "./dashboard.component";
 import {DashboardResolverService} from "./dashboard-resolver.service";
-import {AuthGuardService} from "../../shared/util/auth-guard.service";
+import {AuthGuardService} from "app/shared/util/auth-guard.service";
 
 @NgModule({
   imports: [

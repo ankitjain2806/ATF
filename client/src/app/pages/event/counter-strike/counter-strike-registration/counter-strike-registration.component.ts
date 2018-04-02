@@ -2,7 +2,6 @@ import {Component, OnInit} from "@angular/core";
 import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
 import {EventService} from "../../event.service";
 import {Router} from "@angular/router";
-import {LoaderService} from "../../../../shared/util/loader.service";
 
 @Component({
   selector : "<counter-strike-registration>",

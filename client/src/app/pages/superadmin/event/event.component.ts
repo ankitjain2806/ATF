@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {SuperAdminService} from "../superadmin.service";
 import {clone} from 'lodash';
 import {IEvent} from "../../../models/event";
-import {LoaderService} from "../../../shared/util/loader.service";
 
 @Component({
   moduleId: module.id,

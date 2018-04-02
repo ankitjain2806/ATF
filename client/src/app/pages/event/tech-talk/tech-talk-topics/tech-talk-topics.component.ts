@@ -1,9 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {DashboardService} from "../../../dashboard/dashboard.service";
-import {LoaderService} from "../../../../shared/util/loader.service";
 import {TechTalkService} from "../tech-talk.service";
-import {ToasterService} from "../../../../shared/util/toaster.service";
+import {ToasterService} from "app/shared/util/toaster.service";
 
 @Component({
   selector: 'app-tech-talk-topics',

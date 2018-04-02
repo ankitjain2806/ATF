@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {HttpService} from "../../../../shared/util/http.service";
-import {UserSessionService} from "../../../../shared/util/user-session.service";
+import {HttpService} from "app/shared/util/http.service";
+import {UserSessionService} from "app/shared/util/user-session.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {TreasurehuntService} from "../treasurehunt.service";
-import {LoaderService} from "../../../../shared/util/loader.service";
 
 @Component({
   selector: 'app-ingame',

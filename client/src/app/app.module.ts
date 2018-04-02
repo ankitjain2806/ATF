@@ -13,7 +13,6 @@ import {HeaderComponent} from './header/header.component';
 import {FooterComponent} from './footer/footer.component';
 import {LoaderComponent} from "./loader/loader.component";
 
-
 import {HomeModule} from './pages/home/home.module';
 import {UserModule} from './pages/user/user.module';
 import {HeaderModule} from './header/header.module';
@@ -22,12 +21,12 @@ import {DashboardModule} from "./pages/dashboard/dashboard.module";
 import {SuperAdminModule} from "./pages/superadmin/superadmin.module";
 
 import {AppService} from "./app.service";
-import {HttpService} from './shared/util/http.service';
-import {UserSessionService} from "./shared/util/user-session.service";
-import {SocketService} from "./shared/util/socket.service";
-import {AuthGuardService} from "./shared/util/auth-guard.service";
-import {LoaderService} from "./shared/util/loader.service";
-import {ToasterService} from "./shared/util/toaster.service";
+import {HttpService} from 'app/shared/util/http.service';
+import {UserSessionService} from "app/shared/util/user-session.service";
+import {SocketService} from "app/shared/util/socket.service";
+import {AuthGuardService} from "app/shared/util/auth-guard.service";
+import {ToasterService} from "app/shared/util/toaster.service";
+import {LoaderService} from "app/shared/util/loader.service";
 
 @NgModule({
   declarations: [
@@ -60,8 +59,8 @@ import {ToasterService} from "./shared/util/toaster.service";
     SocketService,
     AuthGuardService,
     Title,
-    LoaderService,
-    ToasterService
+    ToasterService,
+    LoaderService
   ],
   bootstrap: [AppComponent]
 })
