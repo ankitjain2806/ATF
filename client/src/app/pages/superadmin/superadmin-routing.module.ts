@@ -19,7 +19,7 @@ import {AuthGuardService} from "app/shared/util/auth-guard.service";
       {
         path: 'superadmin/event',
         component: EventAdminComponent,
-        data: {title: "SuperAdmin"}
+        data: {title: "Events"}
       },
       {
         path: 'superadmin/user',
@@ -27,16 +27,19 @@ import {AuthGuardService} from "app/shared/util/auth-guard.service";
       },
       {
         path: 'superadmin/add-resource',
-        component: ResourceComponent
+        component: ResourceComponent,
+        data: {title: "Add Resource"},
       },
       {
         path: 'superadmin/hackathon-register-users-detail',
-        component: HackathonComponent
+        component: HackathonComponent,
+        data: {title: "Hackathon Registered Users Detail"},
       },
       {
         path: 'superadmin/hackathon/teamInfo/:teamId',
         canActivate: [AuthGuardService],
-        component: HackathonTeamInfoComponent
+        component: HackathonTeamInfoComponent,
+        data: {title: "Hackathon Team Details"},
       }
     ])
   ],

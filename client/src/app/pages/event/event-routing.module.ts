@@ -124,17 +124,20 @@ import {HellInTheCellHomeComponent} from "./hell-in-the-cell/hell-in-the-cell-ho
       {
         path: 'event/hackathon/complete-registration',
         canActivate: [AuthGuardService],
-        component: HackathonComponet
+        component: HackathonComponet,
+        data: {title: "Hackathon Comlete Registration"}
       },
       {
         path: 'event/counterstrike/registration',
         canActivate: [AuthGuardService],
-        component: CounterStrikeRegistrationComponent
+        component: CounterStrikeRegistrationComponent,
+        data: {title: "Counter Strike Registration"},
       },
       {
         path: 'event/counterstrike/home',
         canActivate: [AuthGuardService],
-        component: CounterStrikeHomeComponent
+        component: CounterStrikeHomeComponent,
+        data: {title: "Counter Strike Home"},
       }
     ])
   ],
