@@ -57,6 +57,7 @@ import {TechTalkTopicsResolverService} from "./tech-talk/tech-talk-topics/tech-t
         path: 'compiler/intro',
         component: CompilerIntroComponent,
         canActivate: [AuthGuardService],
+        data: {title: "Compiler Intro"},
         resolve: {
           resources: CompilerIntroResolverService
         }
