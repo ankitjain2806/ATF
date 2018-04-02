@@ -6,7 +6,7 @@ var envConfig = {
     googleAuth: {
       clientID: '562692892340-9o35ra5u84gr56dv797jtj7f0mvb1r7p.apps.googleusercontent.com',
       clientSecret: '44ui31IRScrmBYu13xmWYS8f',
-      callbackUrl: '/auth/google/callback'
+      callbackUrl: '/api/auth/google/callback'
     },
     // mongoURI: 'mongodb://localhost:27017/ATF3',
     mongoURI: 'mongodb://accolite:accolite@ds121534.mlab.com:21534/atf_local',
@@ -20,7 +20,7 @@ var envConfig = {
     googleAuth: {
       clientID: '562692892340-9o35ra5u84gr56dv797jtj7f0mvb1r7p.apps.googleusercontent.com',
       clientSecret: '44ui31IRScrmBYu13xmWYS8f',
-      callbackUrl: '/auth/google/callback'
+      callbackUrl: '/api/auth/google/callback'
     },
     mongoURI: 'mongodb://accolite:accolite@ds121534.mlab.com:21534/atf_local',
     // mongoURI: 'mongodb://accolite:accolite@ds231987.mlab.com:31987/atf_accolite',
