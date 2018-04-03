@@ -27,10 +27,28 @@ passport.use(new GoogleStrategy({
       } else {
         if (person) {
           if(!person.isActive) {
-
+            if(person.isInvited) {
+              person.name=  {
+                familyName: profile.name.familyName,
+                givenName: profile.name.givenName
+              },
+              person.isActive= true;
+              person.isInvited= false;
+              person.email= profile.email;
+              person.imageUrl= profile.photos[0].value;
+              person.provider= profile.provier;
+              person.providerData= profile._json;
+              person.save(function (err, data) {
+                request.session.user = data;
+                return done(err, data);
+              })
+            } else {
+              return done(err, null);
+            }
+          } else {
+            request.session.user = person;
+            return done(err, person);
           }
-          request.session.user = person;
-          return done(err, person);
         } else {
           var user = new User({
             name: {

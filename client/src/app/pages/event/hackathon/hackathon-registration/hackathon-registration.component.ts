@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {EventService} from "../../event.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-hackathon-registration',
@@ -17,10 +17,13 @@ export class HackathonRegistrationComponent implements OnInit {
   constructor(
     private _fb: FormBuilder,
     private eventService: EventService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     this.route.data.subscribe((res) => {
-      console.log(res)
+      if(res.team.data.length > 0) {
+        this.router.navigate(['/hackathon/my-team']);
+      }
     });
   }
 
@@ -69,9 +72,8 @@ export class HackathonRegistrationComponent implements OnInit {
   }
 
   completeRegistration(resourceForm: any){
-    console.log(resourceForm);
     this.eventService.completeHackathonRegistration(resourceForm).subscribe(data=>{
-      console.log(data);
+      this.router.navigate(['/hackathon/my-team']);
     })
   }
 
