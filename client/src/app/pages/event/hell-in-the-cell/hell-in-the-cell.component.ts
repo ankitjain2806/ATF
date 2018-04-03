@@ -4,7 +4,7 @@ import {FormGroup} from "@angular/forms";
 import {Resource} from "../../../models/Resource";
 
 @Component({
-  selector: 'app-tech-talk',
+  selector: 'app-hell-cell',
   templateUrl: './hell-in-the-cell.component.html',
   styleUrls: ['./hell-in-the-cell.component.scss']
 })
